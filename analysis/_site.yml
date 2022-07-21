@@ -1,0 +1,18 @@
+---
+name: Density_and_sexual_selection_2022
+output_dir: ../docs
+navbar:
+  title: "Population density affects sexual selection in the red flour beetle"
+  left:
+  - text: Analyses
+    href: index.html
+output:
+  workflowr::wflow_html:
+    toc: true
+    toc_float: true
+    depth: 3
+    number_sections: false
+    theme: yeti
+    highlight: tango
+    code_folding: hide
+---
