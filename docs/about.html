@@ -13,7 +13,8 @@
 
 <title>About</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -31,13 +32,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -47,6 +50,7 @@ div.section {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 
@@ -76,6 +80,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -231,12 +238,12 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Stronger net selection on males across animals</a>
+      <a class="navbar-brand" href="index.html">Population density affects sexual selection in the red flour beetle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -254,7 +261,7 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -270,7 +277,9 @@ $(document).ready(function () {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -279,7 +288,9 @@ $(document).ready(function () {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -288,17 +299,28 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-09-27
+<strong>Last updated:</strong> 2022-07-22
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>Net_Selection_eLife_code/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong>
+<code>Density_and_sexual_selection_2022/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -307,45 +329,65 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerNetSelectioneLifecodetreea6602c7ce423c8fb3d7b49bf73fbd63d41debcb5targetblanka6602c7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/LennartWinkler/Net_Selection_eLife_code/tree/a6602c7ce423c8fb3d7b49bf73fbd63d41debcb5" target="_blank">a6602c7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022tree4de8636c5720612cb8bf9f6d3cf1282187edaf06targetblank4de8636a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/4de8636c5720612cb8bf9f6d3cf1282187edaf06" target="_blank">4de8636</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerNetSelectioneLifecodetreea6602c7ce423c8fb3d7b49bf73fbd63d41debcb5targetblanka6602c7a" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022tree4de8636c5720612cb8bf9f6d3cf1282187edaf06targetblank4de8636a"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/LennartWinkler/Net_Selection_eLife_code/tree/a6602c7ce423c8fb3d7b49bf73fbd63d41debcb5" target="_blank">a6602c7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/4de8636c5720612cb8bf9f6d3cf1282187edaf06" target="_blank">4de8636</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-    Ignored:    data/.Rhistory
-
-Untracked files:
-    Untracked:  data/Winkler_et_al_2021_eLife_DataTable.txt
-    Untracked:  data/Winkler_et_al_2021_eLife_Phylogeny.txt
-    Untracked:  data/Winkler_et_al_2021_eLife_Phylogeny_PIC.txt
+    Ignored:    .Rproj.user/
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -356,7 +398,11 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/about.Rmd</code>) and HTML (<code>docs/about.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/about.Rmd</code>) and HTML
+(<code>docs/about.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -382,189 +428,36 @@ Message
 <tbody>
 <tr>
 <td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/3b9b079b5b59f8c4075bc5fccadaf48cac74bcfd/docs/about.html" target="_blank">3b9b079</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-09-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/dcdf568487731c743f3b59589d222989dcbdbd05/docs/about.html" target="_blank">dcdf568</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-09-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/1d415ea9c8865103a65e6600c74d83b18bc1b67e/docs/about.html" target="_blank">1d415ea</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-09-22
-</td>
-<td>
-wflow_publish(republish = TRUE, all = T)
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/f1eb5c9d1a7e6e0715058161c79c0bec610429a8/docs/about.html" target="_blank">f1eb5c9</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-09-22
-</td>
-<td>
-wflow_publish(all = T)
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/533349df30a37dfd102499c7c8699b12055a775f/docs/about.html" target="_blank">533349d</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-06-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/9e111f7f4f3b065ebdb9f9b7f2ae9f16211a09df/docs/about.html" target="_blank">9e111f7</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-06-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/1f9d0521008c24bf26d017d4cb7c89f5c53c04c8/docs/about.html" target="_blank">1f9d052</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-06-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/50f8474459a6f1774b79e2c3145af6a30bc31c72/docs/about.html" target="_blank">50f8474</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-06-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/527eeed90f47da6008ca3763eee1266cff31f5aa/docs/about.html" target="_blank">527eeed</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-06-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Net_Selection_eLife_code/7d5ef2c287225924c6124ecb5bccaa216c8a8c56/docs/about.html" target="_blank">7d5ef2c</a>
-</td>
-<td>
-LennartWinkler
-</td>
-<td>
-2021-06-13
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
 Rmd
 </td>
 <td>
-<a href="https://github.com/LennartWinkler/Net_Selection_eLife_code/blob/320011ba4a7e729c473d1ce6e756a3bfcfa72046/analysis/about.Rmd" target="_blank">320011b</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/c31e7ea60119f34abd46090c3215b49e48a77200/analysis/about.Rmd" target="_blank">c31e7ea</a>
 </td>
 <td>
-LennartWinkler
+Lennart Winkler
 </td>
 <td>
-2021-06-13
+2022-07-21
 </td>
 <td>
-Start workflowr project.
+start
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/c31e7ea60119f34abd46090c3215b49e48a77200/docs/about.html" target="_blank">c31e7ea</a>
+</td>
+<td>
+Lennart Winkler
+</td>
+<td>
+2022-07-21
+</td>
+<td>
+start
 </td>
 </tr>
 </tbody>
@@ -579,7 +472,7 @@ Start workflowr project.
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->
@@ -588,6 +481,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 
