@@ -9,11 +9,11 @@ output:
 
 Supplementary material reporting R code for the manuscript 'Population density affects sexual selection in the red flour beetle'.
 
-## Load and prepare data
+# Load and prepare data
 
 Before we started the analyses, we loaded all necessary packages and data.
 
-```{r, warning=FALSE, message=FALSE, results='hide'}
+```{r message=FALSE, warning=FALSE, results='hide'}
 #load packages
 rm(list = ls())
 library(ggeffects)
@@ -483,4 +483,666 @@ DB_data_Small_area_full=rbind(DB_data_0.67,DB_data_1.33)
 #Population size
 DB_data_Small_pop_full=rbind(DB_data_0.26,DB_data_0.67)
 DB_data_Large_pop_full=rbind(DB_data_0.52,DB_data_1.33)
+```
+
+# Treatment effects
+## Mating behaviour
+We first tested the effect that the treatments (group size and area) had on the mating behaviour of focal beetles.<br><br>
+Behavioural variables:<br>
+- Number of matings<br>
+- Number of different mating partners (mating success)<br>
+- Mating duration in seconds<br>
+- Mating encounters (mating number + mating attempts)<br>
+- Proportion of successful matings (mating number/mating number + mating attempts)<br>
+<br>
+### Number of matings
+Figure: Number of matings
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Figure: Number of matings
+# Treatment: Group size
+p1<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Matings_number),fill=Gr_size, col=Gr_size)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  xlab('Sex')+ylab("Number of matings")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,12)+labs(tag = "A")+
+  annotate("text",label='n =',x=0.55,y=12,size=4)+
+  annotate("text",label='91',x=0.78,y=12,size=4)+
+  annotate("text",label='74',x=1.23,y=12,size=4)+
+  annotate("text",label='85',x=1.78,y=12,size=4)+
+  annotate("text",label='85',x=2.23,y=12,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0.15,2.2,0,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+# Treatment: Area 
+p1.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Matings_number),fill=Area, col=Area)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+labs(tag = "B")+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,12)+
+  annotate("text",label='n =',x=0.55,y=12,size=4)+
+  annotate("text",label='86',x=0.78,y=12,size=4)+
+  annotate("text",label='79',x=1.23,y=12,size=4)+
+  annotate("text",label='88',x=1.78,y=12,size=4)+
+  annotate("text",label='82',x=2.23,y=12,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0.15,2.2,0,0,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+grid.arrange(grobs = list(p1,p1.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+```
+Statistical models: Number of matings (quasi-Poisson GLM)<br>
+Effect of group size on number of matings in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Statistical models: Number of matings (quasi-Poisson GLM)
+# Sex: Female
+# Treatment: Group size
+mod1.1=glm(f_TotMatings~Gr_size,data=DB_data,family = quasipoisson)
+summary(mod1.1)
+```
+Effect of group size on number of matings in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Group size
+mod1.2=glm(m_TotMatings~Gr_size,data=DB_data,family = quasipoisson)
+summary(mod1.2)
+```
+Effect of area on number of matings in females.
+```{r, warning=FALSE, message=FALSE,fig.align="center",fig.width = 10}
+# Sex: Female
+# Treatment: Area
+mod1.3=glm(f_TotMatings~Area,data=DB_data,family = quasipoisson)
+summary(mod1.3)
+```
+Effect of area on number of matings in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+
+# Sex: Male
+# Treatment: Area
+mod1.4=glm(m_TotMatings~Area,data=DB_data,family = quasipoisson)
+summary(mod1.4)
+```
+### Number of mating partners
+Figure: Number of mating partners (mating success)
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Figure: Number of mating partners (mating success)
+# Treatment: Group size
+p2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(MatingPartners_number),fill=Gr_size, col=Gr_size)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  xlab('Sex')+ylab("Number of partners")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,5.4)+labs(tag = "A")+
+  annotate("text",label='n =',x=0.55,y=5.4,size=4)+
+  annotate("text",label='91',x=0.78,y=5.4,size=4)+
+  annotate("text",label='74',x=1.23,y=5.4,size=4)+
+  annotate("text",label='85',x=1.78,y=5.4,size=4)+
+  annotate("text",label='85',x=2.23,y=5.4,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+# Treatment: Area
+p2.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(MatingPartners_number),fill=Area, col=Area)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,5.4)+labs(tag = "B")+
+  annotate("text",label='n =',x=0.55,y=5.4,size=4)+
+  annotate("text",label='86',x=0.78,y=5.4,size=4)+
+  annotate("text",label='79',x=1.23,y=5.4,size=4)+
+  annotate("text",label='88',x=1.78,y=5.4,size=4)+
+  annotate("text",label='82',x=2.23,y=5.4,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0,0,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+plot2<-grid.arrange(grobs = list(p2,p2.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+```
+Statistical models: Number of mating partners (quasi-Poisson GLM)<br>
+Effect of group size on number of mating partners in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Statistical models: Number of mating partners (quasi-Poisson GLM)
+# Sex: Female
+# Treatment: Group size
+mod2.1=glm(f_cMS~Gr_size,data=DB_data,family = quasipoisson)
+summary(mod2.1)
+```
+Effect of group size on number of mating partners in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Group size
+mod2.2=glm(m_cMS~Gr_size,data=DB_data,family = quasipoisson)
+summary(mod2.2)
+```
+Effect of area on number of mating partners in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Female
+# Treatment: Area
+mod2.3=glm(f_cMS~Area,data=DB_data,family = quasipoisson)
+summary(mod2.3)
+```
+Effect of area on number of mating partners in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Area
+mod2.4=glm(m_cMS~Area,data=DB_data,family = quasipoisson)
+summary(mod2.4)
+```
+### Mating duration
+Figure: Mating duration in seconds
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Figure: Mating duration in seconds
+# Treatment: Group size
+p3<-ggplot(DB_data, aes(x=Sex, y=as.numeric(MatingDuration_av),fill=Gr_size, col=Gr_size)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  xlab('Sex')+ylab("Mean mating duration")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,390)+labs(tag = "A")+
+  annotate("text",label='n =',x=0.55,y=390,size=4)+
+  annotate("text",label='91',x=0.78,y=390,size=4)+
+  annotate("text",label='74',x=1.23,y=390,size=4)+
+  annotate("text",label='85',x=1.78,y=390,size=4)+
+  annotate("text",label='85',x=2.23,y=390,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0.15,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+# Treatment: Area
+p3.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(MatingDuration_av),fill=Area, col=Area)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,390)+labs(tag = "B")+
+  annotate("text",label='n =',x=0.55,y=390,size=4)+
+  annotate("text",label='86',x=0.78,y=390,size=4)+
+  annotate("text",label='79',x=1.23,y=390,size=4)+
+  annotate("text",label='88',x=1.78,y=390,size=4)+
+  annotate("text",label='82',x=2.23,y=390,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0.15,0,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+plot3<-grid.arrange(grobs = list(p3,p3.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+```
+Statistical models: Mating duration (Gaussian GLM)<br>
+Effect of group size on mating duration in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Statistical models: Mating duration (Gaussian GLM)
+# Sex: Female
+# Treatment: Group size
+mod3.1=glm(f_MatingDuration_av~Gr_size,data=DB_data,family = gaussian)
+summary(mod3.1)
+```
+Effect of group size on mating duration in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Group size
+mod3.2=glm(m_MatingDuration_av~Gr_size,data=DB_data,family = gaussian)
+summary(mod3.2)
+```
+Effect of area on mating duration in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Female
+# Treatment: Area
+mod3.3=glm(f_MatingDuration_av~Area,data=DB_data,family = gaussian)
+summary(mod3.3)
+```
+Effect of area on mating duration in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Area
+mod3.4=glm(m_MatingDuration_av~Area,data=DB_data,family = gaussian)
+summary(mod3.4)
+```
+### Mating encounters
+Figure: Mating encounters (mating number + mating attempts)
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Figure: Mating encounters (mating number + mating attempts)
+# Treatment: Group size
+p4<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Total_Encounters),fill=Gr_size, col=Gr_size)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  xlab('Sex')+ylab("Mating encounters")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,33)+labs(tag = "A")+
+  annotate("text",label='n =',x=0.55,y=33,size=4)+
+  annotate("text",label='91',x=0.78,y=33,size=4)+
+  annotate("text",label='74',x=1.23,y=33,size=4)+
+  annotate("text",label='85',x=1.78,y=33,size=4)+
+  annotate("text",label='85',x=2.23,y=33,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0.15,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+# Treatment: Area
+p4.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Total_Encounters),fill=Area, col=Area)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,33)+labs(tag = "B")+
+  annotate("text",label='n =',x=0.55,y=33,size=4)+
+  annotate("text",label='86',x=0.78,y=33,size=4)+
+  annotate("text",label='79',x=1.23,y=33,size=4)+
+  annotate("text",label='88',x=1.78,y=33,size=4)+
+  annotate("text",label='82',x=2.23,y=33,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0.15,0,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+plot4<-grid.arrange(grobs = list(p4,p4.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+```
+Statistical models: Mating encounters (Gaussian GLM)<br>
+Effect of group size on mating encounters in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Statistical models: Mating encounters (Gaussian GLM)
+# Sex: Female
+# Treatment: Group size
+mod4.1=glm(f_Total_Encounters~Gr_size,data=DB_data,family = gaussian)
+summary(mod4.1)
+```
+Effect of group size on mating encounters in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Group size
+mod4.2=glm(m_Total_Encounters~Gr_size,data=DB_data,family = gaussian)
+summary(mod4.2)
+```
+Effect of area on mating encounters in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Female
+# Treatment: Area
+mod4.3=glm(f_Total_Encounters~Area,data=DB_data,family = gaussian)
+summary(mod4.3)
+```
+Effect of area on mating encounters in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Area
+mod4.4=glm(m_Total_Encounters~Area,data=DB_data,family = gaussian)
+summary(mod4.4)
+```
+### Proportion of successful matings
+Figure: Proportion of successful matings (mating number/mating number + mating attempts)
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Figure: Proportion of successful matings (mating number/mating number + mating attempts)
+# Treatment: Group size
+p5<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Prop_MS),fill=Gr_size, col=Gr_size)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  xlab('Sex')+ylab("Proportion successful matings")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,1.1)+labs(tag = "A")+
+  annotate("text",label='n =',x=0.55,y=1.1,size=4)+
+  annotate("text",label='91',x=0.78,y=1.1,size=4)+
+  annotate("text",label='74',x=1.23,y=1.1,size=4)+
+  annotate("text",label='85',x=1.78,y=1.1,size=4)+
+  annotate("text",label='85',x=2.23,y=1.1,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0.15,2.2,0,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+# Treatment: Area
+p5.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Prop_MS),fill=Area, col=Area)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,1.1)+labs(tag = "B")+
+  annotate("text",label='n =',x=0.55,y=1.1,size=4)+
+  annotate("text",label='86',x=0.78,y=1.1,size=4)+
+  annotate("text",label='79',x=1.23,y=1.1,size=4)+
+  annotate("text",label='88',x=1.78,y=1.1,size=4)+
+  annotate("text",label='82',x=2.23,y=1.1,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0.15,2.2,0,0,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+          legend.position = c(1.08, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+plot5<-grid.arrange(grobs = list(p5,p5.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+```
+Statistical models: Proportion of successful matings (quasi-binomial GLM)<br>
+Effect of group size on proportion of successful matings in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Statistical models: Proportion of successful matings (quasi-binomial GLM)
+# Sex: Female
+# Treatment: Group size
+mod5.1=glm(cbind(f_TotMatings,f_Attempts_number)~Gr_size,data=DB_data,family = quasibinomial)
+summary(mod5.1)
+```
+Effect of group size on proportion of successful matings in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Group size
+mod5.2=glm(cbind(m_TotMatings,m_Attempts_number)~Gr_size,data=DB_data,family = quasibinomial)
+summary(mod5.2)
+```
+Effect of area on proportion of successful matings in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Female
+# Treatment: Area
+mod5.3=glm(cbind(f_TotMatings,f_Attempts_number)~Area,data=DB_data,family = quasibinomial)
+summary(mod5.3)
+```
+Effect of area on proportion of successful matings in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Area
+mod5.4=glm(cbind(m_TotMatings,m_Attempts_number)~Area,data=DB_data,family = quasibinomial)
+summary(mod5.4)
+```
+
+### Reproductive success
+
+Secondly, we tested the effect that the treatments (group size and area) had on the reproductive success of focal beetles.<br>
+Figure: Reproductive success
+```{r, warning=FALSE, message=FALSE, results='hide',fig.width = 10}
+# Figure: Reproductive success
+# Treatment: Group size
+p6<-ggplot(DB_data_clean, aes(x=Sex, y=as.numeric(Total_N_MTP1),fill=Gr_size, col=Gr_size)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))+
+  xlab('Sex')+ylab("Number of offspring")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,320)+labs(tag = "A")+
+  annotate("text",label='n =',x=0.55,y=320,size=4)+
+  annotate("text",label='59',x=0.78,y=320,size=4)+
+  annotate("text",label='48',x=1.23,y=320,size=4)+
+  annotate("text",label='51',x=1.78,y=320,size=4)+
+  annotate("text",label='59',x=2.23,y=320,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(1.1, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  guides(colour = guide_legend(override.aes = list(size=4)))
+
+# Treatment: Area
+p6.2<-ggplot(DB_data_clean, aes(x=Sex, y=as.numeric(Total_N_MTP1),fill=Area, col=Area)) +
+  geom_point(position=position_jitterdodge(jitter.width=0.6,jitter.height = 0,dodge.width=0.9),shape=19, alpha=0.75, size = 2)+
+  stat_summary(fun.min = function(z) { quantile(z,0.25) },
+               fun.max = function(z) { quantile(z,0.75) },
+               fun = mean,position=position_dodge(.9), size = 0.9,col='black',show.legend = F)+
+  scale_color_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Large area','Small area'))+
+  xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,320)+labs(tag = "B")+
+  annotate("text",label='n =',x=0.55,y=320,size=4)+
+  annotate("text",label='56',x=0.78,y=320,size=4)+
+  annotate("text",label='51',x=1.23,y=320,size=4)+
+  annotate("text",label='57',x=1.78,y=320,size=4)+
+  annotate("text",label='53',x=2.23,y=320,size=4)+
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0,2.2,0,0,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        legend.key=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(1.1, 0.8),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+guides(colour = guide_legend(override.aes = list(size=4)))
+
+plot6<-grid.arrange(grobs = list(p6,p6.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+```
+Statistical models: Reproductive success (quasi-Poisson GLM)<br>
+Effect of group size on reproductive success in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Statistical models: Reproductive success (quasi-Poisson GLM)
+# Sex: Female
+# Treatment: Group size
+mod6.1=glm(f_RS~Gr_size,data=DB_data_clean,family = quasipoisson)
+summary(mod6.1)
+```
+Effect of group size on reproductive success in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Group size
+mod6.2=glm(m_RS~Gr_size,data=DB_data_clean,family = quasipoisson)
+summary(mod6.2)
+```
+Effect of area on reproductive success in females.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Female
+# Treatment: Area
+mod6.3=glm(f_RS~Area,data=DB_data_clean,family = quasipoisson)
+summary(mod6.3)
+```
+Effect of area on reproductive success in males.
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+# Sex: Male
+# Treatment: Area
+mod6.4=glm(m_RS~Area,data=DB_data_clean,family = quasipoisson)
+summary(mod6.4)
 ```
