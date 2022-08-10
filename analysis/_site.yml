@@ -4,8 +4,18 @@ output_dir: ../docs
 navbar:
   title: "Population density affects sexual selection in the red flour beetle"
   left:
-  - text: Analyses
+  - text: Home
+    href: start.html
+  - text: Analyses 1
     href: index.html
+  - text: Analyses 2
+    href: index2.html
+  - text: Analyses 3
+    href: index3.html
+  - text: Analyses 4
+    href: index4.html
+  - text: Analyses 5
+    href: index5.html
 output:
   workflowr::wflow_html:
     toc: true

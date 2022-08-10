@@ -683,7 +683,7 @@ p2.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(MatingPartners_number),fill=Area, 
 
 plot2<-grid.arrange(grobs = list(p2,p2.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 2: Effects of group size (A) and area treatment (B) on the number of mating partners of female and male focals. Black bars indicate means and standard errors.
+Figure 2: Effects of group size (A) and area treatment (B) on the number of mating partners of female and male focals. Black bars indicate means and quartile borders.
 
 <br><br>Statistical models: Number of mating partners (quasi-Poisson GLM)<br>
 Effect of group size on number of mating partners in females.
@@ -793,7 +793,7 @@ p3.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(MatingDuration_av),fill=Area, col=
 
 plot3<-grid.arrange(grobs = list(p3,p3.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 3: Effects of group size (A) and area treatment (B) on the Mating duration (in seconds) of female and male focals. Black bars indicate means and standard errors.
+Figure 3: Effects of group size (A) and area treatment (B) on the Mating duration (in seconds) of female and male focals. Black bars indicate means and quartile borders.
 
 <br><br>Statistical models: Mating duration (Gaussian GLM)<br>
 Effect of group size on mating duration in females.
@@ -903,7 +903,7 @@ p4.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Total_Encounters),fill=Area, col=A
 
 plot4<-grid.arrange(grobs = list(p4,p4.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 4: Effects of group size (A) and area treatment (B) on the number of mating encounters (mating number + mating attempts) of female and male focals. Black bars indicate means and standard errors.
+Figure 4: Effects of group size (A) and area treatment (B) on the number of mating encounters (mating number + mating attempts) of female and male focals. Black bars indicate means and quartile borders.
 
 <br><br>Statistical models: Mating encounters (Gaussian GLM)<br>
 Effect of group size on mating encounters in females.
@@ -1013,7 +1013,7 @@ p5.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Prop_MS),fill=Area, col=Area)) +
 
 plot5<-grid.arrange(grobs = list(p5,p5.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 5: Effects of group size (A) and area treatment (B) on the proportion of successful matings of female and male focals. Black bars indicate means and standard errors.
+Figure 5: Effects of group size (A) and area treatment (B) on the proportion of successful matings of female and male focals. Black bars indicate means and quartile borders.
 
 <br><br>Statistical models: Proportion of successful matings (quasi-binomial GLM)<br>
 Effect of group size on proportion of successful matings in females.
@@ -1125,7 +1125,7 @@ p6.2<-ggplot(DB_data_clean, aes(x=Sex, y=as.numeric(Total_N_MTP1),fill=Area, col
 
 grid.arrange(grobs = list(p6,p6.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 6: Effects of group size (A) and area treatment (B) on the reproductive success of female and male focals. Black bars indicate means and standard errors.
+Figure 6: Effects of group size (A) and area treatment (B) on the reproductive success of female and male focals. Black bars indicate means and quartile borders.
 
 <br><br>Statistical models: Reproductive success (quasi-Poisson GLM)<br>
 Effect of group size on reproductive success in females.
@@ -1159,7 +1159,7 @@ summary(mod6.4)
 ```
 # Metrics of sexual selection
 In this part of our analysis we estimated standardized metrics of (sexual) selection.<br>
-<br>Metrics:
+<br>Metrics:<br>
 - Opportunity for selection<br>
 - Opportunity for sexual selection<br>
 - Bateman gradient<br>
@@ -2911,45 +2911,25 @@ c <- function(d, i){
   return(var(d2[,1], na.rm=TRUE))
 }
 Large_area_M_MS_bootvar <- boot(DB_data_clean_Large_area_M_MS_n, c, R=10000)
-Large_area_M_MS_bootvar
-summary(Large_area_M_MS_bootvar)
-plot(Large_area_M_MS_bootvar)
-boot.ci(Large_area_M_MS_bootvar, type = "all")
-quantile(Large_area_M_MS_bootvar$t,.025)
-quantile(Large_area_M_MS_bootvar$t,.975)
+
 
 # Small Area
 DB_data_clean_Small_area_M_MS_n <-as.data.table(DB_data_clean_Small_area$rel_m_cMS)
 
 Small_area_M_MS_bootvar <- boot(DB_data_clean_Small_area_M_MS_n, c, R=10000)
-Small_area_M_MS_bootvar
-summary(Small_area_M_MS_bootvar)
-plot(Small_area_M_MS_bootvar)
-boot.ci(Small_area_M_MS_bootvar, type = "all")
-quantile(Small_area_M_MS_bootvar$t,.025)
-quantile(Small_area_M_MS_bootvar$t,.975)
+
 
 # Small group 
 DB_data_clean_Small_pop_M_MS_n <-as.data.table(DB_data_clean_Small_pop$rel_m_cMS)
 
 Small_pop_M_MS_bootvar <- boot(DB_data_clean_Small_pop_M_MS_n, c, R=10000)
-Small_pop_M_MS_bootvar
-summary(Small_pop_M_MS_bootvar)
-plot(Small_pop_M_MS_bootvar)
-boot.ci(Small_pop_M_MS_bootvar, type = "all")
-quantile(Small_pop_M_MS_bootvar$t,.025)
-quantile(Small_pop_M_MS_bootvar$t,.975)
+
 
 # Large group  
 DB_data_clean_Large_pop_M_MS_n <-as.data.table(DB_data_clean_Large_pop$rel_m_cMS)
 
 Large_pop_M_MS_bootvar <- boot(DB_data_clean_Large_pop_M_MS_n, c, R=10000)
-Large_pop_M_MS_bootvar
-summary(Large_pop_M_MS_bootvar)
-plot(Large_pop_M_MS_bootvar)
-boot.ci(Large_pop_M_MS_bootvar, type = "all")
-quantile(Large_pop_M_MS_bootvar$t,.025)
-quantile(Large_pop_M_MS_bootvar$t,.975)
+
 rm("c")
 
 # InSuc ####
@@ -2960,45 +2940,25 @@ c <- function(d, i){
   return(var(d2[,1], na.rm=TRUE))
 }
 Large_area_M_InSuc_bootvar <- boot(DB_data_clean_Large_area_M_InSuc_n, c, R=10000)
-Large_area_M_InSuc_bootvar
-summary(Large_area_M_InSuc_bootvar)
-plot(Large_area_M_InSuc_bootvar)
-boot.ci(Large_area_M_InSuc_bootvar, type = "all")
-quantile(Large_area_M_InSuc_bootvar$t,.025)
-quantile(Large_area_M_InSuc_bootvar$t,.975)
+
 
 # Small Area
 DB_data_clean_Small_area_M_InSuc_n <-as.data.table(DB_data_clean_Small_area$rel_m_InSuc)
 
 Small_area_M_InSuc_bootvar <- boot(DB_data_clean_Small_area_M_InSuc_n, c, R=10000)
-Small_area_M_InSuc_bootvar
-summary(Small_area_M_InSuc_bootvar)
-plot(Small_area_M_InSuc_bootvar)
-boot.ci(Small_area_M_InSuc_bootvar, type = "all")
-quantile(Small_area_M_InSuc_bootvar$t,.025)
-quantile(Small_area_M_InSuc_bootvar$t,.975)
+
 
 # Small group
 DB_data_clean_Small_pop_M_InSuc_n <-as.data.table(DB_data_clean_Small_pop$rel_m_InSuc)
 
 Small_pop_M_InSuc_bootvar <- boot(DB_data_clean_Small_pop_M_InSuc_n, c, R=10000)
-Small_pop_M_InSuc_bootvar
-summary(Small_pop_M_InSuc_bootvar)
-plot(Small_pop_M_InSuc_bootvar)
-boot.ci(Small_pop_M_InSuc_bootvar, type = "all")
-quantile(Small_pop_M_InSuc_bootvar$t,.025)
-quantile(Small_pop_M_InSuc_bootvar$t,.975)
+
 
 # Large group 
 DB_data_clean_Large_pop_M_InSuc_n <-as.data.table(DB_data_clean_Large_pop$rel_m_InSuc)
 
 Large_pop_M_InSuc_bootvar <- boot(DB_data_clean_Large_pop_M_InSuc_n, c, R=10000)
-Large_pop_M_InSuc_bootvar
-summary(Large_pop_M_InSuc_bootvar)
-plot(Large_pop_M_InSuc_bootvar)
-boot.ci(Large_pop_M_InSuc_bootvar, type = "all")
-quantile(Large_pop_M_InSuc_bootvar$t,.025)
-quantile(Large_pop_M_InSuc_bootvar$t,.975)
+
 rm("c")
 
 # feSuc ####
@@ -3009,45 +2969,24 @@ c <- function(d, i){
   return(var(d2$V1, na.rm=TRUE))
 }
 Large_area_M_feSuc_bootvar <- boot(DB_data_clean_Large_area_M_feSuc_n, c, R=10000)
-Large_area_M_feSuc_bootvar
-summary(Large_area_M_feSuc_bootvar)
-plot(Large_area_M_feSuc_bootvar)
-boot.ci(Large_area_M_feSuc_bootvar, type = "all")
-quantile(Large_area_M_feSuc_bootvar$t,.025)
-quantile(Large_area_M_feSuc_bootvar$t,.975)
+
 
 # Small Area
 DB_data_clean_Small_area_M_feSuc_n <-as.data.table(DB_data_clean_Small_area$rel_m_feSuc)
 
 Small_area_M_feSuc_bootvar <- boot(DB_data_clean_Small_area_M_feSuc_n, c, R=10000)
-Small_area_M_feSuc_bootvar
-summary(Small_area_M_feSuc_bootvar)
-plot(Small_area_M_feSuc_bootvar)
-boot.ci(Small_area_M_feSuc_bootvar, type = "all")
-quantile(Small_area_M_feSuc_bootvar$t,.025)
-quantile(Small_area_M_feSuc_bootvar$t,.975)
 
 # Small group
 DB_data_clean_Small_pop_M_feSuc_n <-as.data.table(DB_data_clean_Small_pop$rel_m_feSuc)
 
 Small_pop_M_feSuc_bootvar <- boot(DB_data_clean_Small_pop_M_feSuc_n, c, R=10000)
-Small_pop_M_feSuc_bootvar
-summary(Small_pop_M_feSuc_bootvar)
-plot(Small_pop_M_feSuc_bootvar)
-boot.ci(Small_pop_M_feSuc_bootvar, type = "all")
-quantile(Small_pop_M_feSuc_bootvar$t,.025)
-quantile(Small_pop_M_feSuc_bootvar$t,.975)
+
 
 # Large group 
 DB_data_clean_Large_pop_M_feSuc_n <-as.data.table(DB_data_clean_Large_pop$rel_m_feSuc)
 
 Large_pop_M_feSuc_bootvar <- boot(DB_data_clean_Large_pop_M_feSuc_n, c, R=10000)
-Large_pop_M_feSuc_bootvar
-summary(Large_pop_M_feSuc_bootvar)
-plot(Large_pop_M_feSuc_bootvar)
-boot.ci(Large_pop_M_feSuc_bootvar, type = "all")
-quantile(Large_pop_M_feSuc_bootvar$t,.025)
-quantile(Large_pop_M_feSuc_bootvar$t,.975)
+
 rm("c")
 
 # pFec ####
@@ -3058,45 +2997,24 @@ c <- function(d, i){
   return(var(d2[,1], na.rm=TRUE))
 }
 Large_area_M_pFec_bootvar <- boot(DB_data_clean_Large_area_M_pFec_n, c, R=10000)
-Large_area_M_pFec_bootvar
-summary(Large_area_M_pFec_bootvar)
-plot(Large_area_M_pFec_bootvar)
-boot.ci(Large_area_M_pFec_bootvar, type = "all")
-quantile(Large_area_M_pFec_bootvar$t,.025)
-quantile(Large_area_M_pFec_bootvar$t,.975)
+
 
 # Small Area
 DB_data_clean_Small_area_M_pFec_n <-as.data.table(DB_data_clean_Small_area$rel_m_pFec)
 
 Small_area_M_pFec_bootvar <- boot(DB_data_clean_Small_area_M_pFec_n, c, R=10000)
-Small_area_M_pFec_bootvar
-summary(Small_area_M_pFec_bootvar)
-plot(Small_area_M_pFec_bootvar)
-boot.ci(Small_area_M_pFec_bootvar, type = "all")
-quantile(Small_area_M_pFec_bootvar$t,.025)
-quantile(Small_area_M_pFec_bootvar$t,.975)
+
 
 # Small group
 DB_data_clean_Small_pop_M_pFec_n <-as.data.table(DB_data_clean_Small_pop$rel_m_pFec)
 
 Small_pop_M_pFec_bootvar <- boot(DB_data_clean_Small_pop_M_pFec_n, c, R=10000)
-Small_pop_M_pFec_bootvar
-summary(Small_pop_M_pFec_bootvar)
-plot(Small_pop_M_pFec_bootvar)
-boot.ci(Small_pop_M_pFec_bootvar, type = "all")
-quantile(Small_pop_M_pFec_bootvar$t,.025)
-quantile(Small_pop_M_pFec_bootvar$t,.975)
 
 # Large group 
 DB_data_clean_Large_pop_M_pFec_n <-as.data.table(DB_data_clean_Large_pop$rel_m_pFec)
 
 Large_pop_M_pFec_bootvar <- boot(DB_data_clean_Large_pop_M_pFec_n, c, R=10000)
-Large_pop_M_pFec_bootvar
-summary(Large_pop_M_pFec_bootvar)
-plot(Large_pop_M_pFec_bootvar)
-boot.ci(Large_pop_M_pFec_bootvar, type = "all")
-quantile(Large_pop_M_pFec_bootvar$t,.025)
-quantile(Large_pop_M_pFec_bootvar$t,.975)
+
 rm("c")
 
 # fMS ####
@@ -3107,45 +3025,25 @@ c <- function(d, i){
   return(var(d2[,1], na.rm=TRUE))
 }
 Large_area_F_fMS_bootvar <- boot(DB_data_clean_Large_area_F_fMS_n, c, R=10000)
-Large_area_F_fMS_bootvar
-summary(Large_area_F_fMS_bootvar)
-plot(Large_area_F_fMS_bootvar)
-boot.ci(Large_area_F_fMS_bootvar, type = "all")
-quantile(Large_area_F_fMS_bootvar$t,.025)
-quantile(Large_area_F_fMS_bootvar$t,.975)
+
 
 # Small Area
 DB_data_clean_Small_area_F_fMS_n <-as.data.table(DB_data_clean_Small_area$rel_f_cMS)
 
 Small_area_F_fMS_bootvar <- boot(DB_data_clean_Small_area_F_fMS_n, c, R=10000)
-Small_area_F_fMS_bootvar
-summary(Small_area_F_fMS_bootvar)
-plot(Small_area_F_fMS_bootvar)
-boot.ci(Small_area_F_fMS_bootvar, type = "all")
-quantile(Small_area_F_fMS_bootvar$t,.025)
-quantile(Small_area_F_fMS_bootvar$t,.975)
+
 
 # Small group
 DB_data_clean_Small_pop_F_fMS_n <-as.data.table(DB_data_clean_Small_pop$rel_f_cMS)
 
 Small_pop_F_fMS_bootvar <- boot(DB_data_clean_Small_pop_F_fMS_n, c, R=10000)
-Small_pop_F_fMS_bootvar
-summary(Small_pop_F_fMS_bootvar)
-plot(Small_pop_F_fMS_bootvar)
-boot.ci(Small_pop_F_fMS_bootvar, type = "all")
-quantile(Small_pop_F_fMS_bootvar$t,.025)
-quantile(Small_pop_F_fMS_bootvar$t,.975)
+
 
 # Large group 
 DB_data_clean_Large_pop_F_fMS_n <-as.data.table(DB_data_clean_Large_pop$rel_f_cMS)
 
 Large_pop_F_fMS_bootvar <- boot(DB_data_clean_Large_pop_F_fMS_n, c, R=10000)
-Large_pop_F_fMS_bootvar
-summary(Large_pop_F_fMS_bootvar)
-plot(Large_pop_F_fMS_bootvar)
-boot.ci(Large_pop_F_fMS_bootvar, type = "all")
-quantile(Large_pop_F_fMS_bootvar$t,.025)
-quantile(Large_pop_F_fMS_bootvar$t,.975)
+
 rm("c")
 
 # fFec ####
@@ -3156,45 +3054,24 @@ c <- function(d, i){
   return(var(d2[,1], na.rm=TRUE))
 }
 Large_area_F_fFec_bootvar <- boot(DB_data_clean_Large_area_F_fFec_n, c, R=10000)
-Large_area_F_fFec_bootvar
-summary(Large_area_F_fFec_bootvar)
-plot(Large_area_F_fFec_bootvar)
-boot.ci(Large_area_F_fFec_bootvar, type = "all")
-quantile(Large_area_F_fFec_bootvar$t,.025)
-quantile(Large_area_F_fFec_bootvar$t,.975)
+
 
 # Small Area
 DB_data_clean_Small_area_F_fFec_n <-as.data.table(DB_data_clean_Small_area$rel_f_fec_pMate)
 
 Small_area_F_fFec_bootvar <- boot(DB_data_clean_Small_area_F_fFec_n, c, R=10000)
-Small_area_F_fFec_bootvar
-summary(Small_area_F_fFec_bootvar)
-plot(Small_area_F_fFec_bootvar)
-boot.ci(Small_area_F_fFec_bootvar, type = "all")
-quantile(Small_area_F_fFec_bootvar$t,.025)
-quantile(Small_area_F_fFec_bootvar$t,.975)
+
 
 # Small group
 DB_data_clean_Small_pop_F_fFec_n <-as.data.table(DB_data_clean_Small_pop$rel_f_fec_pMate)
 
 Small_pop_F_fFec_bootvar <- boot(DB_data_clean_Small_pop_F_fFec_n, c, R=10000)
-Small_pop_F_fFec_bootvar
-summary(Small_pop_F_fFec_bootvar)
-plot(Small_pop_F_fFec_bootvar)
-boot.ci(Small_pop_F_fFec_bootvar, type = "all")
-quantile(Small_pop_F_fFec_bootvar$t,.025)
-quantile(Small_pop_F_fFec_bootvar$t,.975)
 
 # Large group
 DB_data_clean_Large_pop_F_fFec_n <-as.data.table(DB_data_clean_Large_pop$rel_f_fec_pMate)
 
 Large_pop_F_fFec_bootvar <- boot(DB_data_clean_Large_pop_F_fFec_n, c, R=10000)
-Large_pop_F_fFec_bootvar
-summary(Large_pop_F_fFec_bootvar)
-plot(Large_pop_F_fFec_bootvar)
-boot.ci(Large_pop_F_fFec_bootvar, type = "all")
-quantile(Large_pop_F_fFec_bootvar$t,.025)
-quantile(Large_pop_F_fFec_bootvar$t,.975)
+
 rm("c")
 
 #Write Table ####
@@ -3812,7 +3689,7 @@ Treatement comparisons via permutation test for the variance decomposition of fe
 Table_VarianceDecomposition_TreatComp_round[c(9:10),]
 ```
 ## Covariances for male variance decomposition
-```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide'}
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide', fig.show='hide'}
 #Compute covariace matrices ####
 # Large Area ####
 #Covariance mMS x inSuc
@@ -3822,50 +3699,43 @@ c <- function(d, i){
   return(cov(d2[1],d2[2],use='pairwise.complete.obs'))
 }
 Large_area_M_cov_mMS_inSuc_bootvar <- boot(x5, c, R=10000)
-Large_area_M_cov_mMS_inSuc_bootvar
-plot(Large_area_M_cov_mMS_inSuc_bootvar)
+
 
 #Covariance mMS x feSuc
 x6=as.data.frame(cbind(DB_data_clean_Large_area_M_MS_n,DB_data_clean_Large_area_M_feSuc_n))
 
 Large_area_M_cov_mMS_feSuc_bootvar <- boot(x6, c, R=10000)
-Large_area_M_cov_mMS_feSuc_bootvar
-plot(Large_area_M_cov_mMS_feSuc_bootvar)
+
 
 #Covariance mMS x pFec
 x7=as.data.frame(cbind(DB_data_clean_Large_area_M_MS_n,DB_data_clean_Large_area_M_pFec_n))
 
 Large_area_M_cov_mMS_pFec_bootvar <- boot(x7, c, R=10000)
-Large_area_M_cov_mMS_pFec_bootvar
-plot(Large_area_M_cov_mMS_pFec_bootvar)
+
 
 #Covariance inSuc x feSuc
 x8=as.data.frame(cbind(DB_data_clean_Large_area_M_InSuc_n,DB_data_clean_Large_area_M_feSuc_n))
 
 Large_area_M_cov_inSuc_feSuc_bootvar <- boot(x8, c, R=10000)
-Large_area_M_cov_inSuc_feSuc_bootvar
-plot(Large_area_M_cov_inSuc_feSuc_bootvar)
+
 
 #Covariance inSuc x pFec
 x9=as.data.frame(cbind(DB_data_clean_Large_area_M_InSuc_n,DB_data_clean_Large_area_M_pFec_n))
 
 Large_area_M_cov_inSuc_pFec_bootvar <- boot(x9, c, R=10000)
-Large_area_M_cov_inSuc_pFec_bootvar
-plot(Large_area_M_cov_inSuc_pFec_bootvar)
+
 
 #Covariance feSuc x pFec
 x10=as.data.frame(cbind(DB_data_clean_Large_area_M_feSuc_n,DB_data_clean_Large_area_M_pFec_n))
 
 Large_area_M_cov_feSuc_pFec_bootvar <- boot(x10, c, R=10000)
-Large_area_M_cov_feSuc_pFec_bootvar
-plot(Large_area_M_cov_feSuc_pFec_bootvar)
+
 
 #Covariance fMS x fFec
 x13=as.data.frame(cbind(DB_data_clean_Large_area_F_fMS_n,DB_data_clean_Large_area_F_fFec_n))
 
 Large_area_F_cov_fMS_fFec_bootvar <- boot(x13, c, R=10000)
-Large_area_F_cov_fMS_fFec_bootvar
-plot(Large_area_F_cov_fMS_fFec_bootvar)
+
 rm("c")
 
 #Write Table ####
@@ -3908,50 +3778,42 @@ c <- function(d, i){
   return(cov(d2[1],d2[2],use='pairwise.complete.obs'))
 }
 Small_area_M_cov_mMS_inSuc_bootvar <- boot(x5, c, R=10000)
-Small_area_M_cov_mMS_inSuc_bootvar
-plot(Small_area_M_cov_mMS_inSuc_bootvar)
+
 
 #Covariance mMS x feSuc
 x6=as.data.frame(cbind(DB_data_clean_Small_area_M_MS_n,DB_data_clean_Small_area_M_feSuc_n))
 
 Small_area_M_cov_mMS_feSuc_bootvar <- boot(x6, c, R=10000)
-Small_area_M_cov_mMS_feSuc_bootvar
-plot(Small_area_M_cov_mMS_feSuc_bootvar)
+
 
 #Covariance mMS x pFec
 x7=as.data.frame(cbind(DB_data_clean_Small_area_M_MS_n,DB_data_clean_Small_area_M_pFec_n))
 
 Small_area_M_cov_mMS_pFec_bootvar <- boot(x7, c, R=10000)
-Small_area_M_cov_mMS_pFec_bootvar
-plot(Small_area_M_cov_mMS_pFec_bootvar)
+
 
 #Covariance inSuc x feSuc
 x8=as.data.frame(cbind(DB_data_clean_Small_area_M_InSuc_n,DB_data_clean_Small_area_M_feSuc_n))
 
 Small_area_M_cov_inSuc_feSuc_bootvar <- boot(x8, c, R=10000)
-Small_area_M_cov_inSuc_feSuc_bootvar
-plot(Small_area_M_cov_inSuc_feSuc_bootvar)
+
 
 #Covariance inSuc x pFec
 x9=as.data.frame(cbind(DB_data_clean_Small_area_M_InSuc_n,DB_data_clean_Small_area_M_pFec_n))
 
 Small_area_M_cov_inSuc_pFec_bootvar <- boot(x9, c, R=10000)
-Small_area_M_cov_inSuc_pFec_bootvar
-plot(Small_area_M_cov_inSuc_pFec_bootvar)
 
 #Covariance feSuc x pFec
 x10=as.data.frame(cbind(DB_data_clean_Small_area_M_feSuc_n,DB_data_clean_Small_area_M_pFec_n))
 
 Small_area_M_cov_feSuc_pFec_bootvar <- boot(x10, c, R=10000)
-Small_area_M_cov_feSuc_pFec_bootvar
-plot(Small_area_M_cov_feSuc_pFec_bootvar)
+
 
 #Covariance fMS x fFec
 x13=as.data.frame(cbind(DB_data_clean_Small_area_F_fMS_n,DB_data_clean_Small_area_F_fFec_n))
 
 Small_area_F_cov_fMS_fFec_bootvar <- boot(x13, c, R=10000)
-Small_area_F_cov_fMS_fFec_bootvar
-plot(Small_area_F_cov_fMS_fFec_bootvar)
+
 rm("c")
 
 #Write Table ####
@@ -3994,50 +3856,42 @@ c <- function(d, i){
   return(cov(d2[1],d2[2],use='pairwise.complete.obs'))
 }
 Small_pop_M_cov_mMS_inSuc_bootvar <- boot(x5, c, R=10000)
-Small_pop_M_cov_mMS_inSuc_bootvar
-plot(Small_pop_M_cov_mMS_inSuc_bootvar)
+
 
 #Covariance mMS x feSuc
 x6=as.data.frame(cbind(DB_data_clean_Small_pop_M_MS_n,DB_data_clean_Small_pop_M_feSuc_n))
 
 Small_pop_M_cov_mMS_feSuc_bootvar <- boot(x6, c, R=10000)
-Small_pop_M_cov_mMS_feSuc_bootvar
-plot(Small_pop_M_cov_mMS_feSuc_bootvar)
+
 
 #Covariance mMS x pFec
 x7=as.data.frame(cbind(DB_data_clean_Small_pop_M_MS_n,DB_data_clean_Small_pop_M_pFec_n))
 
 Small_pop_M_cov_mMS_pFec_bootvar <- boot(x7, c, R=10000)
-Small_pop_M_cov_mMS_pFec_bootvar
-plot(Small_pop_M_cov_mMS_pFec_bootvar)
+
 
 #Covariance inSuc x feSuc
 x8=as.data.frame(cbind(DB_data_clean_Small_pop_M_InSuc_n,DB_data_clean_Small_pop_M_feSuc_n))
 
 Small_pop_M_cov_inSuc_feSuc_bootvar <- boot(x8, c, R=10000)
-Small_pop_M_cov_inSuc_feSuc_bootvar
-plot(Small_pop_M_cov_inSuc_feSuc_bootvar)
 
 #Covariance inSuc x pFec
 x9=as.data.frame(cbind(DB_data_clean_Small_pop_M_InSuc_n,DB_data_clean_Small_pop_M_pFec_n))
 
 Small_pop_M_cov_inSuc_pFec_bootvar <- boot(x9, c, R=10000)
-Small_pop_M_cov_inSuc_pFec_bootvar
-plot(Small_pop_M_cov_inSuc_pFec_bootvar)
+
 
 #Covariance feSuc x pFec
 x10=as.data.frame(cbind(DB_data_clean_Small_pop_M_feSuc_n,DB_data_clean_Small_pop_M_pFec_n))
 
 Small_pop_M_cov_feSuc_pFec_bootvar <- boot(x10, c, R=10000)
-Small_pop_M_cov_feSuc_pFec_bootvar
-plot(Small_pop_M_cov_feSuc_pFec_bootvar)
+
 
 #Covariance fMS x fFec
 x13=as.data.frame(cbind(DB_data_clean_Small_pop_F_fMS_n,DB_data_clean_Small_pop_F_fFec_n))
 
 Small_pop_F_cov_fMS_fFec_bootvar <- boot(x13, c, R=10000)
-Small_pop_F_cov_fMS_fFec_bootvar
-plot(Small_pop_F_cov_fMS_fFec_bootvar)
+
 rm("c")
 
 #Write Table ####
@@ -4080,50 +3934,43 @@ c <- function(d, i){
   return(cov(d2[1],d2[2],use='pairwise.complete.obs'))
 }
 Large_pop_M_cov_mMS_inSuc_bootvar <- boot(x5, c, R=10000)
-Large_pop_M_cov_mMS_inSuc_bootvar
-plot(Large_pop_M_cov_mMS_inSuc_bootvar)
+
 
 #Covariance mMS x feSuc
 x6=as.data.frame(cbind(DB_data_clean_Large_pop_M_MS_n,DB_data_clean_Large_pop_M_feSuc_n))
 
 Large_pop_M_cov_mMS_feSuc_bootvar <- boot(x6, c, R=10000)
-Large_pop_M_cov_mMS_feSuc_bootvar
-plot(Large_pop_M_cov_mMS_feSuc_bootvar)
+
 
 #Covariance mMS x pFec
 x7=as.data.frame(cbind(DB_data_clean_Large_pop_M_MS_n,DB_data_clean_Large_pop_M_pFec_n))
 
 Large_pop_M_cov_mMS_pFec_bootvar <- boot(x7, c, R=10000)
-Large_pop_M_cov_mMS_pFec_bootvar
-plot(Large_pop_M_cov_mMS_pFec_bootvar)
+
 
 #Covariance inSuc x feSuc
 x8=as.data.frame(cbind(DB_data_clean_Large_pop_M_InSuc_n,DB_data_clean_Large_pop_M_feSuc_n))
 
 Large_pop_M_cov_inSuc_feSuc_bootvar <- boot(x8, c, R=10000)
-Large_pop_M_cov_inSuc_feSuc_bootvar
-plot(Large_pop_M_cov_inSuc_feSuc_bootvar)
+
 
 #Covariance inSuc x pFec
 x9=as.data.frame(cbind(DB_data_clean_Large_pop_M_InSuc_n,DB_data_clean_Large_pop_M_pFec_n))
 
 Large_pop_M_cov_inSuc_pFec_bootvar <- boot(x9, c, R=10000)
-Large_pop_M_cov_inSuc_pFec_bootvar
-plot(Large_pop_M_cov_inSuc_pFec_bootvar)
+
 
 #Covariance feSuc x pFec
 x10=as.data.frame(cbind(DB_data_clean_Large_pop_M_feSuc_n,DB_data_clean_Large_pop_M_pFec_n))
 
 Large_pop_M_cov_feSuc_pFec_bootvar <- boot(x10, c, R=10000)
-Large_pop_M_cov_feSuc_pFec_bootvar
-plot(Large_pop_M_cov_feSuc_pFec_bootvar)
+
 
 #Covariance fMS x fFec
 x13=as.data.frame(cbind(DB_data_clean_Large_pop_F_fMS_n,DB_data_clean_Large_pop_F_fFec_n))
 
 Large_pop_F_cov_fMS_fFec_bootvar <- boot(x13, c, R=10000)
-Large_pop_F_cov_fMS_fFec_bootvar
-plot(Large_pop_F_cov_fMS_fFec_bootvar)
+
 rm("c")
 
 #Write Table ####
@@ -4198,7 +4045,7 @@ PhenVarBoot_Table_plot_cov_pop=PhenVarBoot_Table_plot_cov_pop[PhenVarBoot_Table_
 
 Figure: Covariances of variance decomposition for females
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-BarPlot_1<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Variance_component, y=Variance, fill=Treatment)) + 
+BarPlot_5<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Variance_component, y=Variance, fill=Treatment)) + 
   scale_y_continuous(limits = c(-0.25, 0.2), breaks = seq(-0.25,0.2,0.1), expand = c(0 ,0)) + 
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
   geom_bar(stat="identity", color="black", position=position_dodge(), alpha=0.8) +
@@ -4224,7 +4071,7 @@ BarPlot_1<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Variance_compone
         axis.ticks.length = unit(.3, "cm"))+
   scale_fill_manual(values=c(colorESEB[1],colorESEB[2]),name = "Treatment", labels = c('Small group','Large group'))
 
-BarPlot_2<-ggplot(PhenVarBoot_Table_plot_cov_area[1:12,], aes(x=Variance_component, y=Variance, fill=Treatment)) + 
+BarPlot_6<-ggplot(PhenVarBoot_Table_plot_cov_area[1:12,], aes(x=Variance_component, y=Variance, fill=Treatment)) + 
   scale_y_continuous(limits = c(-0.25, 0.2), breaks = seq(-0.25,0.2,0.1), expand = c(0 ,0)) + 
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
   geom_bar(stat="identity", color="black", position=position_dodge(), alpha=0.8) +
@@ -4250,6 +4097,6 @@ BarPlot_2<-ggplot(PhenVarBoot_Table_plot_cov_area[1:12,], aes(x=Variance_compone
         axis.ticks = element_line(size = 1),
         axis.ticks.length = unit(.3, "cm"))
 
-grid.arrange(grobs = list(BarPlot_3,BarPlot_4), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+grid.arrange(grobs = list(BarPlot_5,BarPlot_6), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
 Figure 14: Covariance components for variance decomposition in males into mating success, insemination success, fertilization success and fecundity of the partners. Means and 95% confidence intervals.<br><br>
