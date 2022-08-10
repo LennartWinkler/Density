@@ -1,0 +1,1291 @@
+---
+title: 'Population density affects sexual selection in the red flour beetle'
+author: "Lennart Winkler^1^, Ronja Eilhardt^1^ & Tim Janicke^1,2^ <br></br>  ^1^Applied Zoology, Technical University Dresden <br> ^2^Centre d’Écologie Fonctionnelle et Évolutive, UMR 5175, CNRS, Université de Montpellier</br>"
+subtitle: Analyses on body mass of focal individuals
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html
+---
+
+Supplementary material reporting R code for the manuscript 'Population density affects sexual selection in the red flour beetle'.
+
+# Load and prepare data
+
+Before we started the analyses, we loaded all necessary packages and data.
+
+```{r , message=FALSE, warning=FALSE, results='hide'}
+#load packages
+rm(list = ls())
+library(ggeffects)
+library(ggplot2)
+library(gridExtra)
+library(lme4)
+library(lmerTest)
+library(readr)
+library(dplyr)
+library(EnvStats)
+library(cowplot)
+library(gridGraphics)
+library(car)
+library(RColorBrewer)
+library(boot)
+library(data.table)
+library(base)
+library(tidyr)
+library(ICC)
+
+#load data
+DB_data=read_delim("./data/DB_AllData_V04.CSV",";", escape_double = FALSE, trim_ws = TRUE)
+
+#Set factors and level factors
+DB_data$Week=as.factor(DB_data$Week)
+
+DB_data$Date=as.factor(DB_data$Date)
+
+DB_data$Sex=as.factor(DB_data$Sex)
+
+DB_data$Gr_size=as.factor(DB_data$Gr_size)
+DB_data$Gr_size <- factor(DB_data$Gr_size, levels=c("SG","LG"))
+
+DB_data$Area=as.factor(DB_data$Area)
+
+#Load Body mass data
+DB_BM_female <- read_delim("./data/DB_mass_focals_female.CSV", 
+                           ";", escape_double = FALSE, trim_ws = TRUE)
+
+DB_BM_male <- read_delim("./data/DB_mass_focals_males.CSV", 
+                         ";", escape_double = FALSE, trim_ws = TRUE)
+
+DB_data_m=merge(DB_data,DB_BM_male,by.x = 'Well_ID',by.y = 'ID_male_focals')
+DB_data_f=merge(DB_data,DB_BM_female,by.x = 'F1_ID',by.y = 'ID_female_focals')
+DB_data=rbind(DB_data_m,DB_data_f)
+
+###Exclude incomplete data
+DB_data=DB_data[DB_data$excluded!=1,]
+
+
+#Calculate total offspring number ####
+
+DB_data$Total_N_MTP1=colSums(rbind(DB_data$N_MTP1_1,DB_data$N_MTP1_2,DB_data$N_MTP1_3,DB_data$N_MTP1_4,DB_data$N_MTP1_5,DB_data$N_MTP1_6), na.rm = T)
+DB_data$Total_N_Rd=colSums(rbind(DB_data$N_RD_1,DB_data$N_RD_2,DB_data$N_RD_3,DB_data$N_RD_4,DB_data$N_RD_5,DB_data$N_RD_6), na.rm = T)/DB_data$N_comp
+
+#Calculate proportional RS ####
+#Percentage focal offspring
+DB_data$m_prop_RS=NA
+DB_data$m_prop_RS=(DB_data$Total_N_MTP1/(DB_data$Total_N_MTP1+DB_data$Total_N_Rd))*100
+DB_data$m_prop_RS[DB_data$Sex=='F']=NA
+DB_data$f_prop_RS=NA
+DB_data$f_prop_RS=(DB_data$Total_N_MTP1/(DB_data$Total_N_MTP1+DB_data$Total_N_Rd))*100
+DB_data$f_prop_RS[DB_data$Sex=='M']=NA
+
+#Calculate proportion of successful matings ####
+DB_data$Prop_MS=NA
+DB_data$Prop_MS=DB_data$Matings_number/(DB_data$Attempts_number+DB_data$Matings_number)
+DB_data$Prop_MS[DB_data$Prop_MS==0]=NA
+
+#Calculate total encounters ####
+DB_data$Total_Encounters=NA
+DB_data$Total_Encounters=DB_data$Attempts_number+DB_data$Matings_number
+
+# Treatment identifier for each density ####
+n=1
+DB_data$Treatment=NA
+for(n in 1:length(DB_data$Sex)){if(DB_data$Gr_size[n]=='SG' && DB_data$Area[n]=='Large'){DB_data$Treatment[n]='D = 0.26'
+}else if(DB_data$Gr_size[n]=='LG' && DB_data$Area[n]=='Large'){DB_data$Treatment[n]='D = 0.52'
+}else if(DB_data$Gr_size[n]=='SG' && DB_data$Area[n]=='Small'){DB_data$Treatment[n]='D = 0.67'
+}else if(DB_data$Gr_size[n]=='LG' && DB_data$Area[n]=='Small'){DB_data$Treatment[n]='D = 1.33'
+}else{DB_data$Treatment[n]=NA}}
+
+DB_data$Treatment=as.factor(DB_data$Treatment)
+
+# Exclude Incubator 3 data #### -> poor performance 
+DB_data_clean=DB_data[DB_data$Incu3!=1,]
+
+# Calculate genetic MS ####
+# Only clean data
+DB_data_clean$gMS=NA 
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_1[i]>=1 & !is.na (DB_data_clean$N_MTP1_1[i])){
+  DB_data_clean$gMS[i]=1
+}else{DB_data_clean$gMS[i]=0}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_2[i]>=1 & !is.na (DB_data_clean$N_MTP1_2[i])){
+  DB_data_clean$gMS[i]=DB_data_clean$gMS[i]+1
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_3[i]>=1 & !is.na (DB_data_clean$N_MTP1_3[i])){
+  DB_data_clean$gMS[i]=DB_data_clean$gMS[i]+1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_4[i]>=1 & !is.na (DB_data_clean$N_MTP1_4[i])){
+  DB_data_clean$gMS[i]=DB_data_clean$gMS[i]+1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_5[i]>=1 & !is.na (DB_data_clean$N_MTP1_5[i])){
+  DB_data_clean$gMS[i]=DB_data_clean$gMS[i]+1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_6[i]>=1 & !is.na (DB_data_clean$N_MTP1_6[i])){
+  DB_data_clean$gMS[i]=DB_data_clean$gMS[i]+1}else{}}
+
+# All data
+DB_data$gMS=NA 
+for(i in 1:length(DB_data$Sex)) {if (DB_data$N_MTP1_1[i]>=1 & !is.na (DB_data$N_MTP1_1[i])){
+  DB_data$gMS[i]=1
+}else{DB_data$gMS[i]=0}}
+for(i in 1:length(DB_data$Sex)) {if (DB_data$N_MTP1_2[i]>=1 & !is.na (DB_data$N_MTP1_2[i])){
+  DB_data$gMS[i]=DB_data$gMS[i]+1
+}else{}}
+for(i in 1:length(DB_data$Sex)) {if (DB_data$N_MTP1_3[i]>=1 & !is.na (DB_data$N_MTP1_3[i])){
+  DB_data$gMS[i]=DB_data$gMS[i]+1}else{}}
+for(i in 1:length(DB_data$Sex)) {if (DB_data$N_MTP1_4[i]>=1 & !is.na (DB_data$N_MTP1_4[i])){
+  DB_data$gMS[i]=DB_data$gMS[i]+1}else{}}
+for(i in 1:length(DB_data$Sex)) {if (DB_data$N_MTP1_5[i]>=1 & !is.na (DB_data$N_MTP1_5[i])){
+  DB_data$gMS[i]=DB_data$gMS[i]+1}else{}}
+for(i in 1:length(DB_data$Sex)) {if (DB_data$N_MTP1_6[i]>=1 & !is.na (DB_data$N_MTP1_6[i])){
+  DB_data$gMS[i]=DB_data$gMS[i]+1}else{}}
+
+#Calculate Rd competition RS ####
+DB_data_clean$m_RS_Rd_comp=NA
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_1[i]>=1 & !is.na (DB_data_clean$N_MTP1_1[i])){
+  DB_data_clean$m_RS_Rd_comp[i]=DB_data_clean$N_RD_1[i]
+}else{DB_data_clean$m_RS_Rd_comp[i]=0}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_2[i]>=1 & !is.na (DB_data_clean$N_MTP1_2[i])){
+  DB_data_clean$m_RS_Rd_comp[i]=DB_data_clean$m_RS_Rd_comp[i]+DB_data_clean$N_RD_2[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_3[i]>=1 & !is.na (DB_data_clean$N_MTP1_3[i])){
+  DB_data_clean$m_RS_Rd_comp[i]=DB_data_clean$m_RS_Rd_comp[i]+DB_data_clean$N_RD_3[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_4[i]>=1 & !is.na (DB_data_clean$N_MTP1_4[i])){
+  DB_data_clean$m_RS_Rd_comp[i]=DB_data_clean$m_RS_Rd_comp[i]+DB_data_clean$N_RD_4[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_5[i]>=1 & !is.na (DB_data_clean$N_MTP1_5[i])){
+  DB_data_clean$m_RS_Rd_comp[i]=DB_data_clean$m_RS_Rd_comp[i]+DB_data_clean$N_RD_5[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_6[i]>=1 & !is.na (DB_data_clean$N_MTP1_6[i])){
+  DB_data_clean$m_RS_Rd_comp[i]=DB_data_clean$m_RS_Rd_comp[i]+DB_data_clean$N_RD_6[i]
+}else{}}
+
+# Check matings of males #### -> add copulations where offspring found but no copulation registered
+
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_1[i]>=1 && DB_data_clean$Cop_Fe_1[i]==0 & !is.na (DB_data_clean$Cop_Fe_1[i])& !is.na (DB_data_clean$N_MTP1_1[i])){
+  DB_data_clean$Cop_Fe_1[i]=1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_2[i]>=1 && DB_data_clean$Cop_Fe_2[i]==0 & !is.na (DB_data_clean$Cop_Fe_2[i])& !is.na (DB_data_clean$N_MTP1_2[i])){
+  DB_data_clean$Cop_Fe_2[i]=1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_3[i]>=1 && DB_data_clean$Cop_Fe_3[i]==0 & !is.na (DB_data_clean$Cop_Fe_3[i])& !is.na (DB_data_clean$N_MTP1_3[i])){
+  DB_data_clean$Cop_Fe_3[i]=1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_4[i]>=1 && DB_data_clean$Cop_Fe_4[i]==0 & !is.na (DB_data_clean$Cop_Fe_4[i])& !is.na (DB_data_clean$N_MTP1_4[i])){
+  DB_data_clean$Cop_Fe_4[i]=1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_5[i]>=1 && DB_data_clean$Cop_Fe_5[i]==0 & !is.na (DB_data_clean$Cop_Fe_5[i])& !is.na (DB_data_clean$N_MTP1_5[i])){
+  DB_data_clean$Cop_Fe_5[i]=1}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$N_MTP1_6[i]>=1 && DB_data_clean$Cop_Fe_6[i]==0 & !is.na (DB_data_clean$Cop_Fe_6[i])& !is.na (DB_data_clean$N_MTP1_6[i])){
+  DB_data_clean$Cop_Fe_6[i]=1}else{}}
+
+# Calculate Rd competition RS of all copulations with potential sperm competition with the  focal ####
+DB_data_clean$m_RS_Rd_comp_full=NA
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$Cop_Fe_1[i]>=1 & !is.na (DB_data_clean$Cop_Fe_1[i])){
+  DB_data_clean$m_RS_Rd_comp_full[i]=DB_data_clean$N_RD_1[i]
+}else{DB_data_clean$m_RS_Rd_comp_full[i]=0}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$Cop_Fe_2[i]>=1 & !is.na (DB_data_clean$Cop_Fe_2[i])){
+  DB_data_clean$m_RS_Rd_comp_full[i]=DB_data_clean$m_RS_Rd_comp_full[i]+DB_data_clean$N_RD_2[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$Cop_Fe_3[i]>=1 & !is.na (DB_data_clean$Cop_Fe_3[i])){
+  DB_data_clean$m_RS_Rd_comp_full[i]=DB_data_clean$m_RS_Rd_comp_full[i]+DB_data_clean$N_RD_3[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$Cop_Fe_4[i]>=1 & !is.na (DB_data_clean$Cop_Fe_4[i])){
+  DB_data_clean$m_RS_Rd_comp_full[i]=DB_data_clean$m_RS_Rd_comp_full[i]+DB_data_clean$N_RD_4[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$Cop_Fe_5[i]>=1 & !is.na (DB_data_clean$Cop_Fe_5[i])){
+  DB_data_clean$m_RS_Rd_comp_full[i]=DB_data_clean$m_RS_Rd_comp_full[i]+DB_data_clean$N_RD_5[i]
+}else{}}
+for(i in 1:length(DB_data_clean$Sex)) {if (DB_data_clean$Cop_Fe_6[i]>=1 & !is.na (DB_data_clean$Cop_Fe_6[i])){
+  DB_data_clean$m_RS_Rd_comp_full[i]=DB_data_clean$m_RS_Rd_comp_full[i]+DB_data_clean$N_RD_6[i]
+}else{}}
+
+# Calculate trait values ####
+# Males ####
+# Total number of matings (all data)
+DB_data$m_TotMatings=NA
+DB_data$m_TotMatings=DB_data$Matings_number
+DB_data$m_TotMatings[DB_data$Sex=='F']=NA
+
+# Avarage mating duration (all data)
+DB_data$MatingDuration_av[DB_data$MatingDuration_av==0]=NA
+DB_data$m_MatingDuration_av=NA
+DB_data$m_MatingDuration_av=DB_data$MatingDuration_av
+DB_data$m_MatingDuration_av[DB_data$Sex=='F']=NA
+DB_data$MatingDuration_av[DB_data$MatingDuration_av==0]=NA
+
+# Total number of mating attempts (all data)
+DB_data$m_Attempts_number=NA
+DB_data$m_Attempts_number=DB_data$Attempts_number
+DB_data$m_Attempts_number[DB_data$Sex=='F']=NA
+
+# Proportional mating success (all data)
+DB_data$m_Prop_MS=NA
+DB_data$m_Prop_MS=DB_data$Prop_MS
+DB_data$m_Prop_MS[DB_data$Sex=='F']=NA
+
+#Total encounters (all data)
+DB_data$m_Total_Encounters=NA
+DB_data$m_Total_Encounters=DB_data$Total_Encounters
+DB_data$m_Total_Encounters[DB_data$Sex=='F']=NA
+
+# Reproductive success
+DB_data_clean$m_RS=NA
+DB_data_clean$m_RS=DB_data_clean$Total_N_MTP1
+DB_data_clean$m_RS[DB_data_clean$Sex=='F']=NA
+
+# Mating success (number of different partners)
+# Clean data
+DB_data_clean$m_cMS=NA
+DB_data_clean$m_cMS=DB_data_clean$MatingPartners_number
+DB_data_clean$m_cMS[DB_data_clean$Sex=='F']=NA
+for(i in 1:length(DB_data_clean$m_cMS)) {if (DB_data_clean$gMS[i]>DB_data_clean$m_cMS[i] & !is.na (DB_data_clean$m_cMS[i])){
+  DB_data_clean$m_cMS[i]=DB_data_clean$gMS[i]}else{}}
+
+# All data
+DB_data$m_cMS=NA
+DB_data$m_cMS=DB_data$MatingPartners_number
+DB_data$m_cMS[DB_data$Sex=='F']=NA
+for(i in 1:length(DB_data$m_cMS)) {if (DB_data$gMS[i]>DB_data$m_cMS[i] & !is.na (DB_data$m_cMS[i])){
+  DB_data$m_cMS[i]=DB_data$gMS[i]}else{}}
+
+# Insemination success
+DB_data_clean$m_InSuc=NA
+DB_data_clean$m_InSuc=DB_data_clean$gMS/DB_data_clean$m_cMS
+for(i in 1:length(DB_data_clean$m_InSuc)) {if (DB_data_clean$m_cMS[i]==0 & !is.na (DB_data_clean$m_cMS[i])){
+  DB_data_clean$m_InSuc[i]=NA}else{}}
+
+# Fertilization success
+DB_data_clean$m_feSuc=NA
+DB_data_clean$m_feSuc=DB_data_clean$m_RS/(DB_data_clean$m_RS+DB_data_clean$m_RS_Rd_comp)
+for(i in 1:length(DB_data_clean$m_feSuc)) {if (DB_data_clean$m_InSuc[i]==0 | is.na (DB_data_clean$m_InSuc[i])){
+  DB_data_clean$m_feSuc[i]=NA}else{}}
+
+# Fecundicty of partners
+DB_data_clean$m_pFec=NA
+DB_data_clean$m_pFec=(DB_data_clean$m_RS+DB_data_clean$m_RS_Rd_comp)/DB_data_clean$gMS
+for(i in 1:length(DB_data_clean$m_pFec)) {if (DB_data_clean$gMS[i]==0){
+  DB_data_clean$m_pFec[i]=NA}else{}}
+
+# Paternity success
+DB_data_clean$m_PS=NA
+DB_data_clean$m_PS=DB_data_clean$m_RS/(DB_data_clean$m_RS+DB_data_clean$m_RS_Rd_comp_full)
+for(i in 1:length(DB_data_clean$m_PS)) {if (DB_data_clean$m_RS[i]==0 & !is.na (DB_data_clean$m_RS[i])){
+  DB_data_clean$m_PS[i]=NA}else{}}
+
+# Fecundity of partners in all females the focal copulated with
+DB_data_clean$m_pFec_compl=NA
+DB_data_clean$m_pFec_compl=(DB_data_clean$m_RS+DB_data_clean$m_RS_Rd_comp_full)/DB_data_clean$m_cMS
+for(i in 1:length(DB_data_clean$m_pFec)) {if (DB_data_clean$m_cMS[i]==0 & !is.na (DB_data_clean$m_cMS[i])){
+  DB_data_clean$m_pFec[i]=NA}else{}}
+
+# Females ####
+# Total number of matings (all data)
+DB_data$f_TotMatings=NA
+DB_data$f_TotMatings=DB_data$Matings_number
+DB_data$f_TotMatings[DB_data$Sex=='M']=NA
+
+# Avarage mating duration (all data)
+DB_data$f_MatingDuration_av=NA
+DB_data$f_MatingDuration_av=DB_data$MatingDuration_av
+DB_data$f_MatingDuration_av[DB_data$Sex=='M']=NA
+DB_data$MatingDuration_av[DB_data$MatingDuration_av==0]=NA
+
+# Total number of mating attempts (all data)
+DB_data$f_Attempts_number=NA
+DB_data$f_Attempts_number=DB_data$Attempts_number
+DB_data$f_Attempts_number[DB_data$Sex=='M']=NA
+
+# Proportional mating success (all data)
+DB_data$f_Prop_MS=NA
+DB_data$f_Prop_MS=DB_data$Prop_MS
+DB_data_clean$f_Prop_MS[DB_data_clean$Sex=='M']=NA
+
+#Total encounters (all data)
+DB_data$f_Total_Encounters=NA
+DB_data$f_Total_Encounters=DB_data$Total_Encounters
+DB_data$f_Total_Encounters[DB_data$Sex=='M']=NA
+
+# Reproductive success
+DB_data_clean$f_RS=NA
+DB_data_clean$f_RS=DB_data_clean$Total_N_MTP1
+DB_data_clean$f_RS[DB_data_clean$Sex=='M']=NA
+
+# Mating success (number of different partners)
+# Clean data
+DB_data_clean$f_cMS=NA
+DB_data_clean$f_cMS=DB_data_clean$MatingPartners_number
+DB_data_clean$f_cMS[DB_data_clean$Sex=='M']=NA
+for(i in 1:length(DB_data_clean$f_cMS)) {if (DB_data_clean$gMS[i]>DB_data_clean$f_cMS[i] & !is.na (DB_data_clean$f_cMS[i])){
+  DB_data_clean$f_cMS[i]=DB_data_clean$gMS[i]}else{}}
+
+# All data
+DB_data$f_cMS=NA
+DB_data$f_cMS=DB_data$MatingPartners_number
+DB_data$f_cMS[DB_data$Sex=='M']=NA
+for(i in 1:length(DB_data$f_cMS)) {if (DB_data$gMS[i]>DB_data$f_cMS[i] & !is.na (DB_data$f_cMS[i])){
+  DB_data$f_cMS[i]=DB_data$gMS[i]}else{}}
+
+# Fecundity per mating partner
+DB_data_clean$f_fec_pMate=NA
+DB_data_clean$f_fec_pMate=DB_data_clean$f_RS/DB_data_clean$f_cMS
+for(i in 1:length(DB_data_clean$f_fec_pMate)) {if (DB_data_clean$f_RS[i]==0 & !is.na (DB_data_clean$f_RS[i])){
+  DB_data_clean$f_fec_pMate[i]=0}else{}}
+for(i in 1:length(DB_data_clean$f_fec_pMate)) {if (DB_data_clean$f_cMS[i]==0 & !is.na (DB_data_clean$f_cMS[i])){
+  DB_data_clean$f_fec_pMate[i]=NA}else{}}
+
+# Relativize data per treatment and sex ####
+# Small group + large Area
+DB_data_clean_0.26=DB_data_clean[DB_data_clean$Treatment=='D = 0.26',]
+
+DB_data_clean_0.26$rel_m_RS=NA
+DB_data_clean_0.26$rel_m_prop_RS=NA
+DB_data_clean_0.26$rel_m_cMS=NA
+DB_data_clean_0.26$rel_m_InSuc=NA
+DB_data_clean_0.26$rel_m_feSuc=NA
+DB_data_clean_0.26$rel_m_pFec=NA
+DB_data_clean_0.26$rel_m_PS=NA
+DB_data_clean_0.26$rel_m_pFec_compl=NA
+
+DB_data_clean_0.26$rel_f_RS=NA
+DB_data_clean_0.26$rel_f_prop_RS=NA
+DB_data_clean_0.26$rel_f_cMS=NA
+DB_data_clean_0.26$rel_f_fec_pMate=NA
+
+DB_data_clean_0.26$rel_m_RS=DB_data_clean_0.26$m_RS/mean(DB_data_clean_0.26$m_RS,na.rm=T)
+DB_data_clean_0.26$rel_m_prop_RS=DB_data_clean_0.26$m_prop_RS/mean(DB_data_clean_0.26$m_prop_RS,na.rm=T)
+DB_data_clean_0.26$rel_m_cMS=DB_data_clean_0.26$m_cMS/mean(DB_data_clean_0.26$m_cMS,na.rm=T)
+DB_data_clean_0.26$rel_m_InSuc=DB_data_clean_0.26$m_InSuc/mean(DB_data_clean_0.26$m_InSuc,na.rm=T)
+DB_data_clean_0.26$rel_m_feSuc=DB_data_clean_0.26$m_feSuc/mean(DB_data_clean_0.26$m_feSuc,na.rm=T)
+DB_data_clean_0.26$rel_m_pFec=DB_data_clean_0.26$m_pFec/mean(DB_data_clean_0.26$m_pFec,na.rm=T)
+DB_data_clean_0.26$rel_m_PS=DB_data_clean_0.26$m_PS/mean(DB_data_clean_0.26$m_PS,na.rm=T)
+DB_data_clean_0.26$rel_m_pFec_compl=DB_data_clean_0.26$m_pFec_compl/mean(DB_data_clean_0.26$m_pFec_compl,na.rm=T)
+
+DB_data_clean_0.26$rel_f_RS=DB_data_clean_0.26$f_RS/mean(DB_data_clean_0.26$f_RS,na.rm=T)
+DB_data_clean_0.26$rel_f_prop_RS=DB_data_clean_0.26$f_prop_RS/mean(DB_data_clean_0.26$f_prop_RS,na.rm=T)
+DB_data_clean_0.26$rel_f_cMS=DB_data_clean_0.26$f_cMS/mean(DB_data_clean_0.26$f_cMS,na.rm=T)
+DB_data_clean_0.26$rel_f_fec_pMate=DB_data_clean_0.26$f_fec_pMate/mean(DB_data_clean_0.26$f_fec_pMate,na.rm=T)
+
+# Large group + large Area
+DB_data_clean_0.52=DB_data_clean[DB_data_clean$Treatment=='D = 0.52',]
+#Relativize data
+
+DB_data_clean_0.52$rel_m_RS=NA
+DB_data_clean_0.52$rel_m_prop_RS=NA
+DB_data_clean_0.52$rel_m_cMS=NA
+DB_data_clean_0.52$rel_m_InSuc=NA
+DB_data_clean_0.52$rel_m_feSuc=NA
+DB_data_clean_0.52$rel_m_pFec=NA
+DB_data_clean_0.52$rel_m_PS=NA
+DB_data_clean_0.52$rel_m_pFec_compl=NA
+
+DB_data_clean_0.52$rel_f_RS=NA
+DB_data_clean_0.52$rel_f_prop_RS=NA
+DB_data_clean_0.52$rel_f_cMS=NA
+DB_data_clean_0.52$rel_f_fec_pMate=NA
+
+DB_data_clean_0.52$rel_m_RS=DB_data_clean_0.52$m_RS/mean(DB_data_clean_0.52$m_RS,na.rm=T)
+DB_data_clean_0.52$rel_m_prop_RS=DB_data_clean_0.52$m_prop_RS/mean(DB_data_clean_0.52$m_prop_RS,na.rm=T)
+DB_data_clean_0.52$rel_m_cMS=DB_data_clean_0.52$m_cMS/mean(DB_data_clean_0.52$m_cMS,na.rm=T)
+DB_data_clean_0.52$rel_m_InSuc=DB_data_clean_0.52$m_InSuc/mean(DB_data_clean_0.52$m_InSuc,na.rm=T)
+DB_data_clean_0.52$rel_m_feSuc=DB_data_clean_0.52$m_feSuc/mean(DB_data_clean_0.52$m_feSuc,na.rm=T)
+DB_data_clean_0.52$rel_m_pFec=DB_data_clean_0.52$m_pFec/mean(DB_data_clean_0.52$m_pFec,na.rm=T)
+DB_data_clean_0.52$rel_m_PS=DB_data_clean_0.52$m_PS/mean(DB_data_clean_0.52$m_PS,na.rm=T)
+DB_data_clean_0.52$rel_m_pFec_compl=DB_data_clean_0.52$m_pFec_compl/mean(DB_data_clean_0.52$m_pFec_compl,na.rm=T)
+
+DB_data_clean_0.52$rel_f_RS=DB_data_clean_0.52$f_RS/mean(DB_data_clean_0.52$f_RS,na.rm=T)
+DB_data_clean_0.52$rel_f_prop_RS=DB_data_clean_0.52$f_prop_RS/mean(DB_data_clean_0.52$f_prop_RS,na.rm=T)
+DB_data_clean_0.52$rel_f_cMS=DB_data_clean_0.52$f_cMS/mean(DB_data_clean_0.52$f_cMS,na.rm=T)
+DB_data_clean_0.52$rel_f_fec_pMate=DB_data_clean_0.52$f_fec_pMate/mean(DB_data_clean_0.52$f_fec_pMate,na.rm=T)
+
+# Small group + small Area
+DB_data_clean_0.67=DB_data_clean[DB_data_clean$Treatment=='D = 0.67',]
+#Relativize data
+DB_data_clean_0.67$rel_m_RS=NA
+DB_data_clean_0.67$rel_m_prop_RS=NA
+DB_data_clean_0.67$rel_m_cMS=NA
+DB_data_clean_0.67$rel_m_InSuc=NA
+DB_data_clean_0.67$rel_m_feSuc=NA
+DB_data_clean_0.67$rel_m_pFec=NA
+DB_data_clean_0.67$rel_m_PS=NA
+DB_data_clean_0.67$rel_m_pFec_compl=NA
+
+DB_data_clean_0.67$rel_f_RS=NA
+DB_data_clean_0.67$rel_f_prop_RS=NA
+DB_data_clean_0.67$rel_f_cMS=NA
+DB_data_clean_0.67$rel_f_fec_pMate=NA
+
+DB_data_clean_0.67$rel_m_RS=DB_data_clean_0.67$m_RS/mean(DB_data_clean_0.67$m_RS,na.rm=T)
+DB_data_clean_0.67$rel_m_prop_RS=DB_data_clean_0.67$m_prop_RS/mean(DB_data_clean_0.67$m_prop_RS,na.rm=T)
+DB_data_clean_0.67$rel_m_cMS=DB_data_clean_0.67$m_cMS/mean(DB_data_clean_0.67$m_cMS,na.rm=T)
+DB_data_clean_0.67$rel_m_InSuc=DB_data_clean_0.67$m_InSuc/mean(DB_data_clean_0.67$m_InSuc,na.rm=T)
+DB_data_clean_0.67$rel_m_feSuc=DB_data_clean_0.67$m_feSuc/mean(DB_data_clean_0.67$m_feSuc,na.rm=T)
+DB_data_clean_0.67$rel_m_pFec=DB_data_clean_0.67$m_pFec/mean(DB_data_clean_0.67$m_pFec,na.rm=T)
+DB_data_clean_0.67$rel_m_PS=DB_data_clean_0.67$m_PS/mean(DB_data_clean_0.67$m_PS,na.rm=T)
+DB_data_clean_0.67$rel_m_pFec_compl=DB_data_clean_0.67$m_pFec_compl/mean(DB_data_clean_0.67$m_pFec_compl,na.rm=T)
+
+DB_data_clean_0.67$rel_f_RS=DB_data_clean_0.67$f_RS/mean(DB_data_clean_0.67$f_RS,na.rm=T)
+DB_data_clean_0.67$rel_f_prop_RS=DB_data_clean_0.67$f_prop_RS/mean(DB_data_clean_0.67$f_prop_RS,na.rm=T)
+DB_data_clean_0.67$rel_f_cMS=DB_data_clean_0.67$f_cMS/mean(DB_data_clean_0.67$f_cMS,na.rm=T)
+DB_data_clean_0.67$rel_f_fec_pMate=DB_data_clean_0.67$f_fec_pMate/mean(DB_data_clean_0.67$f_fec_pMate,na.rm=T)
+
+# Large group + small Area
+DB_data_clean_1.33=DB_data_clean[DB_data_clean$Treatment=='D = 1.33',]
+#Relativize data
+
+DB_data_clean_1.33$rel_m_RS=NA
+DB_data_clean_1.33$rel_m_prop_RS=NA
+DB_data_clean_1.33$rel_m_cMS=NA
+DB_data_clean_1.33$rel_m_InSuc=NA
+DB_data_clean_1.33$rel_m_feSuc=NA
+DB_data_clean_1.33$rel_m_pFec=NA
+DB_data_clean_1.33$rel_m_PS=NA
+DB_data_clean_1.33$rel_m_pFec_compl=NA
+
+DB_data_clean_1.33$rel_f_RS=NA
+DB_data_clean_1.33$rel_f_prop_RS=NA
+DB_data_clean_1.33$rel_f_cMS=NA
+DB_data_clean_1.33$rel_f_fec_pMate=NA
+
+DB_data_clean_1.33$rel_m_RS=DB_data_clean_1.33$m_RS/mean(DB_data_clean_1.33$m_RS,na.rm=T)
+DB_data_clean_1.33$rel_m_prop_RS=DB_data_clean_1.33$m_prop_RS/mean(DB_data_clean_1.33$m_prop_RS,na.rm=T)
+DB_data_clean_1.33$rel_m_cMS=DB_data_clean_1.33$m_cMS/mean(DB_data_clean_1.33$m_cMS,na.rm=T)
+DB_data_clean_1.33$rel_m_InSuc=DB_data_clean_1.33$m_InSuc/mean(DB_data_clean_1.33$m_InSuc,na.rm=T)
+DB_data_clean_1.33$rel_m_feSuc=DB_data_clean_1.33$m_feSuc/mean(DB_data_clean_1.33$m_feSuc,na.rm=T)
+DB_data_clean_1.33$rel_m_pFec=DB_data_clean_1.33$m_pFec/mean(DB_data_clean_1.33$m_pFec,na.rm=T)
+DB_data_clean_1.33$rel_m_PS=DB_data_clean_1.33$m_PS/mean(DB_data_clean_1.33$m_PS,na.rm=T)
+DB_data_clean_1.33$rel_m_pFec_compl=DB_data_clean_1.33$m_pFec_compl/mean(DB_data_clean_1.33$m_pFec_compl,na.rm=T)
+
+DB_data_clean_1.33$rel_f_RS=DB_data_clean_1.33$f_RS/mean(DB_data_clean_1.33$f_RS,na.rm=T)
+DB_data_clean_1.33$rel_f_prop_RS=DB_data_clean_1.33$f_prop_RS/mean(DB_data_clean_1.33$f_prop_RS,na.rm=T)
+DB_data_clean_1.33$rel_f_cMS=DB_data_clean_1.33$f_cMS/mean(DB_data_clean_1.33$f_cMS,na.rm=T)
+DB_data_clean_1.33$rel_f_fec_pMate=DB_data_clean_1.33$f_fec_pMate/mean(DB_data_clean_1.33$f_fec_pMate,na.rm=T)
+
+# Set colors for figures
+colpal=brewer.pal(4, 'Dark2')
+colpal2=brewer.pal(3, 'Set1')
+colpal3=brewer.pal(4, 'Paired')
+slava_ukrajini=(c('#0057B8','#FFD700'))
+colorESEB=c('#01519c','#ffdf33')
+colorESEB2=c('#1DA1F2','#ffec69')
+
+# Merge data according to treatment #### -> Reduce treatments to area and population size
+#Area
+DB_data_clean_Large_area=rbind(DB_data_clean_0.26,DB_data_clean_0.52)
+DB_data_clean_Small_area=rbind(DB_data_clean_0.67,DB_data_clean_1.33)
+
+#Population size
+DB_data_clean_Small_pop=rbind(DB_data_clean_0.26,DB_data_clean_0.67)
+DB_data_clean_Large_pop=rbind(DB_data_clean_0.52,DB_data_clean_1.33)
+
+# Merge data according to treatment full data set #### -> Reduce treatments to area and population size
+DB_data_0.26=DB_data[DB_data$Treatment=='D = 0.26',]
+DB_data_0.52=DB_data[DB_data$Treatment=='D = 0.52',]
+DB_data_0.67=DB_data[DB_data$Treatment=='D = 0.67',]
+DB_data_1.33=DB_data[DB_data$Treatment=='D = 1.33',]
+
+#Area
+DB_data_Large_area_full=rbind(DB_data_0.26,DB_data_0.52)
+DB_data_Small_area_full=rbind(DB_data_0.67,DB_data_1.33)
+
+#Population size
+DB_data_Small_pop_full=rbind(DB_data_0.26,DB_data_0.67)
+DB_data_Large_pop_full=rbind(DB_data_0.52,DB_data_1.33)
+```
+
+# Repeatability
+
+Repeatability of body mass measures.<br>
+Intra-class correlation coefficient:<br>
+- Males
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+ICCest(DB_data$Body_mass_mg_focal[DB_data$Sex=='M'], DB_data$Mass_reproducibility_mg_focal[DB_data$Sex=='M'])
+```
+- Females
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+ICCest(DB_data$Body_mass_mg_focal[DB_data$Sex=='F'], DB_data$Mass_reproducibility_mg_focal[DB_data$Sex=='F'])
+```
+
+# Effect of body mass on reproductive success
+
+Correlation between body mass and reproductive success (selection gradient).
+
+
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide'}
+# Effect of body mass on reproductive success - Selection gradient ####
+#Male
+DB_data_clean_M=DB_data_clean[DB_data_clean$Sex=='M',]
+#Standardize body mass
+DB_data_clean_M$stder_BM_focal=NA
+DB_data_clean_M$stder_BM_focal=DB_data_clean_M$Body_mass_mg_focal-mean(DB_data_clean_M$Body_mass_mg_focal)
+DB_data_clean_M$stder_BM_focal=DB_data_clean_M$stder_BM_focal/sd(DB_data_clean_M$Body_mass_mg_focal)
+
+#Model treatment
+treat1M=glm(m_RS~Gr_size*Area,data=DB_data_clean_M,family = quasipoisson)
+DB_data_clean_M$res_RS=NA
+DB_data_clean_M$res_RS=residuals(treat1M)
+
+# Males
+p3=ggplot(DB_data_clean_M, aes(x=stder_BM_focal, y=res_RS)) + 
+  geom_point(size = 2)+xlab('Standardized male body mass')+ylab('Res. offspring number')+labs(tag = "A")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3,2.3)+ylim(-13,23)
+
+#Females
+DB_data_clean_F=DB_data_clean[DB_data_clean$Sex=='F',]
+#Standardize body mass
+DB_data_clean_F$stder_BM_focal=NA
+DB_data_clean_F$stder_BM_focal=DB_data_clean_F$Body_mass_mg_focal-mean(DB_data_clean_F$Body_mass_mg_focal)
+DB_data_clean_F$stder_BM_focal=DB_data_clean_F$stder_BM_focal/sd(DB_data_clean_F$Body_mass_mg_focal)
+
+#Model treatment
+treat1F=glm(f_RS~Gr_size*Area,data=DB_data_clean_F,family = quasipoisson)
+DB_data_clean_F$res_RS=NA
+DB_data_clean_F$res_RS=residuals(treat1F)
+
+p4=ggplot(DB_data_clean_F, aes(x=stder_BM_focal, y=res_RS)) + 
+geom_point(size = 2)+xlab('Standardized female body mass')+ylab('Res. offspring number')+labs(tag = "B")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3,2.3)+ylim(-13,23)
+
+grid.arrange(p3,p4, nrow = 1,ncol=2)
+```
+Figure 1: Scatter plots of relationship between standardized body mass and residual offspring number for males (A) and females (B).<br><br>
+Statistical tests<br>
+Selection gradient for males
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod2=glm(res_RS~stder_BM_focal,data=DB_data_clean_M,family = gaussian)
+summary(mod2)
+```
+Selection gradient for females
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod3=glm(res_RS~stder_BM_focal,data=DB_data_clean_F,family = gaussian)
+summary(mod3)
+```
+Testing for a sex difference (sex x treatment interaction).
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+DB_data_clean_C=rbind(DB_data_clean_F,DB_data_clean_M)
+mod4=glm(res_RS~stder_BM_focal*Sex,data=DB_data_clean_C,family = gaussian)
+summary(mod4)
+#Anova(mod4,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(mod4,type=2)
+```
+
+# Effect of body mass on reproductive behaviour
+
+Correlation between body mass and reproductive behaviour:<br>
+- Number of matings<br>
+- Number of mating partners (mating success)<br>
+- Proportion of successful matings<br>
+
+## Number of matings
+Correlation between body mass and the number of matings.
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide'}
+# Effect of body mass on mating number ####
+# Males
+DB_data_M=DB_data[DB_data$Sex=='M',]
+#Standardize body mass
+DB_data_M$stder_BM_focal=NA
+DB_data_M$stder_BM_focal=DB_data_M$Body_mass_mg_focal-mean(DB_data_M$Body_mass_mg_focal)
+DB_data_M$stder_BM_focal=DB_data_M$stder_BM_focal/sd(DB_data_M$Body_mass_mg_focal)
+
+#Model treatment
+treat1M_MR=glm(m_TotMatings~Gr_size*Area,data=DB_data_M,family = quasipoisson)
+DB_data_M$res_MR=NA
+DB_data_M$res_MR=residuals(treat1M_MR)
+
+p5=ggplot(DB_data_M, aes(x=stder_BM_focal, y=res_MR)) + 
+  geom_point(size = 2)+xlab('Standardized male body mass')+ylab('Res. number of matings')+labs(tag = "A")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3.1,2.4)+ylim(-2.7,4.2)
+
+#Females
+DB_data_F=DB_data[DB_data$Sex=='F',]
+#Standardize body mass
+DB_data_F$stder_BM_focal=NA
+DB_data_F$stder_BM_focal=DB_data_F$Body_mass_mg_focal-mean(DB_data_F$Body_mass_mg_focal)
+DB_data_F$stder_BM_focal=DB_data_F$stder_BM_focal/sd(DB_data_F$Body_mass_mg_focal)
+
+#Model treatment
+treat1F_MR=glm(f_TotMatings~Gr_size*Area,data=DB_data_F,family = quasipoisson)
+DB_data_F$res_MR=NA
+DB_data_F$res_MR=residuals(treat1F_MR)
+
+p6=ggplot(DB_data_F, aes(x=stder_BM_focal, y=res_MR)) + 
+  geom_point(size = 2)+xlab('Standardized female body mass')+ylab('Res. number of matings')+labs(tag = "B")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3.1,2.4)+ylim(-2.7,4.2)
+
+grid.arrange(p5,p6, nrow = 1,ncol=2)
+```
+Figure 2: Scatter plots of relationship between standardized body mass and residual number of matings for males (A) and females (B).<br><br>
+Statistical tests<br>
+Males
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod5=glm(res_MR~stder_BM_focal,data=DB_data_M,family = gaussian)
+summary(mod5)
+```
+Females
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod6=glm(res_MR~stder_BM_focal,data=DB_data_F,family = gaussian)
+summary(mod6)
+```
+Testing for a sex difference (sex x treatment interaction).
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Sex difference?
+DB_data_clean_C=rbind(DB_data_F,DB_data_M)
+mod4=glm(res_MR~stder_BM_focal*Sex,data=DB_data_clean_C,family = gaussian)
+summary(mod4)
+Anova(mod4,type=3) #If the interactions are not significant, type II gives a more powerful test.
+#Anova(mod4,type=2)
+```
+
+## Number of mating partners
+Correlation between body mass and the number of mating partners.
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide'}
+# Effect of body mass on mating success ####
+# Males
+#Model treatment
+treat1M_MS=glm(m_cMS~Gr_size*Area,data=DB_data_M,family = quasipoisson)
+DB_data_M$res_MS=NA
+DB_data_M$res_MS=residuals(treat1M_MS)
+
+p7=ggplot(DB_data_M, aes(x=stder_BM_focal, y=res_MS)) + 
+  geom_point(size = 2)+xlab('Standardized male body mass')+ylab('Res. number of mating partners')+labs(tag = "A")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3.1,2.4)+ylim(-2,2.5)
+
+#Females
+#Model treatment
+treat1F_MS=glm(f_cMS~Gr_size*Area,data=DB_data_F,family = quasipoisson)
+DB_data_F$res_MS=NA
+DB_data_F$res_MS=residuals(treat1F_MS)
+
+p8=ggplot(DB_data_F, aes(x=stder_BM_focal, y=res_MS)) + 
+  geom_point(size = 2)+xlab('Standardized female body mass')+ylab('Res. number of mating partners')+labs(tag = "B")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3.1,2.4)+ylim(-2,2.5)
+
+grid.arrange(p7,p8, nrow = 1,ncol=2)
+```
+Figure 3: Scatter plots of relationship between standardized body mass and residual number of mating partners for males (A) and females (B).<br><br>
+Statistical tests<br>
+Males
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod7=glm(res_MS~stder_BM_focal,data=DB_data_M,family = gaussian)
+summary(mod7)
+```
+Females
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod7=glm(res_MS~stder_BM_focal,data=DB_data_F,family = gaussian)
+summary(mod7)
+```
+Testing for a sex difference (sex x treatment interaction).
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Sex difference?
+DB_data_clean_C=rbind(DB_data_F,DB_data_M)
+mod4=glm(res_MS~stder_BM_focal*Sex,data=DB_data_clean_C,family = gaussian)
+summary(mod4)
+#Anova(mod4,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(mod4,type=2)
+```
+
+## Proportion of successful matings
+Correlation between body mass and the proportion of successful matings.
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide'}
+# Effect of BM on proportion successful matings ####
+# Males
+#Model treatment
+treat1M_Prop_MS=glm(Prop_MS~Gr_size*Area,data=DB_data_M,family = quasibinomial,na.action=na.exclude)
+DB_data_M$res_Prop_MS=NA
+DB_data_M$res_Prop_MS=residuals(treat1M_Prop_MS)
+
+p9=ggplot(DB_data_M, aes(x=stder_BM_focal, y=res_Prop_MS)) + 
+  geom_point(size = 2)+xlab('Standardized male body mass')+ylab('Res. prop. of successful matings')+labs(tag = "A")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3.1,2.4)+ylim(-0.8,1.6)
+
+#Females
+#Model treatment
+treat1F_Prop_MS=glm(Prop_MS~Gr_size*Area,data=DB_data_F,family = quasibinomial,na.action=na.exclude)
+DB_data_F$res_Prop_MS=NA
+DB_data_F$res_Prop_MS=residuals(treat1F_Prop_MS)
+
+p10=ggplot(DB_data_F, aes(x=stder_BM_focal, y=res_Prop_MS)) + 
+  geom_point(size = 2)+xlab('Standardized female body mass')+ylab('Res. prop. of successful matings')+labs(tag = "B")+
+  geom_smooth(method=lm,color="black")+ theme(axis.text=element_text(size=13),axis.title=element_text(size=14)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  xlim(-3.1,2.4)+ylim(-0.8,1.6)
+
+grid.arrange(p9,p10, nrow = 1,ncol=2)
+```
+Figure 4: Scatter plots of relationship between standardized body mass and residual proportion of successful matings for males (A) and females (B).<br><br>
+Statistical tests<br>
+Males
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod7=glm(res_Prop_MS~stder_BM_focal,data=DB_data_M,family = gaussian)
+summary(mod7)
+```
+Females
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+mod7=glm(res_Prop_MS~stder_BM_focal,data=DB_data_F,family = gaussian)
+summary(mod7)
+```
+Testing for a sex difference (sex x treatment interaction).
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Sex difference?
+DB_data_clean_C=rbind(DB_data_F,DB_data_M)
+mod4=glm(res_Prop_MS~stder_BM_focal*Sex,data=DB_data_clean_C,family = gaussian)
+summary(mod4)
+#Anova(mod4,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(mod4,type=2)
+```
+
+# Density treatment and body mass
+
+Here we tested the interaction of the density treatment and body mass. 
+## Reproductive success
+Males
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Males
+#Model treatment
+ModT1=glm(m_RS~stder_BM_focal*Gr_size*Area,data=DB_data_clean_M,family = quasipoisson)
+summary(ModT1)
+#Anova(ModT1,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT1,type=2)
+```
+Females
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Females
+#Model treatment
+ModT2=glm(f_RS~stder_BM_focal*Gr_size*Area,data=DB_data_clean_F,family = quasipoisson)
+summary(ModT2)
+#Anova(ModT2,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT2,type=2)
+```
+
+## Number of matings
+Males
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Males
+#Model treatment
+ModT1=glm(m_TotMatings~stder_BM_focal*Gr_size*Area,data=DB_data_M,family = quasipoisson)
+summary(ModT1)
+#Anova(ModT1,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT1,type=2)
+```
+Females
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Females
+#Model treatment
+ModT2=glm(f_TotMatings~stder_BM_focal*Gr_size*Area,data=DB_data_F,family = quasipoisson)
+summary(ModT2)
+#Anova(ModT2,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT2,type=2)
+```
+
+## Number of mating partners
+Males
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Males
+#Model treatment
+ModT1=glm(m_cMS~stder_BM_focal*Gr_size*Area,data=DB_data_M,family = quasipoisson)
+summary(ModT1)
+#Anova(ModT1,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT1,type=2)
+```
+Females
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Females
+#Model treatment
+ModT2=glm(f_cMS~stder_BM_focal*Gr_size*Area,data=DB_data_F,family = quasipoisson)
+summary(ModT2)
+#Anova(ModT2,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT2,type=2)
+```
+
+## Proportion of successful matings
+Males
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Males
+#Model treatment
+ModT1=glm(Prop_MS~stder_BM_focal*Gr_size*Area,data=DB_data_M,family = quasibinomial)
+summary(ModT1)
+#Anova(ModT1,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT1,type=2)
+```
+Females
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+#Females
+#Model treatment
+ModT2=glm(Prop_MS~stder_BM_focal*Gr_size*Area,data=DB_data_F,family = quasibinomial)
+summary(ModT2)
+#Anova(ModT2,type=3) #If the interactions are not significant, type II gives a more powerful test.
+Anova(ModT2,type=2)
+```
+
+# Selection coefficients
+
+Finally, we used bootstrapping to estimate treatment specific selection coeficients on body mass.
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# Selection coefficients ####
+#All 
+#Males
+#Bootstrap
+selDif_BW_males = function(dataFrame, indexVector) { 
+  #Calculate relative fitness
+  rel_fit_males=dataFrame[indexVector, match("m_RS",names(dataFrame))]/mean(dataFrame[indexVector, match("m_RS",names(dataFrame))],na.rm=T)
+  #Calculate selection differential
+  s = cov(dataFrame[indexVector, match("stder_BM_focal",names(dataFrame))],rel_fit_males,use="complete.obs",method = "pearson")
+  return(s)
+}
+
+boot_BW_males = boot(DB_data_clean_M, selDif_BW_males, R = 10000)
+
+
+#Females
+selDif_BW_females = function(dataFrame, indexVector) { 
+  #Calculate relative fitness
+  rel_fit_females=dataFrame[indexVector, match("f_RS",names(dataFrame))]/mean(dataFrame[indexVector, match("f_RS",names(dataFrame))],na.rm=T)
+  #Calculate selection differential
+  s = cov(dataFrame[indexVector, match("stder_BM_focal",names(dataFrame))],rel_fit_females,use="complete.obs",method = "pearson")
+  return(s)
+}
+
+boot_BW_females = boot(DB_data_clean_F, selDif_BW_females, R = 10000)
+
+
+# Selection coefficients for treatments
+#Males
+#Group size
+#Small group
+boot_BW_males_group_size_small = boot(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',], selDif_BW_males, R = 10000)
+
+
+#Large group
+boot_BW_males_group_size_large = boot(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',], selDif_BW_males, R = 10000)
+
+
+#Area
+#Large Area
+boot_BW_males_area_large = boot(DB_data_clean_M[DB_data_clean_M$Area=='Large',], selDif_BW_males, R = 10000)
+
+
+#Small Area
+boot_BW_males_area_small = boot(DB_data_clean_M[DB_data_clean_M$Area=='Small',], selDif_BW_males, R = 10000)
+
+
+#Females
+#Group size
+#Small group
+boot_BW_females_group_size_small = boot(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',], selDif_BW_females, R = 10000)
+
+
+#Large group
+boot_BW_females_group_size_large = boot(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',], selDif_BW_females, R = 10000)
+
+
+#Area
+#Large Area
+boot_BW_females_area_large = boot(DB_data_clean_F[DB_data_clean_F$Area=='Large',], selDif_BW_females, R = 10000)
+
+
+#Small Area
+boot_BW_females_area_small = boot(DB_data_clean_F[DB_data_clean_F$Area=='Small',], selDif_BW_females, R = 10000)
+
+#Data table ####
+boot_data_BW_males <- as.data.frame(cbind("Male", "Mass", "All", mean(boot_BW_males$t,na.rm=T), quantile(boot_BW_males$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_males$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_females <- as.data.frame(cbind("Female", "Mass", "All", mean(boot_BW_females$t,na.rm=T), quantile(boot_BW_females$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_females$t,.975, names = FALSE,na.rm=T)))
+
+boot_data_BW_males_group_size_small <- as.data.frame(cbind("Male", "Mass", "Small group", mean(boot_BW_males_group_size_small$t,na.rm=T), quantile(boot_BW_males_group_size_small$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_males_group_size_small$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_females_group_size_small <- as.data.frame(cbind("Female", "Mass", "Small group", mean(boot_BW_females_group_size_small$t,na.rm=T), quantile(boot_BW_females_group_size_small$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_females_group_size_small$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_males_group_size_large <- as.data.frame(cbind("Male", "Mass", "large group", mean(boot_BW_males_group_size_large$t,na.rm=T), quantile(boot_BW_males_group_size_large$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_males_group_size_large$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_females_group_size_large <- as.data.frame(cbind("Female", "Mass", "large group", mean(boot_BW_females_group_size_large$t,na.rm=T), quantile(boot_BW_females_group_size_large$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_females_group_size_large$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_males_area_small <- as.data.frame(cbind("Male", "Mass", "Small area", mean(boot_BW_males_area_small$t,na.rm=T), quantile(boot_BW_males_area_small$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_males_area_small$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_females_area_small <- as.data.frame(cbind("Female", "Mass", "Small area", mean(boot_BW_females_area_small$t,na.rm=T), quantile(boot_BW_females_area_small$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_females_area_small$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_males_area_large <- as.data.frame(cbind("Male", "Mass", "large area", mean(boot_BW_males_area_large$t,na.rm=T), quantile(boot_BW_males_area_large$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_males_area_large$t,.975, names = FALSE,na.rm=T)))
+boot_data_BW_females_area_large <- as.data.frame(cbind("Female", "Mass", "large area", mean(boot_BW_females_area_large$t,na.rm=T), quantile(boot_BW_females_area_large$t,.025, names = FALSE,na.rm=T), quantile(boot_BW_females_area_large$t,.975, names = FALSE,na.rm=T)))
+
+SelDifBoot_Table <- as.table(as.matrix(rbind(boot_data_BW_males,boot_data_BW_females,boot_data_BW_males_group_size_small,boot_data_BW_females_group_size_small,
+                                             boot_data_BW_males_group_size_large,boot_data_BW_females_group_size_large,
+                                             boot_data_BW_males_area_small,boot_data_BW_females_area_small,
+                                             boot_data_BW_males_area_large,boot_data_BW_females_area_large)))
+
+is.table(SelDifBoot_Table)
+
+colnames(SelDifBoot_Table)[1] <- "Sex"
+colnames(SelDifBoot_Table)[2] <- "Trait"
+colnames(SelDifBoot_Table)[3] <- "Treatment"
+colnames(SelDifBoot_Table)[4] <- "Coefficient"
+colnames(SelDifBoot_Table)[5] <- "l95_CI"
+colnames(SelDifBoot_Table)[6] <- "u95_CI"
+SelDifBoot_Table=as.data.frame.matrix(SelDifBoot_Table)
+SelDifBoot_Table$Sex <- as.factor(as.character(SelDifBoot_Table$Sex))
+SelDifBoot_Table$Trait <- as.factor(as.character(SelDifBoot_Table$Trait))
+SelDifBoot_Table$Treatment <- as.factor(as.character(SelDifBoot_Table$Treatment))
+SelDifBoot_Table$Coefficient <- as.numeric(as.character(SelDifBoot_Table$Coefficient))
+SelDifBoot_Table$l95_CI <- as.numeric(as.character(SelDifBoot_Table$l95_CI))
+SelDifBoot_Table$u95_CI <- as.numeric(as.character(SelDifBoot_Table$u95_CI))
+
+SelDifBoot_Table_round=cbind(SelDifBoot_Table[,c(1,2,3)],round(SelDifBoot_Table[,c(4,5,6)],digit=3))
+```
+
+Figure of section coefficients on body mass for different density treatments.
+```{r, message=FALSE, warning=FALSE, results='hide'}
+#Figures ####
+SelDifBoot_Table$Treatment <- factor(SelDifBoot_Table$Treatment, levels=c("All",'Small group','large group','large area','Small area'))
+SelDifBoot_Table$Sex <- factor(SelDifBoot_Table$Sex, levels=c("Female",'Male'))
+
+BarPlot_2<- ggplot(SelDifBoot_Table[3:6,], aes(x=Sex, y=Coefficient, fill=Treatment)) + 
+  scale_y_continuous(limits = c(-.27, .75), expand = c(0 ,0)) + 
+  geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
+  geom_bar(stat="identity", color="black", position=position_dodge(), alpha=0.8) +
+  geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI), width=.3,size=1, position=position_dodge(.9)) +
+  ylab(expression(paste("Standardized selection differential (",~italic("s'"),")"))) +xlab('Sex') +ggtitle('Group size')+labs(tag = "A")+
+  scale_x_discrete(breaks=waiver(),labels = c("Female","Male"))+ 
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0.1,2,0.1,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(1.05, 0.8),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "", labels = c("Small group",'Large group'))
+
+BarPlot_3<- ggplot(SelDifBoot_Table[c(9,10,7,8),], aes(x=Sex, y=Coefficient, fill=Treatment)) + 
+  scale_y_continuous(limits = c(-.27, .75), breaks = seq(-.3,.7,.15), expand = c(0 ,0)) + 
+  geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
+  geom_bar(stat="identity", color="black", position=position_dodge(), alpha=0.8) +
+  geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI), width=.3,size=1, position=position_dodge(.9)) +
+  ylab('') +xlab('Sex') +ggtitle('Area')+labs(tag = "B")+
+  scale_x_discrete(breaks=waiver(),labels = c("Female","Male"))+ 
+  theme(panel.border = element_blank(),
+        plot.margin = margin(0.1,2,0.1,0.2,"cm"),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(1.05, 0.8),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "", labels = c("Large area",'Small area'))
+
+plot1<-grid.arrange(BarPlot_2,BarPlot_3, nrow = 1,ncol=2)
+```
+Figure 5: Effect of density on sex-specific standardized selection differential (s’) for population size (A) and area treatment (B).<br><br>
+
+Permutation tests for differences in density dependent standardized selection differentials.
+```{r, message=FALSE, warning=FALSE}
+# Permutation test ####
+# Sex bias ####
+#population size ####
+#Small
+Sex_diff_Small_male_pop=c(boot_BW_males_group_size_small$t)-c(boot_BW_females_group_size_small$t)
+
+t_Sex_diff_Small_male_pop=mean(Sex_diff_Small_male_pop,na.rm=TRUE)
+t_Sex_diff_Small_male_pop_lower=quantile(Sex_diff_Small_male_pop,.025,na.rm=TRUE)
+t_Sex_diff_Small_male_pop_upper=quantile(Sex_diff_Small_male_pop,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS),
+            DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS))
+comb_data_BM=c(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$stder_BM_focal,
+               DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$stder_BM_focal)
+
+diff.observed_Small_pop = cov(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS),use="complete.obs",method = "pearson") 
+diff.observed_Small_pop
+
+number_of_permutations = 100000
+diff.random_Small_pop = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_Small_pop[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Sex_diff_Small_pop = sum((diff.random_Small_pop) >= as.numeric((diff.observed_Small_pop)))/   number_of_permutations
+p_Sex_diff_Small_pop
+
+#population size ####
+#Large
+Sex_diff_large_male_pop=c(boot_BW_males_group_size_large$t)-c(boot_BW_females_group_size_large$t)
+
+t_Sex_diff_large_male_pop=mean(Sex_diff_large_male_pop,na.rm=TRUE)
+t_Sex_diff_large_male_pop_lower=quantile(Sex_diff_large_male_pop,.025,na.rm=TRUE)
+t_Sex_diff_large_male_pop_upper=quantile(Sex_diff_large_male_pop,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS),
+               DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_M[DB_data_clean_F$Gr_size=='LG',]$f_RS))
+comb_data_BM=c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$stder_BM_focal,
+               DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$stder_BM_focal)
+
+diff.observed_large_pop = cov(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS),use="complete.obs",method = "pearson") 
+diff.observed_large_pop
+
+number_of_permutations = 100000
+diff.random_large_pop = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_large_pop[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Sex_diff_large_pop = sum(abs(diff.random_large_pop) >= as.numeric(abs(diff.observed_large_pop)))/   number_of_permutations
+p_Sex_diff_large_pop
+
+#Area ####
+#Large
+Sex_diff_large_area=c(boot_BW_males_area_large$t)-c(boot_BW_females_area_large$t)
+
+t_Sex_diff_large_area=mean(Sex_diff_large_area,na.rm=TRUE)
+t_Sex_diff_large_area_lower=quantile(Sex_diff_large_area,.025,na.rm=TRUE)
+t_Sex_diff_large_area_upper=quantile(Sex_diff_large_area,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS),
+               DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS))
+comb_data_BM=c(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$stder_BM_focal,
+               DB_data_clean_F[DB_data_clean_F$Area=='Large',]$stder_BM_focal)
+
+diff.observed_large_area = cov(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS),use="complete.obs",method = "pearson") 
+diff.observed_large_area
+
+number_of_permutations = 100000
+diff.random_large_area = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_large_area[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Sex_diff_large_area = sum(abs(diff.random_large_area) >= as.numeric(abs(diff.observed_large_area)))/   number_of_permutations
+p_Sex_diff_large_area
+
+#Small
+Sex_diff_small_area=c(boot_BW_males_area_small$t)-c(boot_BW_females_area_small$t)
+
+t_Sex_diff_small_area=mean(Sex_diff_small_area,na.rm=TRUE)
+t_Sex_diff_small_area_lower=quantile(Sex_diff_small_area,.025,na.rm=TRUE)
+t_Sex_diff_small_area_upper=quantile(Sex_diff_small_area,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS),
+               DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS))
+comb_data_BM=c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$stder_BM_focal,
+               DB_data_clean_F[DB_data_clean_F$Area=='Small',]$stder_BM_focal)
+
+diff.observed_small_area = cov(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS),use="complete.obs",method = "pearson") 
+diff.observed_small_area
+
+number_of_permutations = 100000
+diff.random_small_area = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_small_area[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Sex_diff_small_area = sum(abs(diff.random_small_area) >= as.numeric(abs(diff.observed_small_area)))/   number_of_permutations
+p_Sex_diff_small_area
+
+# Treatment bias ####
+# Group size ####
+# Males
+Treat_diff_male_pop=c(boot_BW_males_group_size_large$t)-c(boot_BW_males_group_size_small$t)
+
+t_Treat_diff_male_pop=mean(Treat_diff_male_pop,na.rm=TRUE)
+t_Treat_diff_male_pop_lower=quantile(Treat_diff_male_pop,.025,na.rm=TRUE)
+t_Treat_diff_male_pop_upper=quantile(Treat_diff_male_pop,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS),
+               DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS))
+comb_data_BM=c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$stder_BM_focal,
+               DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$stder_BM_focal)
+
+diff.observed_male_pop = cov(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS),use="complete.obs",method = "pearson") 
+diff.observed_male_pop
+
+number_of_permutations = 100000
+diff.random_male_pop = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='LG',]$m_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Gr_size=='SG',]$m_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_male_pop[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Treat_diff_male_pop = sum(abs(diff.random_male_pop) >= as.numeric(abs(diff.observed_male_pop)))/   number_of_permutations
+p_Treat_diff_male_pop
+
+# Females
+Treat_diff_female_pop=c(boot_BW_females_group_size_large$t)-c(boot_BW_females_group_size_small$t)
+
+t_Treat_diff_female_pop=mean(Treat_diff_female_pop,na.rm=TRUE)
+t_Treat_diff_female_pop_lower=quantile(Treat_diff_female_pop,.025,na.rm=TRUE)
+t_Treat_diff_female_pop_upper=quantile(Treat_diff_female_pop,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS),
+               DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS))
+comb_data_BM=c(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$stder_BM_focal,
+               DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$stder_BM_focal)
+
+diff.observed_female_pop = cov(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS),use="complete.obs",method = "pearson") 
+diff.observed_female_pop
+
+number_of_permutations = 100000
+diff.random_female_pop = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='LG',]$f_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Gr_size=='SG',]$f_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_female_pop[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+
+
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Treat_diff_female_pop = sum(abs(diff.random_female_pop) >= as.numeric(abs(diff.observed_female_pop)))/   number_of_permutations
+p_Treat_diff_female_pop
+
+# Area ####
+# Males
+Treat_diff_male_area=c(boot_BW_males_area_large$t)-c(boot_BW_males_area_small$t)
+
+t_Treat_diff_male_area=mean(Treat_diff_male_area,na.rm=TRUE)
+t_Treat_diff_male_area_lower=quantile(Treat_diff_male_area,.025,na.rm=TRUE)
+t_Treat_diff_male_area_upper=quantile(Treat_diff_male_area,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS),
+               DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS))
+comb_data_BM=c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$stder_BM_focal,
+               DB_data_clean_M[DB_data_clean_M$Area=='Large',]$stder_BM_focal)
+
+diff.observed_male_area = cov(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$stder_BM_focal,DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS),use="complete.obs",method = "pearson") 
+diff.observed_male_area
+
+number_of_permutations = 100000
+diff.random_male_area = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Small',]$m_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS/mean(DB_data_clean_M[DB_data_clean_M$Area=='Large',]$m_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_male_area[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Treat_diff_male_area = sum(abs(diff.random_male_area) >= as.numeric(abs(diff.observed_male_area)))/   number_of_permutations
+p_Treat_diff_male_area
+
+# Females
+Treat_diff_female_area=c(boot_BW_females_area_large$t)-c(boot_BW_females_area_small$t)
+
+t_Treat_diff_female_area=mean(Treat_diff_female_area,na.rm=TRUE)
+t_Treat_diff_female_area_lower=quantile(Treat_diff_female_area,.025,na.rm=TRUE)
+t_Treat_diff_female_area_upper=quantile(Treat_diff_female_area,.975,na.rm=TRUE)
+
+#Permutation test to calculate p value
+comb_data_RS=c(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS),
+               DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS))
+comb_data_BM=c(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$stder_BM_focal,
+               DB_data_clean_F[DB_data_clean_F$Area=='Large',]$stder_BM_focal)
+
+diff.observed_female_area = cov(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS),use="complete.obs",method = "pearson") - cov(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$stder_BM_focal,DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS),use="complete.obs",method = "pearson") 
+diff.observed_female_area
+
+number_of_permutations = 100000
+diff.random_female_area = NULL
+for (i in 1 : number_of_permutations) {
+  
+  # Sample from the combined dataset
+  a.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS))), TRUE)
+  b.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Small',]$f_RS))), TRUE)
+  c.random = sample (na.omit(comb_data_RS), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS))), TRUE)
+  d.random = sample (na.omit(comb_data_BM), length(c(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS/mean(DB_data_clean_F[DB_data_clean_F$Area=='Large',]$f_RS))), TRUE)
+  
+  # Null (permuated) difference
+  diff.random_female_area[i] = cov(b.random,a.random,use="complete.obs",method = "pearson") - cov(d.random,c.random,use="complete.obs",method = "pearson")
+}
+# P-value is the fraction of how many times the permuted difference is
+# equal or more extreme than the observed difference
+
+p_Treat_diff_female_area = sum(abs(diff.random_female_area) >= as.numeric(abs(diff.observed_female_area)))/   number_of_permutations
+p_Treat_diff_female_area
+```
