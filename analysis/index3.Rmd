@@ -486,19 +486,6 @@ DB_data_Small_pop_full=rbind(DB_data_0.26,DB_data_0.67)
 DB_data_Large_pop_full=rbind(DB_data_0.52,DB_data_1.33)
 ```
 
-# Repeatability
-
-Repeatability of body mass measures.<br>
-Intra-class correlation coefficient:<br>
-- Males
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-ICCest(DB_data$Body_mass_mg_focal[DB_data$Sex=='M'], DB_data$Mass_reproducibility_mg_focal[DB_data$Sex=='M'])
-```
-- Females
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-ICCest(DB_data$Body_mass_mg_focal[DB_data$Sex=='F'], DB_data$Mass_reproducibility_mg_focal[DB_data$Sex=='F'])
-```
-
 # Effect of body mass on reproductive success
 
 Correlation between body mass and reproductive success (selection gradient).
@@ -824,9 +811,9 @@ summary(ModT2)
 Anova(ModT2,type=2)
 ```
 
-# Selection coefficients
+# Standardized selection differential
 
-Finally, we used bootstrapping to estimate treatment specific selection coeficients on body mass.
+Finally, we used bootstrapping to estimate treatment specific standardized selection differential on body mass.
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 # Selection coefficients ####
 #All 
@@ -930,7 +917,6 @@ SelDifBoot_Table$u95_CI <- as.numeric(as.character(SelDifBoot_Table$u95_CI))
 SelDifBoot_Table_round=cbind(SelDifBoot_Table[,c(1,2,3)],round(SelDifBoot_Table[,c(4,5,6)],digit=3))
 ```
 
-Figure of section coefficients on body mass for different density treatments.
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 #Figures ####
 SelDifBoot_Table$Treatment <- factor(SelDifBoot_Table$Treatment, levels=c("All",'Small group','large group','large area','Small area'))
@@ -993,7 +979,7 @@ plot1<-grid.arrange(BarPlot_2,BarPlot_3, nrow = 1,ncol=2)
 Figure 5: Effect of density on sex-specific standardized selection differential (s’) for population size (A) and area treatment (B).<br><br>
 
 Permutation tests for differences in density dependent standardized selection differentials.
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, results='hide'}
 # Permutation test ####
 # Sex bias ####
 #population size ####
@@ -1288,4 +1274,65 @@ for (i in 1 : number_of_permutations) {
 
 p_Treat_diff_female_area = sum(abs(diff.random_female_area) >= as.numeric(abs(diff.observed_female_area)))/   number_of_permutations
 p_Treat_diff_female_area
+```
+
+Sex difference in small group size treatment: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Sex_diff_Small_pop
+```
+
+Sex difference in large group size treatment: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Sex_diff_large_pop
+```
+
+Sex difference in large area treatment: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Sex_diff_large_area
+```
+
+Sex difference in small area treatment: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Sex_diff_small_area
+```
+
+Treatment difference in group size treatment for males: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Treat_diff_male_pop
+```
+
+Treatment difference in group size treatment for females: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Treat_diff_female_pop
+```
+
+Treatment difference in area treatment for males: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Treat_diff_male_area
+```
+
+Treatment difference in area treatment for females: <br>
+p=
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+p_Treat_diff_female_area
+```
+
+# Repeatability
+
+Repeatability of body mass measures.<br>
+Intra-class correlation coefficient:<br>
+- Males
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+ICCest(DB_data$Body_mass_mg_focal[DB_data$Sex=='M'], DB_data$Mass_reproducibility_mg_focal[DB_data$Sex=='M'])
+```
+- Females
+```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+ICCest(DB_data$Body_mass_mg_focal[DB_data$Sex=='F'], DB_data$Mass_reproducibility_mg_focal[DB_data$Sex=='F'])
 ```

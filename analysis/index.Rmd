@@ -494,10 +494,10 @@ Behavioural variables:<br>
 - Number of different mating partners (mating success)<br>
 - Mating duration in seconds<br>
 - Mating encounters (mating number + mating attempts)<br>
-- Proportion of successful matings (mating number/mating number + mating attempts)<br>
-<br>
+- Proportion of successful matings (mating number/mating number + mating attempts)
+
 ### Number of matings
-Figure: Number of matings
+
 ```{r Mating num plot, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Figure: Number of matings
 # Treatment: Group size
@@ -577,7 +577,7 @@ grid.arrange(grobs = list(p1,p1.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 Figure 1: Effects of group size (A) and area treatment (B) on the number of matings of female and male focals. Black bars indicate means and standard errors.
 
 <br><br>
-Statistical models: Number of matings (quasi-Poisson GLM)<br>
+Statistical models: Number of matings (quasi-Poisson GLM)<br><br>
 Effect of group size on number of matings in females.
 ```{r Test, fig.align="center", fig.width=10, message=FALSE, warning=FALSE}
 mod1.1=glm(f_TotMatings~Gr_size,data=DB_data,family = quasipoisson)
@@ -606,7 +606,7 @@ mod1.4=glm(m_TotMatings~Area,data=DB_data,family = quasipoisson)
 summary(mod1.4)
 ```
 ### Number of mating partners
-Figure: Number of mating partners (mating success)
+
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Figure: Number of mating partners (mating success)
 # Treatment: Group size
@@ -685,7 +685,7 @@ plot2<-grid.arrange(grobs = list(p2,p2.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
 Figure 2: Effects of group size (A) and area treatment (B) on the number of mating partners of female and male focals. Black bars indicate means and quartile borders.
 
-<br><br>Statistical models: Number of mating partners (quasi-Poisson GLM)<br>
+<br><br>Statistical models: Number of mating partners (quasi-Poisson GLM)<br><br>
 Effect of group size on number of mating partners in females.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Statistical models: Number of mating partners (quasi-Poisson GLM)
@@ -716,7 +716,6 @@ mod2.4=glm(m_cMS~Area,data=DB_data,family = quasipoisson)
 summary(mod2.4)
 ```
 ### Mating duration
-Figure: Mating duration in seconds
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 #Figure: Mating duration in seconds
 # Treatment: Group size
@@ -795,7 +794,7 @@ plot3<-grid.arrange(grobs = list(p3,p3.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
 Figure 3: Effects of group size (A) and area treatment (B) on the Mating duration (in seconds) of female and male focals. Black bars indicate means and quartile borders.
 
-<br><br>Statistical models: Mating duration (Gaussian GLM)<br>
+<br><br>Statistical models: Mating duration (Gaussian GLM)<br><br>
 Effect of group size on mating duration in females.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Statistical models: Mating duration (Gaussian GLM)
@@ -826,7 +825,6 @@ mod3.4=glm(m_MatingDuration_av~Area,data=DB_data,family = gaussian)
 summary(mod3.4)
 ```
 ### Mating encounters
-Figure: Mating encounters (mating number + mating attempts)
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Figure: Mating encounters (mating number + mating attempts)
 # Treatment: Group size
@@ -905,7 +903,7 @@ plot4<-grid.arrange(grobs = list(p4,p4.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
 Figure 4: Effects of group size (A) and area treatment (B) on the number of mating encounters (mating number + mating attempts) of female and male focals. Black bars indicate means and quartile borders.
 
-<br><br>Statistical models: Mating encounters (Gaussian GLM)<br>
+<br><br>Statistical models: Mating encounters (Gaussian GLM)<br><br>
 Effect of group size on mating encounters in females.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Statistical models: Mating encounters (Gaussian GLM)
@@ -936,7 +934,6 @@ mod4.4=glm(m_Total_Encounters~Area,data=DB_data,family = gaussian)
 summary(mod4.4)
 ```
 ### Proportion of successful matings
-Figure: Proportion of successful matings (mating number/mating number + mating attempts)
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Figure: Proportion of successful matings (mating number/mating number + mating attempts)
 # Treatment: Group size
@@ -1013,9 +1010,9 @@ p5.2<-ggplot(DB_data, aes(x=Sex, y=as.numeric(Prop_MS),fill=Area, col=Area)) +
 
 plot5<-grid.arrange(grobs = list(p5,p5.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 5: Effects of group size (A) and area treatment (B) on the proportion of successful matings of female and male focals. Black bars indicate means and quartile borders.
+Figure 5: Effects of group size (A) and area treatment (B) on the proportion of successful matings (mating number/mating number + mating attempts) of female and male focals. Black bars indicate means and quartile borders.
 
-<br><br>Statistical models: Proportion of successful matings (quasi-binomial GLM)<br>
+<br><br>Statistical models: Proportion of successful matings (quasi-binomial GLM)<br><br>
 Effect of group size on proportion of successful matings in females.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Statistical models: Proportion of successful matings (quasi-binomial GLM)
@@ -1048,8 +1045,7 @@ summary(mod5.4)
 
 ## Reproductive success
 
-Secondly, we tested the effect that the treatments (group size and area) had on the reproductive success of focal beetles.<br>
-Figure: Reproductive success
+Secondly, we tested the effect that the treatments (group size and area) had on the reproductive success of focal beetles.
 ```{r, warning=FALSE, message=FALSE, results='hide',fig.width = 10}
 # Figure: Reproductive success
 # Treatment: Group size
@@ -1127,7 +1123,7 @@ grid.arrange(grobs = list(p6,p6.2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
 Figure 6: Effects of group size (A) and area treatment (B) on the reproductive success of female and male focals. Black bars indicate means and quartile borders.
 
-<br><br>Statistical models: Reproductive success (quasi-Poisson GLM)<br>
+<br><br>Statistical models: Reproductive success (quasi-Poisson GLM)<br><br>
 Effect of group size on reproductive success in females.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Statistical models: Reproductive success (quasi-Poisson GLM)
@@ -1890,35 +1886,35 @@ t_Treat_diff_Female_pop_S_p = sum(abs(diff.random) >= as.numeric(abs(diff.observ
 #Save data table ####
 CompTreat_Table_Male_area_I <- as.data.frame(cbind("Male", "Area", "Opportunity for selection", t_Treat_diff_Male_area_I, t_Treat_diff_Male_area_I_lower, t_Treat_diff_Male_area_I_upper, t_Treat_diff_Male_area_I_p))
 names(CompTreat_Table_Male_area_I)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_I <- as.data.frame(cbind("Male", "Population size", "Opportunity for selection", t_Treat_diff_Male_pop_I, t_Treat_diff_Male_pop_I_lower, t_Treat_diff_Male_pop_I_upper, t_Treat_diff_Male_pop_I_p))
+CompTreat_Table_Male_pop_I <- as.data.frame(cbind("Male", "Group size", "Opportunity for selection", t_Treat_diff_Male_pop_I, t_Treat_diff_Male_pop_I_lower, t_Treat_diff_Male_pop_I_upper, t_Treat_diff_Male_pop_I_p))
 names(CompTreat_Table_Male_pop_I)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Male_area_Is <- as.data.frame(cbind("Male", "Area", "Opportunity for sexual selection", t_Treat_diff_Male_area_Is, t_Treat_diff_Male_area_Is_lower, t_Treat_diff_Male_area_Is_upper, t_Treat_diff_Male_area_Is_p))
 names(CompTreat_Table_Male_area_Is)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_Is <- as.data.frame(cbind("Male", "Population size", "Opportunity for sexual selection", t_Treat_diff_Male_pop_Is, t_Treat_diff_Male_pop_Is_lower, t_Treat_diff_Male_pop_Is_upper, t_Treat_diff_Male_pop_Is_p))
+CompTreat_Table_Male_pop_Is <- as.data.frame(cbind("Male", "Group size", "Opportunity for sexual selection", t_Treat_diff_Male_pop_Is, t_Treat_diff_Male_pop_Is_lower, t_Treat_diff_Male_pop_Is_upper, t_Treat_diff_Male_pop_Is_p))
 names(CompTreat_Table_Male_pop_Is)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Male_area_B <- as.data.frame(cbind("Male", "Area", "Bateman gradient", t_Treat_diff_Male_area_B, t_Treat_diff_Male_area_B_lower, t_Treat_diff_Male_area_B_upper, t_Treat_diff_Male_area_B_p))
 names(CompTreat_Table_Male_area_B)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_B <- as.data.frame(cbind("Male", "Population size", "Bateman gradient", t_Treat_diff_Male_pop_B, t_Treat_diff_Male_pop_B_lower, t_Treat_diff_Male_pop_B_upper, t_Treat_diff_Male_pop_B_p))
+CompTreat_Table_Male_pop_B <- as.data.frame(cbind("Male", "Group size", "Bateman gradient", t_Treat_diff_Male_pop_B, t_Treat_diff_Male_pop_B_lower, t_Treat_diff_Male_pop_B_upper, t_Treat_diff_Male_pop_B_p))
 names(CompTreat_Table_Male_pop_B)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Male_area_S <- as.data.frame(cbind("Male", "Area", "Jones index", t_Treat_diff_Male_area_S, t_Treat_diff_Male_area_S_lower, t_Treat_diff_Male_area_S_upper, t_Treat_diff_Male_area_S_p))
 names(CompTreat_Table_Male_area_S)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_S <- as.data.frame(cbind("Male", "Population size", "Jones index", t_Treat_diff_Male_pop_S, t_Treat_diff_Male_pop_S_lower, t_Treat_diff_Male_pop_S_upper, t_Treat_diff_Male_pop_S_p))
+CompTreat_Table_Male_pop_S <- as.data.frame(cbind("Male", "Group size", "Jones index", t_Treat_diff_Male_pop_S, t_Treat_diff_Male_pop_S_lower, t_Treat_diff_Male_pop_S_upper, t_Treat_diff_Male_pop_S_p))
 names(CompTreat_Table_Male_pop_S)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Female_area_I <- as.data.frame(cbind("Female", "Area", "Opportunity for selection", t_Treat_diff_Female_area_I, t_Treat_diff_Female_area_I_lower, t_Treat_diff_Female_area_I_upper, t_Treat_diff_Female_area_I_p))
 names(CompTreat_Table_Female_area_I)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_pop_I <- as.data.frame(cbind("Female", "Population size", "Opportunity for selection", t_Treat_diff_Female_pop_I, t_Treat_diff_Female_pop_I_lower, t_Treat_diff_Female_pop_I_upper, t_Treat_diff_Female_pop_I_p))
+CompTreat_Table_Female_pop_I <- as.data.frame(cbind("Female", "Group size", "Opportunity for selection", t_Treat_diff_Female_pop_I, t_Treat_diff_Female_pop_I_lower, t_Treat_diff_Female_pop_I_upper, t_Treat_diff_Female_pop_I_p))
 names(CompTreat_Table_Female_pop_I)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Female_area_Is <- as.data.frame(cbind("Female", "Area", "Opportunity for sexual selection", t_Treat_diff_Female_area_Is, t_Treat_diff_Female_area_Is_lower, t_Treat_diff_Female_area_Is_upper, t_Treat_diff_Female_area_Is_p))
 names(CompTreat_Table_Female_area_Is)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_pop_Is <- as.data.frame(cbind("Female", "Population size", "Opportunity for sexual selection", t_Treat_diff_Female_pop_Is, t_Treat_diff_Female_pop_Is_lower, t_Treat_diff_Female_pop_Is_upper, t_Treat_diff_Female_pop_Is_p))
+CompTreat_Table_Female_pop_Is <- as.data.frame(cbind("Female", "Group size", "Opportunity for sexual selection", t_Treat_diff_Female_pop_Is, t_Treat_diff_Female_pop_Is_lower, t_Treat_diff_Female_pop_Is_upper, t_Treat_diff_Female_pop_Is_p))
 names(CompTreat_Table_Female_pop_Is)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Female_area_B <- as.data.frame(cbind("Female", "Area", "Bateman gradient", t_Treat_diff_Female_area_B, t_Treat_diff_Female_area_B_lower, t_Treat_diff_Female_area_B_upper, t_Treat_diff_Female_area_B_p))
 names(CompTreat_Table_Female_area_B)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_pop_B <- as.data.frame(cbind("Female", "Population size", "Bateman gradient", t_Treat_diff_Female_pop_B, t_Treat_diff_Female_pop_B_lower, t_Treat_diff_Female_pop_B_upper, t_Treat_diff_Female_pop_B_p))
+CompTreat_Table_Female_pop_B <- as.data.frame(cbind("Female", "Group size", "Bateman gradient", t_Treat_diff_Female_pop_B, t_Treat_diff_Female_pop_B_lower, t_Treat_diff_Female_pop_B_upper, t_Treat_diff_Female_pop_B_p))
 names(CompTreat_Table_Female_pop_B)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Female_area_S <- as.data.frame(cbind("Female", "Area", "Jones index", t_Treat_diff_Female_area_S, t_Treat_diff_Female_area_S_lower, t_Treat_diff_Female_area_S_upper, t_Treat_diff_Female_area_S_p))
 names(CompTreat_Table_Female_area_S)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_pop_S <- as.data.frame(cbind("Female", "Population size", "Jones index", t_Treat_diff_Female_pop_S, t_Treat_diff_Female_pop_S_lower, t_Treat_diff_Female_pop_S_upper, t_Treat_diff_Female_pop_S_p))
+CompTreat_Table_Female_pop_S <- as.data.frame(cbind("Female", "Group size", "Jones index", t_Treat_diff_Female_pop_S, t_Treat_diff_Female_pop_S_lower, t_Treat_diff_Female_pop_S_upper, t_Treat_diff_Female_pop_S_p))
 names(CompTreat_Table_Female_pop_S)=c('V1','V2','V3','V4','V5','V6','V7')
 
 Table_BatemanMetrics_TreatComp <- as.data.frame(as.matrix(rbind(CompTreat_Table_Male_area_I,CompTreat_Table_Male_area_Is,
@@ -2473,35 +2469,35 @@ t_Sex_diff_Large_pop_S_p = sum(abs(diff.random) >= as.numeric(abs(diff.observed)
 #Save data table ####
 CompSex_Table_Large_area_I <- as.data.frame(cbind("Large area", "Opportunity for selection", t_Sex_diff_Large_area_I, t_Sex_diff_Large_area_I_lower, t_Sex_diff_Large_area_I_upper, t_Sex_diff_Large_area_I_p))
 names(CompSex_Table_Large_area_I)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Large_pop_I <- as.data.frame(cbind("Large population size", "Opportunity for selection", t_Sex_diff_Large_pop_I, t_Sex_diff_Large_pop_I_lower, t_Sex_diff_Large_pop_I_upper, t_Sex_diff_Large_pop_I_p))
+CompSex_Table_Large_pop_I <- as.data.frame(cbind("Large group size", "Opportunity for selection", t_Sex_diff_Large_pop_I, t_Sex_diff_Large_pop_I_lower, t_Sex_diff_Large_pop_I_upper, t_Sex_diff_Large_pop_I_p))
 names(CompSex_Table_Large_pop_I)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Large_area_Is <- as.data.frame(cbind("Large area", "Opportunity for sexual selection", t_Sex_diff_Large_area_Is, t_Sex_diff_Large_area_Is_lower, t_Sex_diff_Large_area_Is_upper, t_Sex_diff_Large_area_Is_p))
 names(CompSex_Table_Large_area_Is)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Large_pop_Is <- as.data.frame(cbind("Large population size", "Opportunity for sexual selection", t_Sex_diff_Large_pop_Is, t_Sex_diff_Large_pop_Is_lower, t_Sex_diff_Large_pop_Is_upper, t_Sex_diff_Large_pop_Is_p))
+CompSex_Table_Large_pop_Is <- as.data.frame(cbind("Large group size", "Opportunity for sexual selection", t_Sex_diff_Large_pop_Is, t_Sex_diff_Large_pop_Is_lower, t_Sex_diff_Large_pop_Is_upper, t_Sex_diff_Large_pop_Is_p))
 names(CompSex_Table_Large_pop_Is)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Large_area_B <- as.data.frame(cbind("Large area", "Bateman gradient", t_Sex_diff_Large_area_B, t_Sex_diff_Large_area_B_lower, t_Sex_diff_Large_area_B_upper, t_Sex_diff_Large_area_B_p))
 names(CompSex_Table_Large_area_B)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Large_pop_B <- as.data.frame(cbind("Large population size", "Bateman gradient", t_Sex_diff_Large_pop_B, t_Sex_diff_Large_pop_B_lower, t_Sex_diff_Large_pop_B_upper, t_Sex_diff_Large_pop_B_p))
+CompSex_Table_Large_pop_B <- as.data.frame(cbind("Large group size", "Bateman gradient", t_Sex_diff_Large_pop_B, t_Sex_diff_Large_pop_B_lower, t_Sex_diff_Large_pop_B_upper, t_Sex_diff_Large_pop_B_p))
 names(CompSex_Table_Large_pop_B)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Large_area_S <- as.data.frame(cbind("Large area", "Jones index", t_Sex_diff_Large_area_S, t_Sex_diff_Large_area_S_lower, t_Sex_diff_Large_area_S_upper, t_Sex_diff_Large_area_S_p))
 names(CompSex_Table_Large_area_S)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Large_pop_S <- as.data.frame(cbind("Large population size", "Jones index", t_Sex_diff_Large_pop_S, t_Sex_diff_Large_pop_S_lower, t_Sex_diff_Large_pop_S_upper, t_Sex_diff_Large_pop_S_p))
+CompSex_Table_Large_pop_S <- as.data.frame(cbind("Large group size", "Jones index", t_Sex_diff_Large_pop_S, t_Sex_diff_Large_pop_S_lower, t_Sex_diff_Large_pop_S_upper, t_Sex_diff_Large_pop_S_p))
 names(CompSex_Table_Large_pop_S)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Small_area_I <- as.data.frame(cbind("Small area", "Opportunity for selection", t_Sex_diff_Small_area_I, t_Sex_diff_Small_area_I_lower, t_Sex_diff_Small_area_I_upper, t_Sex_diff_Small_area_I_p))
 names(CompSex_Table_Small_area_I)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Small_pop_I <- as.data.frame(cbind("Small population size", "Opportunity for selection", t_Sex_diff_Small_pop_I, t_Sex_diff_Small_pop_I_lower, t_Sex_diff_Small_pop_I_upper, t_Sex_diff_Small_pop_I_p))
+CompSex_Table_Small_pop_I <- as.data.frame(cbind("Small group size", "Opportunity for selection", t_Sex_diff_Small_pop_I, t_Sex_diff_Small_pop_I_lower, t_Sex_diff_Small_pop_I_upper, t_Sex_diff_Small_pop_I_p))
 names(CompSex_Table_Small_pop_I)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Small_area_Is <- as.data.frame(cbind("Small area", "Opportunity for sexual selection", t_Sex_diff_Small_area_Is, t_Sex_diff_Small_area_Is_lower, t_Sex_diff_Small_area_Is_upper, t_Sex_diff_Small_area_Is_p))
 names(CompSex_Table_Small_area_Is)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Small_pop_Is <- as.data.frame(cbind("Small population size", "Opportunity for sexual selection", t_Sex_diff_Small_pop_Is, t_Sex_diff_Small_pop_Is_lower, t_Sex_diff_Small_pop_Is_upper, t_Sex_diff_Small_pop_Is_p))
+CompSex_Table_Small_pop_Is <- as.data.frame(cbind("Small group size", "Opportunity for sexual selection", t_Sex_diff_Small_pop_Is, t_Sex_diff_Small_pop_Is_lower, t_Sex_diff_Small_pop_Is_upper, t_Sex_diff_Small_pop_Is_p))
 names(CompSex_Table_Small_pop_Is)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Small_area_B <- as.data.frame(cbind("Small area", "Bateman gradient", t_Sex_diff_Small_area_B, t_Sex_diff_Small_area_B_lower, t_Sex_diff_Small_area_B_upper, t_Sex_diff_Small_area_B_p))
 names(CompSex_Table_Small_area_B)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Small_pop_B <- as.data.frame(cbind("Small population size", "Bateman gradient", t_Sex_diff_Small_pop_B, t_Sex_diff_Small_pop_B_lower, t_Sex_diff_Small_pop_B_upper, t_Sex_diff_Small_pop_B_p))
+CompSex_Table_Small_pop_B <- as.data.frame(cbind("Small group size", "Bateman gradient", t_Sex_diff_Small_pop_B, t_Sex_diff_Small_pop_B_lower, t_Sex_diff_Small_pop_B_upper, t_Sex_diff_Small_pop_B_p))
 names(CompSex_Table_Small_pop_B)=c('V1','V2','V3','V4','V5','V6')
 CompSex_Table_Small_area_S <- as.data.frame(cbind("Small area", "Jones index", t_Sex_diff_Small_area_S, t_Sex_diff_Small_area_S_lower, t_Sex_diff_Small_area_S_upper, t_Sex_diff_Small_area_S_p))
 names(CompSex_Table_Small_area_S)=c('V1','V2','V3','V4','V5','V6')
-CompSex_Table_Small_pop_S <- as.data.frame(cbind("Small population size", "Jones index", t_Sex_diff_Small_pop_S, t_Sex_diff_Small_pop_S_lower, t_Sex_diff_Small_pop_S_upper, t_Sex_diff_Small_pop_S_p))
+CompSex_Table_Small_pop_S <- as.data.frame(cbind("Small group size", "Jones index", t_Sex_diff_Small_pop_S, t_Sex_diff_Small_pop_S_lower, t_Sex_diff_Small_pop_S_upper, t_Sex_diff_Small_pop_S_p))
 names(CompSex_Table_Small_pop_S)=c('V1','V2','V3','V4','V5','V6')
 
 Table_BatemanMetrics_SexComp <- as.data.frame(as.matrix(rbind(CompSex_Table_Small_pop_I,CompSex_Table_Small_pop_Is,
@@ -2529,7 +2525,6 @@ rownames(Table_BatemanMetrics_SexComp_round) <- NULL
 ```
 
 ## Opportunity for selection
-Figure: Opportunity for selection (variance in reproductive success) 
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 #Plot Selection Metrics
 
@@ -2596,19 +2591,18 @@ BarPlot_2<- ggplot(Table_BatemanMetrics_area[c(1,2,9,10),], aes(x=Sex, y=Varianc
 
 grid.arrange(grobs = list(BarPlot_1,BarPlot_2), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 7: Effects of group size (A) and area treatment (B) on the opportunity for selection in females and males. Means and 95% confidence intervals.<br><br>
+Figure 7: Effects of group size (A) and area treatment (B) on the opportunity for selection (variance in reproductive success) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the opportunity for selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(1,5,9,13),]
+Table_BatemanMetrics_TreatComp_round[c(1,5,9,13),c(1,3,4,5,6)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_SexComp_round[c(1,5,9,13),]
+Table_BatemanMetrics_SexComp_round[c(1,5,9,13),c(1,3,4,5,6)]
 ```
 
 ## Opportunity for sexual selection
-Figure: Opportunity for sexual selection (variance in mating success) 
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Opportunity for sexual selection
 BarPlot_3<- ggplot(Table_BatemanMetrics_pop[c(3,4,11,12),], aes(x=Sex, y=Variance, fill=Treatment)) + 
@@ -2665,19 +2659,18 @@ BarPlot_4<- ggplot(Table_BatemanMetrics_area[c(3,4,11,12),], aes(x=Sex, y=Varian
 
 grid.arrange(grobs = list(BarPlot_3,BarPlot_4), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 8: Effects of group size (A) and area treatment (B) on the opportunity for sexual selection in females and males. Means and 95% confidence intervals.<br><br>
+Figure 8: Effects of group size (A) and area treatment (B) on the opportunity for sexual selection (variance in mating success) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the opportunity for sexual selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(2,6,10,14),]
+Table_BatemanMetrics_TreatComp_round[c(2,6,10,14),c(1,3,4,5,6)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_SexComp_round[c(2,6,10,14),]
+Table_BatemanMetrics_SexComp_round[c(2,6,10,14),c(1,3,4,5,6)]
 ```
 
 ## Bateman gradient
-Figure: Bateman gradient (slope of mating success on reproductive success) 
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Bateman gradient
 BarPlot_5<- ggplot(Table_BatemanMetrics_pop[c(5,6,13,14),], aes(x=Sex, y=Variance, fill=Treatment)) + 
@@ -2734,15 +2727,15 @@ BarPlot_6<- ggplot(Table_BatemanMetrics_area[c(5,6,13,14),], aes(x=Sex, y=Varian
 
 grid.arrange(grobs = list(BarPlot_5,BarPlot_6), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 9: Effects of group size (A) and area treatment (B) on the Bateman gradient in females and males. Means and 95% confidence intervals.<br><br>
+Figure 9: Effects of group size (A) and area treatment (B) on the Bateman gradient (slope of mating success on reproductive success) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the Bateman gradient
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(3,7,11,15),]
+Table_BatemanMetrics_TreatComp_round[c(3,7,11,15),c(1,3,4,5,6)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_SexComp_round[c(3,7,11,15),]
+Table_BatemanMetrics_SexComp_round[c(3,7,11,15),c(1,3,4,5,6)]
 ```
 
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
@@ -2755,8 +2748,8 @@ p1<-ggplot(DB_data_clean_Small_pop, aes(x=rel_m_cMS, y=rel_m_RS)) +
   theme(axis.text=element_text(size=13),
         axis.title=element_text(size=14))+ theme(legend.position="none")+
   ylim(0,4.2)+xlim(0,3.2)+
-  annotate("text",label=expression(paste(beta['female'],' = 0.69')),x=.48,y=4.2,size=4)+
-  annotate("text",label=expression(paste(beta['male'],' = 1.15')),x=.42,y=3.85,size=4)+
+  annotate("text",label=expression(paste(beta['female'],' = 0.57')),x=.48,y=4.2,size=4)+
+  annotate("text",label=expression(paste(beta['male'],' = 1.13')),x=.42,y=3.85,size=4)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
 p1=p1+geom_point(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],alpha=0.4,shape=16, size = 3)+
   geom_smooth(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],method=lm, se=TRUE,alpha=0.3)
@@ -2769,8 +2762,8 @@ p2<-ggplot(DB_data_clean_Large_pop, aes(x=rel_m_cMS, y=rel_m_RS)) +
   theme(axis.text=element_text(size=13),
         axis.title=element_text(size=14))+ theme(legend.position="none")+
   ylim(0,4.2)+xlim(0,3.2)+
-  annotate("text",label=expression(paste(beta['female'],' = 0.88')),x=.48,y=4.2,size=4)+
-  annotate("text",label=expression(paste(beta['male'],' = 0.59')),x=.42,y=3.85,size=4)+
+  annotate("text",label=expression(paste(beta['female'],' =  0.86')),x=.48,y=4.2,size=4)+
+  annotate("text",label=expression(paste(beta['male'],' = 0.56')),x=.42,y=3.85,size=4)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
 p2=p2+geom_point(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],alpha=0.4,shape=16, size = 3)+
   geom_smooth(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],method=lm, se=TRUE,alpha=0.3)
@@ -2783,8 +2776,8 @@ p3<-ggplot(DB_data_clean_Large_area, aes(x=rel_m_cMS, y=rel_m_RS)) +
   theme(axis.text=element_text(size=13),
         axis.title=element_text(size=14))+ theme(legend.position="none")+
   ylim(0,4.2)+xlim(0,3.2)+
-  annotate("text",label=expression(paste(beta['female'],' = 0.93')),x=.48,y=4.2,size=4)+
-  annotate("text",label=expression(paste(beta['male'],' = 0.51')),x=.42,y=3.85,size=4)+
+  annotate("text",label=expression(paste(beta['female'],' = 0.90')),x=.48,y=4.2,size=4)+
+  annotate("text",label=expression(paste(beta['male'],' = 0.48')),x=.42,y=3.85,size=4)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
 p3=p3+geom_point(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],alpha=0.4,shape=16, size = 3)+
   geom_smooth(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],method=lm, se=TRUE,alpha=0.3)
@@ -2799,8 +2792,8 @@ p4<-ggplot(DB_data_clean_Small_area, aes(x=rel_m_cMS, y=rel_m_RS)) +
         axis.title=element_text(size=14))+
   ylim(0,4.2)+xlim(0,3.2)+
   theme(legend.position="none")+
-  annotate("text",label=expression(paste(beta['female'],' = 0.72')),x=.48,y=4.2,size=4)+
-  annotate("text",label=expression(paste(beta['male'],' = 1.19')),x=.42,y=3.85,size=4)+
+  annotate("text",label=expression(paste(beta['female'],' = 0.66')),x=.48,y=4.2,size=4)+
+  annotate("text",label=expression(paste(beta['male'],' =  1.16')),x=.42,y=3.85,size=4)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))
 p4=p4+geom_point(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],alpha=0.4,shape=16, size = 3)+
   geom_smooth(aes(x=rel_f_cMS, y=rel_f_RS),color=colpal2[1],method=lm, se=TRUE,alpha=0.3)
@@ -2821,7 +2814,6 @@ plot1<-grid.arrange(p1,p2,legend,p3,p4,legend, nrow = 2,ncol=3, widths=c(2.3, 2.
 Figure 10: Scatter plot of the Bateman gradient in females and males. Means and 95% confidence intervals.<br><br>
 
 ## Jones index
-Figure: Jones index (maximum strength of sexual selection) 
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 # Jones index
 BarPlot_7<- ggplot(Table_BatemanMetrics_pop[c(7,8,14,15),], aes(x=Sex, y=Variance, fill=Treatment)) + 
@@ -2878,15 +2870,15 @@ BarPlot_8<- ggplot(Table_BatemanMetrics_area[c(7,8,14,15),], aes(x=Sex, y=Varian
 
 grid.arrange(grobs = list(BarPlot_7,BarPlot_8), nrow = 1,ncol=2, widths=c(2.3, 2.3))
 ```
-Figure 11: Effects of group size (A) and area treatment (B) on the Jones index in females and males. Means and 95% confidence intervals.<br><br>
+Figure 11: Effects of group size (A) and area treatment (B) on the Jones index (maximum strength of sexual selection) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the Jones index
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(4,8,12,16),]
+Table_BatemanMetrics_TreatComp_round[c(4,8,12,16),c(1,3,4,5,6)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_SexComp_round[c(4,8,12,16),]
+Table_BatemanMetrics_SexComp_round[c(4,8,12,16),c(1,3,4,5,6)]
 ```
 
 # Variance decopmposition
@@ -3504,29 +3496,29 @@ for (i in 1 : number_of_permutations) {
 t_Treat_diff_Female_pop_fFec_p = sum(abs(diff.random) >= as.numeric(abs(diff.observed)))/   number_of_permutations
 
 #Save data table ####
-CompTreat_Table_Male_area_mMS <- as.data.frame(cbind("Male", "Area", "mMS", t_Treat_diff_Male_area_mMS, t_Treat_diff_Male_area_mMS_lower, t_Treat_diff_Male_area_mMS_upper, t_Treat_diff_Male_area_mMS_p))
+CompTreat_Table_Male_area_mMS <- as.data.frame(cbind("Male", "Area", "MS", t_Treat_diff_Male_area_mMS, t_Treat_diff_Male_area_mMS_lower, t_Treat_diff_Male_area_mMS_upper, t_Treat_diff_Male_area_mMS_p))
 names(CompTreat_Table_Male_area_mMS)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_area_InSuc <- as.data.frame(cbind("Male", "Area", "InSuc", t_Treat_diff_Male_area_InSuc, t_Treat_diff_Male_area_InSuc_lower, t_Treat_diff_Male_area_InSuc_upper, t_Treat_diff_Male_area_InSuc_p))
+CompTreat_Table_Male_area_InSuc <- as.data.frame(cbind("Male", "Area", "inSuc", t_Treat_diff_Male_area_InSuc, t_Treat_diff_Male_area_InSuc_lower, t_Treat_diff_Male_area_InSuc_upper, t_Treat_diff_Male_area_InSuc_p))
 names(CompTreat_Table_Male_area_InSuc)=c('V1','V2','V3','V4','V5','V6','V7')
 CompTreat_Table_Male_area_feSuc <- as.data.frame(cbind("Male", "Area", "feSuc", t_Treat_diff_Male_area_feSuc, t_Treat_diff_Male_area_feSuc_lower, t_Treat_diff_Male_area_feSuc_upper, t_Treat_diff_Male_area_feSuc_p))
 names(CompTreat_Table_Male_area_feSuc)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_area_mFec <- as.data.frame(cbind("Male", "Area", "mFec", t_Treat_diff_Male_area_mFec, t_Treat_diff_Male_area_mFec_lower, t_Treat_diff_Male_area_mFec_upper, t_Treat_diff_Male_area_mFec_p))
+CompTreat_Table_Male_area_mFec <- as.data.frame(cbind("Male", "Area", "Fec", t_Treat_diff_Male_area_mFec, t_Treat_diff_Male_area_mFec_lower, t_Treat_diff_Male_area_mFec_upper, t_Treat_diff_Male_area_mFec_p))
 names(CompTreat_Table_Male_area_mFec)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_area_fMS <- as.data.frame(cbind("Female", "Area", "fMS", t_Treat_diff_Female_area_fMS, t_Treat_diff_Female_area_fMS_lower, t_Treat_diff_Female_area_fMS_upper, t_Treat_diff_Female_area_fMS_p))
+CompTreat_Table_Female_area_fMS <- as.data.frame(cbind("Female", "Area", "MS", t_Treat_diff_Female_area_fMS, t_Treat_diff_Female_area_fMS_lower, t_Treat_diff_Female_area_fMS_upper, t_Treat_diff_Female_area_fMS_p))
 names(CompTreat_Table_Female_area_fMS)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_area_fFec <- as.data.frame(cbind("Female", "Area", "fFec", t_Treat_diff_Female_area_fFec, t_Treat_diff_Female_area_fFec_lower, t_Treat_diff_Female_area_fFec_upper, t_Treat_diff_Female_area_fFec_p))
+CompTreat_Table_Female_area_fFec <- as.data.frame(cbind("Female", "Area", "Fec", t_Treat_diff_Female_area_fFec, t_Treat_diff_Female_area_fFec_lower, t_Treat_diff_Female_area_fFec_upper, t_Treat_diff_Female_area_fFec_p))
 names(CompTreat_Table_Female_area_fFec)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_mMS <- as.data.frame(cbind("Male", "pop", "mMS", t_Treat_diff_Male_pop_mMS, t_Treat_diff_Male_pop_mMS_lower, t_Treat_diff_Male_pop_mMS_upper, t_Treat_diff_Male_pop_mMS_p))
+CompTreat_Table_Male_pop_mMS <- as.data.frame(cbind("Male", "Group size", "MS", t_Treat_diff_Male_pop_mMS, t_Treat_diff_Male_pop_mMS_lower, t_Treat_diff_Male_pop_mMS_upper, t_Treat_diff_Male_pop_mMS_p))
 names(CompTreat_Table_Male_pop_mMS)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_InSuc <- as.data.frame(cbind("Male", "pop", "InSuc", t_Treat_diff_Male_pop_InSuc, t_Treat_diff_Male_pop_InSuc_lower, t_Treat_diff_Male_pop_InSuc_upper, t_Treat_diff_Male_pop_InSuc_p))
+CompTreat_Table_Male_pop_InSuc <- as.data.frame(cbind("Male", "Group size", "inSuc", t_Treat_diff_Male_pop_InSuc, t_Treat_diff_Male_pop_InSuc_lower, t_Treat_diff_Male_pop_InSuc_upper, t_Treat_diff_Male_pop_InSuc_p))
 names(CompTreat_Table_Male_pop_InSuc)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_feSuc <- as.data.frame(cbind("Male", "pop", "feSuc", t_Treat_diff_Male_pop_feSuc, t_Treat_diff_Male_pop_feSuc_lower, t_Treat_diff_Male_pop_feSuc_upper, t_Treat_diff_Male_pop_feSuc_p))
+CompTreat_Table_Male_pop_feSuc <- as.data.frame(cbind("Male", "Group size", "feSuc", t_Treat_diff_Male_pop_feSuc, t_Treat_diff_Male_pop_feSuc_lower, t_Treat_diff_Male_pop_feSuc_upper, t_Treat_diff_Male_pop_feSuc_p))
 names(CompTreat_Table_Male_pop_feSuc)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Male_pop_mFec <- as.data.frame(cbind("Male", "pop", "mFec", t_Treat_diff_Male_pop_mFec, t_Treat_diff_Male_pop_mFec_lower, t_Treat_diff_Male_pop_mFec_upper, t_Treat_diff_Male_pop_mFec_p))
+CompTreat_Table_Male_pop_mFec <- as.data.frame(cbind("Male", "Group size", "Fec", t_Treat_diff_Male_pop_mFec, t_Treat_diff_Male_pop_mFec_lower, t_Treat_diff_Male_pop_mFec_upper, t_Treat_diff_Male_pop_mFec_p))
 names(CompTreat_Table_Male_pop_mFec)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_pop_fMS <- as.data.frame(cbind("Female", "pop", "fMS", t_Treat_diff_Female_pop_fMS, t_Treat_diff_Female_pop_fMS_lower, t_Treat_diff_Female_pop_fMS_upper, t_Treat_diff_Female_pop_fMS_p))
+CompTreat_Table_Female_pop_fMS <- as.data.frame(cbind("Female", "Group size", "MS", t_Treat_diff_Female_pop_fMS, t_Treat_diff_Female_pop_fMS_lower, t_Treat_diff_Female_pop_fMS_upper, t_Treat_diff_Female_pop_fMS_p))
 names(CompTreat_Table_Female_pop_fMS)=c('V1','V2','V3','V4','V5','V6','V7')
-CompTreat_Table_Female_pop_fFec <- as.data.frame(cbind("Female", "pop", "fFec", t_Treat_diff_Female_pop_fFec, t_Treat_diff_Female_pop_fFec_lower, t_Treat_diff_Female_pop_fFec_upper, t_Treat_diff_Female_pop_fFec_p))
+CompTreat_Table_Female_pop_fFec <- as.data.frame(cbind("Female", "Group size", "Fec", t_Treat_diff_Female_pop_fFec, t_Treat_diff_Female_pop_fFec_lower, t_Treat_diff_Female_pop_fFec_upper, t_Treat_diff_Female_pop_fFec_p))
 names(CompTreat_Table_Female_pop_fFec)=c('V1','V2','V3','V4','V5','V6','V7')
 
 
@@ -3554,7 +3546,6 @@ rownames(Table_VarianceDecomposition_TreatComp_round) <- NULL
 ```
 
 ## Variance decomposition for males
-Figure: Variance decomposition for males
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
 #Figure ####
 
@@ -3623,11 +3614,10 @@ Figure 12: Variance decomposition for males into mating success, insemination su
 
 Treatement comparisons via permutation test for the variance decomposition of male reproductive success.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_VarianceDecomposition_TreatComp_round[c(1:8),]
+Table_VarianceDecomposition_TreatComp_round[c(1:8),c(2:7)]
 ```
 
 ## Variance decomposition for females
-Figure: Variance decomposition for females
 ```{r fig.align="center", fig.width=10, message=FALSE, warning=FALSE}
 BarPlot_3<- ggplot(PhenVarBoot_Table_pop[9:12,], aes(x=Variance_component, y=Variance, fill=Treatment)) + 
   scale_y_continuous(limits = c(0, 2.7), breaks = seq(0,2.7,0.5), expand = c(0 ,0)) + 
@@ -3686,7 +3676,7 @@ grid.arrange(grobs = list(BarPlot_3,BarPlot_4), nrow = 1,ncol=2, widths=c(2.3, 2
 Figure 13: Variance decomposition for females into mating success, fecundity and their covariance. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the variance decomposition of female reproductive success.
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_VarianceDecomposition_TreatComp_round[c(9:10),]
+Table_VarianceDecomposition_TreatComp_round[c(9:10),c(2:7)]
 ```
 ## Covariances for male variance decomposition
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide', fig.show='hide'}
@@ -4044,7 +4034,7 @@ PhenVarBoot_Table_plot_cov_pop=PhenVarBoot_Table_plot_cov_pop[PhenVarBoot_Table_
 ```
 
 Figure: Covariances of variance decomposition for females
-```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
+```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 18}
 BarPlot_5<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Variance_component, y=Variance, fill=Treatment)) + 
   scale_y_continuous(limits = c(-0.25, 0.2), breaks = seq(-0.25,0.2,0.1), expand = c(0 ,0)) + 
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +

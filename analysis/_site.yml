@@ -5,7 +5,7 @@ navbar:
   title: "Population density affects sexual selection in the red flour beetle"
   left:
   - text: Home
-    href: start.html
+    href: a_start.html
   - text: Analyses 1
     href: index.html
   - text: Analyses 2
