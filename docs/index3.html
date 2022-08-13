@@ -480,7 +480,7 @@ CNRS, Université de Montpellier</br></h4>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -491,8 +491,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -501,13 +501,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-12
+<strong>Last updated:</strong> 2022-08-13
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong>
@@ -531,21 +531,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -636,15 +633,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef89f7c166b10dab54e9f687a799bfc4a40170000targetblankf89f7c1a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef54f0225bf3bec80fbcdfe96a0af081fc5f51918targetblankf54f022a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f89f7c166b10dab54e9f687a799bfc4a40170000" target="_blank">f89f7c1</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f54f0225bf3bec80fbcdfe96a0af081fc5f51918" target="_blank">f54f022</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef89f7c166b10dab54e9f687a799bfc4a40170000targetblankf89f7c1a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef54f0225bf3bec80fbcdfe96a0af081fc5f51918targetblankf54f022a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -654,7 +651,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f89f7c166b10dab54e9f687a799bfc4a40170000" target="_blank">f89f7c1</a>.
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f54f0225bf3bec80fbcdfe96a0af081fc5f51918" target="_blank">f54f022</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -675,15 +672,6 @@ Ignored files:
 Untracked files:
     Untracked:  analysis/a_start.Rmd
     Untracked:  analysis/index6.Rmd
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/index2.Rmd
-    Modified:   analysis/index3.Rmd
-    Modified:   analysis/index4.Rmd
-    Modified:   analysis/index5.Rmd
-    Deleted:    analysis/start.Rmd
 
 </code></pre>
 <p>
@@ -728,6 +716,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/f54f0225bf3bec80fbcdfe96a0af081fc5f51918/analysis/index3.Rmd" target="_blank">f54f022</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2022-08-13
+</td>
+<td>
+wflow_publish(republish = TRUE, all = T)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/f54f0225bf3bec80fbcdfe96a0af081fc5f51918/docs/index3.html" target="_blank">f54f022</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2022-08-13
+</td>
+<td>
+wflow_publish(republish = TRUE, all = T)
+</td>
+</tr>
 <tr>
 <td>
 Rmd

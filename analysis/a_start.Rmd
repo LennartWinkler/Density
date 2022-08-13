@@ -1,0 +1,29 @@
+---
+title: 'Population density affects sexual selection in the red flour beetle'
+author: "Lennart Winkler^1^, Ronja Eilhardt^1^ & Tim Janicke^1,2^ <br></br>  ^1^Applied Zoology, Technical University Dresden <br> ^2^Centre d’Écologie Fonctionnelle et Évolutive, UMR 5175, CNRS, Université de Montpellier</br>"
+subtitle: Start page
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html
+---
+
+Supplementary material reporting R code for the manuscript 'Population density affects sexual selection in the red flour beetle'.<br><br>
+
+Code and figures can be found at:<br><br>
+- All initial manuscript analyses <br>
+https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index.html
+<br><br>
+- Additional analyses excluding individuals without mating success <br>
+https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index2.html
+<br><br>
+- Analyses on body mass of focal individuals <br>
+https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index3.html
+<br><br>
+- Analyses on body mass of focal individuals excluding individuals without mating success  <br>
+https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index4.html
+<br><br>
+- All initial manuscript analyses (treatment specific) <br>
+https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index5.html
+<br><br>
+- Additional analyses excluding individuals without mating success (treatment specific) <br>
+https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index6.html
