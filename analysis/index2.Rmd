@@ -2596,7 +2596,7 @@ grid.arrange(grobs = list(BarPlot_1,BarPlot_2), nrow = 1,ncol=2, widths=c(2.3, 2
 Figure 7: Effects of group size (A) and area treatment (B) on the opportunity for selection (variance in reproductive success) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the opportunity for selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(1,5,9,13),c(1,3,4,5,6)]
+Table_BatemanMetrics_TreatComp_round[c(1,5,9,13),c(1,2,4,5,6,7)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
@@ -2664,7 +2664,7 @@ grid.arrange(grobs = list(BarPlot_3,BarPlot_4), nrow = 1,ncol=2, widths=c(2.3, 2
 Figure 8: Effects of group size (A) and area treatment (B) on the opportunity for sexual selection (variance in mating success) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the opportunity for sexual selection
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(2,6,10,14),c(1,3,4,5,6)]
+Table_BatemanMetrics_TreatComp_round[c(2,6,10,14),c(1,2,4,5,6,7)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
@@ -2730,7 +2730,7 @@ grid.arrange(grobs = list(BarPlot_5,BarPlot_6), nrow = 1,ncol=2, widths=c(2.3, 2
 Figure 9: Effects of group size (A) and area treatment (B) on the Bateman gradient (slope of mating success on reproductive success) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the Bateman gradient
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(3,7,11,15),c(1,3,4,5,6)]
+Table_BatemanMetrics_TreatComp_round[c(3,7,11,15),c(1,2,4,5,6,7)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection
@@ -2871,7 +2871,7 @@ grid.arrange(grobs = list(BarPlot_7,BarPlot_8), nrow = 1,ncol=2, widths=c(2.3, 2
 Figure 11: Effects of group size (A) and area treatment (B) on the Jones index (maximum strength of sexual selection) in females and males. Means and 95% confidence intervals.<br><br>
 Treatement comparisons via permutation test for the Jones index
 ```{r, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10}
-Table_BatemanMetrics_TreatComp_round[c(4,8,12,16),c(1,3,4,5,6)]
+Table_BatemanMetrics_TreatComp_round[c(4,8,12,16),c(1,2,4,5,6,7)]
 ```
 
 Sex comparisons via permutation test for the opportunity for selection

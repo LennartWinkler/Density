@@ -16,6 +16,8 @@ navbar:
     href: index4.html
   - text: Analyses 5
     href: index5.html
+  - text: Analyses 6
+    href: index6.html
 output:
   workflowr::wflow_html:
     toc: true
