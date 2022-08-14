@@ -445,6 +445,9 @@ div.tocify {
 <li>
   <a href="index5.html">Analyses 5</a>
 </li>
+<li>
+  <a href="index6.html">Analyses 6</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -481,7 +484,7 @@ CNRS, Université de Montpellier</br></h4>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -492,8 +495,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -502,13 +505,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-13
+<strong>Last updated:</strong> 2022-08-14
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong>
@@ -532,21 +535,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -637,15 +637,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef89f7c166b10dab54e9f687a799bfc4a40170000targetblankf89f7c1a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treed0d039cec957009b84835e46a05832afd43c2d78targetblankd0d039ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f89f7c166b10dab54e9f687a799bfc4a40170000" target="_blank">f89f7c1</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/d0d039cec957009b84835e46a05832afd43c2d78" target="_blank">d0d039c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef89f7c166b10dab54e9f687a799bfc4a40170000targetblankf89f7c1a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treed0d039cec957009b84835e46a05832afd43c2d78targetblankd0d039ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -655,7 +655,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f89f7c166b10dab54e9f687a799bfc4a40170000" target="_blank">f89f7c1</a>.
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/d0d039cec957009b84835e46a05832afd43c2d78" target="_blank">d0d039c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -672,20 +672,6 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
-
-Untracked files:
-    Untracked:  analysis/a_start.Rmd
-    Untracked:  analysis/index6.Rmd
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/index2.Rmd
-    Modified:   analysis/index3.Rmd
-    Modified:   analysis/index4.Rmd
-    Modified:   analysis/index5.Rmd
-    Deleted:    analysis/start.Rmd
 
 </code></pre>
 <p>
@@ -700,10 +686,90 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/index6.Rmd</code>) and HTML
+(<code>docs/index6.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/d0d039cec957009b84835e46a05832afd43c2d78/analysis/index6.Rmd" target="_blank">d0d039c</a>
+</td>
+<td>
+Lennart Winkler
+</td>
+<td>
+2022-08-14
+</td>
+<td>
+wflow_publish(all = T)
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/39e340c721b1cde01ddae3aec437bc41d8c856aa/analysis/index6.Rmd" target="_blank">39e340c</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2022-08-13
+</td>
+<td>
+new
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/39e340c721b1cde01ddae3aec437bc41d8c856aa/docs/index6.html" target="_blank">39e340c</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2022-08-13
+</td>
+<td>
+new
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -1269,7 +1335,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 164.51  on 129  degrees of freedom
 Residual deviance: 156.63  on 126  degrees of freedom
-  (148 Beobachtungen als fehlend gelöscht)
+  (148 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 5</code></pre>
@@ -1318,7 +1384,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 150.57  on 147  degrees of freedom
 Residual deviance: 139.99  on 144  degrees of freedom
-  (130 Beobachtungen als fehlend gelöscht)
+  (130 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 5</code></pre>
@@ -1413,7 +1479,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 49.041  on 129  degrees of freedom
 Residual deviance: 46.650  on 126  degrees of freedom
-  (148 Beobachtungen als fehlend gelöscht)
+  (148 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 4</code></pre>
@@ -1462,7 +1528,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 52.151  on 147  degrees of freedom
 Residual deviance: 51.738  on 144  degrees of freedom
-  (130 Beobachtungen als fehlend gelöscht)
+  (130 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 4</code></pre>
@@ -1553,7 +1619,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 158874  on 129  degrees of freedom
 Residual deviance: 155524  on 126  degrees of freedom
-  (148 Beobachtungen als fehlend gelöscht)
+  (148 observations deleted due to missingness)
 AIC: 1300.2
 
 Number of Fisher Scoring iterations: 2</code></pre>
@@ -1598,7 +1664,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 225607  on 147  degrees of freedom
 Residual deviance: 222694  on 144  degrees of freedom
-  (130 Beobachtungen als fehlend gelöscht)
+  (130 observations deleted due to missingness)
 AIC: 1512.8
 
 Number of Fisher Scoring iterations: 2</code></pre>
@@ -1689,7 +1755,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 2420.8  on 129  degrees of freedom
 Residual deviance: 2227.7  on 126  degrees of freedom
-  (148 Beobachtungen als fehlend gelöscht)
+  (148 observations deleted due to missingness)
 AIC: 748.28
 
 Number of Fisher Scoring iterations: 2</code></pre>
@@ -1738,7 +1804,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 3857.3  on 147  degrees of freedom
 Residual deviance: 3452.9  on 144  degrees of freedom
-  (130 Beobachtungen als fehlend gelöscht)
+  (130 observations deleted due to missingness)
 AIC: 896.17
 
 Number of Fisher Scoring iterations: 2</code></pre>
@@ -1834,7 +1900,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 190.01  on 129  degrees of freedom
 Residual deviance: 183.48  on 126  degrees of freedom
-  (148 Beobachtungen als fehlend gelöscht)
+  (148 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 4</code></pre>
@@ -1882,7 +1948,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 194.77  on 147  degrees of freedom
 Residual deviance: 194.30  on 144  degrees of freedom
-  (130 Beobachtungen als fehlend gelöscht)
+  (130 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 4</code></pre>
@@ -1975,7 +2041,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 5078.4  on 93  degrees of freedom
 Residual deviance: 4959.6  on 90  degrees of freedom
-  (83 Beobachtungen als fehlend gelöscht)
+  (83 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 5</code></pre>
@@ -2019,7 +2085,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 
     Null deviance: 4614.9  on 82  degrees of freedom
 Residual deviance: 4518.3  on 79  degrees of freedom
-  (94 Beobachtungen als fehlend gelöscht)
+  (94 observations deleted due to missingness)
 AIC: NA
 
 Number of Fisher Scoring iterations: 5</code></pre>
@@ -4587,28 +4653,28 @@ Figure 7: Effects of denstiy treatment on the opportunity for selection
 (variance in reproductive success) in females and males. Means and 95%
 confidence intervals.<br><br> Treatement comparisons via permutation
 test for the opportunity for selection</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">25</span>,<span class="dv">26</span>,<span class="dv">27</span>,<span class="dv">28</span>,<span class="dv">29</span>,<span class="dv">30</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>      Sex                  Variable Variance l95.CI u95.CI
-1    Male Opportunity for selection    0.131 -0.334  0.707
-2    Male Opportunity for selection   -0.196 -1.090  0.599
-3    Male Opportunity for selection   -0.169 -0.765  0.480
-4    Male Opportunity for selection   -0.327 -1.137  0.250
-5    Male Opportunity for selection   -0.300 -0.759  0.128
-6    Male Opportunity for selection    0.027 -0.684  0.896
-25 Female Opportunity for selection    0.062 -0.198  0.362
-26 Female Opportunity for selection   -0.142 -0.476  0.193
-27 Female Opportunity for selection    0.298  0.065  0.558
-28 Female Opportunity for selection   -0.204 -0.583  0.153
-29 Female Opportunity for selection    0.236 -0.068  0.528
-30 Female Opportunity for selection    0.439  0.099  0.787</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">25</span>,<span class="dv">26</span>,<span class="dv">27</span>,<span class="dv">28</span>,<span class="dv">29</span>,<span class="dv">30</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>      Sex Comparison Variance l95.CI u95.CI P-Value
+1    Male 0.26vs0.52    0.131 -0.334  0.707   0.333
+2    Male 0.26vs0.67   -0.196 -1.090  0.599   0.536
+3    Male 0.26vs1.33   -0.169 -0.765  0.480   0.399
+4    Male 0.52vs0.67   -0.327 -1.137  0.250   0.188
+5    Male 0.52vs1.33   -0.300 -0.759  0.128   0.038
+6    Male 0.67vs1.33    0.027 -0.684  0.896   0.959
+25 Female 0.26vs0.52    0.062 -0.198  0.362   0.633
+26 Female 0.26vs0.67   -0.142 -0.476  0.193   0.125
+27 Female 0.26vs1.33    0.298  0.065  0.558   0.003
+28 Female 0.52vs0.67   -0.204 -0.583  0.153   0.058
+29 Female 0.52vs1.33    0.236 -0.068  0.528   0.006
+30 Female 0.67vs1.33    0.439  0.099  0.787   0.000</code></pre>
 <p>Sex comparisons via permutation test for the opportunity for
 selection</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>   Sex                  Variable Variance l95.CI u95.CI
-1 Male Opportunity for selection   -0.032 -0.480  0.527
-2 Male Opportunity for selection   -0.101 -0.382  0.226
-3 Male Opportunity for selection    0.022 -0.600  0.847
-4 Male Opportunity for selection    0.435  0.026  0.902</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>  Treatment Variance l95.CI u95.CI P-Value
+1      0.26   -0.032 -0.480  0.527   0.899
+2      0.52   -0.101 -0.382  0.226   0.237
+3      0.67    0.022 -0.600  0.847   0.977
+4      1.33    0.435  0.026  0.902   0.007</code></pre>
 </div>
 <div id="opportunity-for-sexual-selection" class="section level2">
 <h2>Opportunity for sexual selection</h2>
@@ -4643,28 +4709,28 @@ Figure 8: Effects of denstiy and area treatment on the opportunity for
 sexual selection (variance in mating success) in females and males.
 Means and 95% confidence intervals.<br><br> Treatement comparisons via
 permutation test for the opportunity for sexual selection</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">31</span>,<span class="dv">32</span>,<span class="dv">33</span>,<span class="dv">34</span>,<span class="dv">35</span>,<span class="dv">36</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>      Sex                         Variable Variance l95.CI u95.CI
-7    Male Opportunity for sexual selection   -0.116 -0.320  0.062
-8    Male Opportunity for sexual selection    0.006 -0.091  0.101
-9    Male Opportunity for sexual selection   -0.024 -0.174  0.109
-10   Male Opportunity for sexual selection    0.122 -0.053  0.324
-11   Male Opportunity for sexual selection    0.092 -0.119  0.312
-12   Male Opportunity for sexual selection   -0.030 -0.176  0.095
-31 Female Opportunity for sexual selection   -0.164 -0.406  0.042
-32 Female Opportunity for sexual selection   -0.003 -0.101  0.075
-33 Female Opportunity for sexual selection   -0.042 -0.198  0.085
-34 Female Opportunity for sexual selection    0.162 -0.054  0.411
-35 Female Opportunity for sexual selection    0.123 -0.130  0.397
-36 Female Opportunity for sexual selection   -0.039 -0.205  0.105</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">31</span>,<span class="dv">32</span>,<span class="dv">33</span>,<span class="dv">34</span>,<span class="dv">35</span>,<span class="dv">36</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>      Sex Comparison Variance l95.CI u95.CI P-Value
+7    Male 0.26vs0.52   -0.116 -0.320  0.062   0.166
+8    Male 0.26vs0.67    0.006 -0.091  0.101   0.770
+9    Male 0.26vs1.33   -0.024 -0.174  0.109   0.633
+10   Male 0.52vs0.67    0.122 -0.053  0.324   0.122
+11   Male 0.52vs1.33    0.092 -0.119  0.312   0.315
+12   Male 0.67vs1.33   -0.030 -0.176  0.095   0.496
+31 Female 0.26vs0.52   -0.164 -0.406  0.042   0.003
+32 Female 0.26vs0.67   -0.003 -0.101  0.075   0.829
+33 Female 0.26vs1.33   -0.042 -0.198  0.085   0.279
+34 Female 0.52vs0.67    0.162 -0.054  0.411   0.013
+35 Female 0.52vs1.33    0.123 -0.130  0.397   0.102
+36 Female 0.67vs1.33   -0.039 -0.205  0.105   0.431</code></pre>
 <p>Sex comparisons via permutation test for the opportunity for
 selection</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>   Sex                         Variable Variance l95.CI u95.CI
-5 Male Opportunity for sexual selection    0.003 -0.081  0.090
-6 Male Opportunity for sexual selection   -0.045 -0.340  0.237
-7 Male Opportunity for sexual selection   -0.006 -0.110  0.087
-8 Male Opportunity for sexual selection   -0.014 -0.199  0.165</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>  Treatment Variance l95.CI u95.CI P-Value
+5      0.26    0.003 -0.081  0.090   0.792
+6      0.52   -0.045 -0.340  0.237   0.578
+7      0.67   -0.006 -0.110  0.087   0.808
+8      1.33   -0.014 -0.199  0.165   0.799</code></pre>
 </div>
 <div id="bateman-gradient" class="section level2">
 <h2>Bateman gradient</h2>
@@ -4699,28 +4765,28 @@ Figure 9: Effects of density treatment on the Bateman gradient (slope of
 mating success on reproductive success) in females and males. Means and
 95% confidence intervals.<br><br> Treatement comparisons via permutation
 test for the Bateman gradient</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">37</span>,<span class="dv">38</span>,<span class="dv">39</span>,<span class="dv">40</span>,<span class="dv">41</span>,<span class="dv">42</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>      Sex         Variable Variance l95.CI u95.CI
-13   Male Bateman gradient    0.902 -0.105  1.958
-14   Male Bateman gradient   -0.571 -1.823  0.849
-15   Male Bateman gradient   -0.252 -1.338  0.684
-16   Male Bateman gradient   -1.474 -2.747 -0.073
-17   Male Bateman gradient   -1.155 -2.241 -0.246
-18   Male Bateman gradient    0.319 -1.109  1.491
-37 Female Bateman gradient   -0.094 -1.094  0.795
-38 Female Bateman gradient    1.228 -0.197  2.551
-39 Female Bateman gradient    0.066 -1.017  1.070
-40 Female Bateman gradient    1.322  0.008  2.530
-41 Female Bateman gradient    0.160 -0.760  1.005
-42 Female Bateman gradient   -1.162 -2.442  0.191</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">37</span>,<span class="dv">38</span>,<span class="dv">39</span>,<span class="dv">40</span>,<span class="dv">41</span>,<span class="dv">42</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>      Sex Comparison Variance l95.CI u95.CI P-Value
+13   Male 0.26vs0.52    0.902 -0.105  1.958   0.022
+14   Male 0.26vs0.67   -0.571 -1.823  0.849   0.203
+15   Male 0.26vs1.33   -0.252 -1.338  0.684   0.695
+16   Male 0.52vs0.67   -1.474 -2.747 -0.073   0.001
+17   Male 0.52vs1.33   -1.155 -2.241 -0.246   0.012
+18   Male 0.67vs1.33    0.319 -1.109  1.491   0.411
+37 Female 0.26vs0.52   -0.094 -1.094  0.795   0.896
+38 Female 0.26vs0.67    1.228 -0.197  2.551   0.015
+39 Female 0.26vs1.33    0.066 -1.017  1.070   0.816
+40 Female 0.52vs0.67    1.322  0.008  2.530   0.002
+41 Female 0.52vs1.33    0.160 -0.760  1.005   0.646
+42 Female 0.67vs1.33   -1.162 -2.442  0.191   0.014</code></pre>
 <p>Sex comparisons via permutation test for the opportunity for
 selection</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>    Sex         Variable Variance l95.CI u95.CI
-9  Male Bateman gradient    0.037 -0.999  1.148
-10 Male Bateman gradient   -0.959 -1.907 -0.105
-11 Male Bateman gradient    1.836  0.196  3.315
-12 Male Bateman gradient    0.355 -0.590  1.402</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>   Treatment Variance l95.CI u95.CI P-Value
+9       0.26    0.037 -0.999  1.148   0.950
+10      0.52   -0.959 -1.907 -0.105   0.007
+11      0.67    1.836  0.196  3.315   0.001
+12      1.33    0.355 -0.590  1.402   0.480</code></pre>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bateman gradient (scatter)</span></span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">ggplot</span>(DB_data_clean_0<span class="fl">.26</span>, <span class="fu">aes</span>(<span class="at">x=</span>rel_m_cMS, <span class="at">y=</span>rel_m_RS)) <span class="sc">+</span></span>
 <span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.4</span>,<span class="at">shape=</span><span class="dv">16</span>, <span class="at">size =</span> <span class="dv">3</span>,<span class="at">color=</span>colpal2[<span class="dv">2</span>]) <span class="sc">+</span></span>
@@ -4821,47 +4887,29 @@ strength of sexual selection) in females and males. Means and 95%
 confidence intervals.<br><br> Treatement comparisons via permutation
 test for the Jones index</p>
 <div class="sourceCode" id="cb100"><pre
-class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">23</span>,<span class="dv">25</span>,<span class="dv">43</span>,<span class="dv">44</span>,<span class="dv">45</span>,<span class="dv">46</span>,<span class="dv">47</span>,<span class="dv">48</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>      Sex                                           Variable Variance l95.CI
-19   Male Maximum standardized sexual selection differential    0.323 -0.137
-20   Male Maximum standardized sexual selection differential   -0.209 -0.756
-21   Male Maximum standardized sexual selection differential   -0.113 -0.443
-22   Male Maximum standardized sexual selection differential   -0.532 -1.127
-23   Male Maximum standardized sexual selection differential   -0.436 -0.836
-25 Female                          Opportunity for selection    0.062 -0.198
-43 Female Maximum standardized sexual selection differential   -0.178 -0.554
-44 Female Maximum standardized sexual selection differential    0.451 -0.054
-45 Female Maximum standardized sexual selection differential   -0.002 -0.378
-46 Female Maximum standardized sexual selection differential    0.628  0.143
-47 Female Maximum standardized sexual selection differential    0.176 -0.177
-48 Female Maximum standardized sexual selection differential   -0.453 -0.880
-   u95.CI
-19  0.767
-20  0.337
-21  0.222
-22  0.066
-23 -0.015
-25  0.362
-43  0.209
-44  0.906
-45  0.370
-46  1.067
-47  0.535
-48  0.025</code></pre>
+class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_TreatComp_round[<span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>,<span class="dv">23</span>,<span class="dv">25</span>,<span class="dv">43</span>,<span class="dv">44</span>,<span class="dv">45</span>,<span class="dv">46</span>,<span class="dv">47</span>,<span class="dv">48</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>      Sex Comparison Variance l95.CI u95.CI P-Value
+19   Male 0.26vs0.52    0.323 -0.137  0.767   0.047
+20   Male 0.26vs0.67   -0.209 -0.756  0.337   0.214
+21   Male 0.26vs1.33   -0.113 -0.443  0.222   0.579
+22   Male 0.52vs0.67   -0.532 -1.127  0.066   0.002
+23   Male 0.52vs1.33   -0.436 -0.836 -0.015   0.019
+25 Female 0.26vs0.52    0.062 -0.198  0.362   0.633
+43 Female 0.26vs0.52   -0.178 -0.554  0.209   0.287
+44 Female 0.26vs0.67    0.451 -0.054  0.906   0.010
+45 Female 0.26vs1.33   -0.002 -0.378  0.370   0.987
+46 Female 0.52vs0.67    0.628  0.143  1.067   0.000
+47 Female 0.52vs1.33    0.176 -0.177  0.535   0.259
+48 Female 0.67vs1.33   -0.453 -0.880  0.025   0.008</code></pre>
 <p>Sex comparisons via permutation test for the opportunity for
 selection</p>
 <div class="sourceCode" id="cb102"><pre
-class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)]</span></code></pre></div>
-<pre><code>    Sex                                           Variable Variance l95.CI
-13 Male Maximum standardized sexual selection differential    0.014 -0.368
-14 Male Maximum standardized sexual selection differential   -0.487 -0.909
-15 Male Maximum standardized sexual selection differential    0.674  0.052
-16 Male Maximum standardized sexual selection differential    0.125 -0.191
-   u95.CI
-13  0.414
-14 -0.028
-15  1.276
-16  0.454</code></pre>
+class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>Table_BatemanMetrics_SexComp_round[<span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>),<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)]</span></code></pre></div>
+<pre><code>   Treatment Variance l95.CI u95.CI P-Value
+13      0.26    0.014 -0.368  0.414   0.911
+14      0.52   -0.487 -0.909 -0.028   0.002
+15      0.67    0.674  0.052  1.276   0.000
+16      1.33    0.125 -0.191  0.454   0.513</code></pre>
 </div>
 </div>
 <div id="variance-decopmposition" class="section level1">
@@ -5563,53 +5611,53 @@ Session information
 <div id="workflowr-sessioninfo" class="collapse">
 <div class="sourceCode" id="cb108"><pre
 class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>R version 4.2.0 (2022-04-22 ucrt)
+<pre><code>R version 4.0.2 (2020-06-22)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
-Running under: Windows 10 x64 (build 19043)
+Running under: Windows 10 x64 (build 19042)
 
 Matrix products: default
 
 locale:
-[1] LC_COLLATE=German_Germany.utf8  LC_CTYPE=German_Germany.utf8   
-[3] LC_MONETARY=German_Germany.utf8 LC_NUMERIC=C                   
-[5] LC_TIME=German_Germany.utf8    
+[1] LC_COLLATE=German_Germany.1252  LC_CTYPE=German_Germany.1252   
+[3] LC_MONETARY=German_Germany.1252 LC_NUMERIC=C                   
+[5] LC_TIME=German_Germany.1252    
 
 attached base packages:
 [1] grid      stats     graphics  grDevices utils     datasets  methods  
 [8] base     
 
 other attached packages:
- [1] ICC_2.4.0          tidyr_1.2.0        data.table_1.14.2  boot_1.3-28       
+ [1] ICC_2.4.0          tidyr_1.2.0        data.table_1.14.2  boot_1.3-25       
  [5] RColorBrewer_1.1-3 car_3.1-0          carData_3.0-5      gridGraphics_0.5-1
  [9] cowplot_1.1.1      EnvStats_2.7.0     dplyr_1.0.9        readr_2.1.2       
-[13] lmerTest_3.1-3     lme4_1.1-30        Matrix_1.4-1       gridExtra_2.3     
-[17] ggplot2_3.3.6      ggeffects_1.1.3    workflowr_1.7.0   
+[13] lmerTest_3.1-3     lme4_1.1-30        Matrix_1.2-18      gridExtra_2.3     
+[17] ggplot2_3.3.6      ggeffects_1.1.2    workflowr_1.7.0   
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.3          sass_0.4.2          bit64_4.0.5        
- [4] vroom_1.5.7         jsonlite_1.8.0      splines_4.2.0      
- [7] bslib_0.4.0         getPass_0.2-2       highr_0.9          
-[10] yaml_2.3.5          numDeriv_2016.8-1.1 pillar_1.8.0       
-[13] lattice_0.20-45     glue_1.6.2          digest_0.6.29      
-[16] promises_1.2.0.1    minqa_1.2.4         colorspace_2.0-3   
-[19] htmltools_0.5.3     httpuv_1.6.5        pkgconfig_2.0.3    
-[22] purrr_0.3.4         scales_1.2.0        processx_3.7.0     
-[25] whisker_0.4         later_1.3.0         tzdb_0.3.0         
-[28] git2r_0.30.1        tibble_3.1.7        mgcv_1.8-40        
-[31] farver_2.1.1        generics_0.1.3      ellipsis_0.3.2     
-[34] cachem_1.0.6        withr_2.5.0         cli_3.3.0          
-[37] crayon_1.5.1        magrittr_2.0.3      evaluate_0.16      
+ [1] httr_1.4.3          sass_0.4.1          bit64_4.0.5        
+ [4] vroom_1.5.7         jsonlite_1.8.0      splines_4.0.2      
+ [7] bslib_0.3.1         assertthat_0.2.1    getPass_0.2-2      
+[10] highr_0.9           yaml_2.3.5          numDeriv_2016.8-1.1
+[13] pillar_1.7.0        lattice_0.20-41     glue_1.6.2         
+[16] digest_0.6.29       promises_1.2.0.1    minqa_1.2.4        
+[19] colorspace_2.0-3    htmltools_0.5.2     httpuv_1.6.5       
+[22] pkgconfig_2.0.3     purrr_0.3.4         scales_1.2.0       
+[25] processx_3.7.0      whisker_0.4         later_1.3.0        
+[28] tzdb_0.3.0          git2r_0.30.1        tibble_3.1.7       
+[31] mgcv_1.8-31         farver_2.1.1        generics_0.1.3     
+[34] ellipsis_0.3.2      withr_2.5.0         cli_3.3.0          
+[37] magrittr_2.0.3      crayon_1.5.1        evaluate_0.15      
 [40] ps_1.7.1            fs_1.5.2            fansi_1.0.3        
-[43] nlme_3.1-157        MASS_7.3-56         tools_4.2.0        
+[43] nlme_3.1-148        MASS_7.3-51.6       tools_4.0.2        
 [46] hms_1.1.1           lifecycle_1.0.1     stringr_1.4.0      
-[49] munsell_0.5.0       callr_3.7.1         compiler_4.2.0     
-[52] jquerylib_0.1.4     rlang_1.0.2         nloptr_2.0.3       
+[49] munsell_0.5.0       callr_3.7.1         compiler_4.0.2     
+[52] jquerylib_0.1.4     rlang_1.0.4         nloptr_2.0.3       
 [55] rstudioapi_0.13     labeling_0.4.2      rmarkdown_2.14     
-[58] gtable_0.3.0        abind_1.4-5         R6_2.5.1           
-[61] knitr_1.39          fastmap_1.1.0       bit_4.0.4          
-[64] utf8_1.2.2          rprojroot_2.0.3     stringi_1.7.8      
-[67] parallel_4.2.0      Rcpp_1.0.9          vctrs_0.4.1        
-[70] tidyselect_1.1.2    xfun_0.31          </code></pre>
+[58] gtable_0.3.0        abind_1.4-5         DBI_1.1.3          
+[61] R6_2.5.1            knitr_1.39          bit_4.0.4          
+[64] fastmap_1.1.0       utf8_1.2.2          rprojroot_2.0.3    
+[67] stringi_1.7.6       parallel_4.0.2      Rcpp_1.0.9         
+[70] vctrs_0.4.1         tidyselect_1.1.2    xfun_0.31          </code></pre>
 </div>
 </div>
 </div>
