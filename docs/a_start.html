@@ -12,9 +12,9 @@
 <meta name="author" content="Lennart Winkler1, Ronja Eilhardt1 &amp; Tim Janicke1,2   1Applied Zoology, Technical University Dresden   2Centre d’Écologie Fonctionnelle et Évolutive, UMR 5175, CNRS, Université de Montpellier" />
 
 
-<title>Population density affects sexual selection in the red flour beetle</title>
+<title>Population density affects sexual selection in an insect model</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -144,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -177,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -186,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -320,15 +317,12 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Population density affects sexual selection in the red flour beetle</a>
+      <a class="navbar-brand" href="index.html">Population density affects sexual selection in an insect model</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="a_start.html">Home</a>
-</li>
-<li>
-  <a href="index.html">Analyses 1</a>
 </li>
 <li>
   <a href="index2.html">Analyses 2</a>
@@ -341,6 +335,9 @@ div.tocify {
 </li>
 <li>
   <a href="index5.html">Analyses 5</a>
+</li>
+<li>
+  <a href="index6.html">Analyses 6</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -363,7 +360,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Population density affects sexual selection
-in the red flour beetle</h1>
+in an insect model</h1>
 <h3 class="subtitle">Start page</h3>
 <h4 class="author">Lennart Winkler<sup>1</sup>, Ronja
 Eilhardt<sup>1</sup> &amp; Tim Janicke<sup>1,2</sup> <br></br>
@@ -398,7 +395,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-12
+<strong>Last updated:</strong> 2023-04-02
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -437,10 +434,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -449,15 +446,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef89f7c166b10dab54e9f687a799bfc4a40170000targetblankf89f7c1a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022tree39e340c721b1cde01ddae3aec437bc41d8c856aatargetblank39e340ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f89f7c166b10dab54e9f687a799bfc4a40170000" target="_blank">f89f7c1</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/39e340c721b1cde01ddae3aec437bc41d8c856aa" target="_blank">39e340c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022treef89f7c166b10dab54e9f687a799bfc4a40170000targetblankf89f7c1a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022tree39e340c721b1cde01ddae3aec437bc41d8c856aatargetblank39e340ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -467,7 +464,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/f89f7c166b10dab54e9f687a799bfc4a40170000" target="_blank">f89f7c1</a>.
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/39e340c721b1cde01ddae3aec437bc41d8c856aa" target="_blank">39e340c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -484,19 +481,24 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
 
 Untracked files:
-    Untracked:  analysis/a_start.Rmd
-    Untracked:  analysis/index6.Rmd
+    Untracked:  data/Data_Winkler_et_al_2023_Denstiy.csv
 
 Unstaged changes:
     Modified:   analysis/_site.yml
+    Modified:   analysis/a_start.Rmd
+    Deleted:    analysis/about.Rmd
     Modified:   analysis/index.Rmd
     Modified:   analysis/index2.Rmd
     Modified:   analysis/index3.Rmd
     Modified:   analysis/index4.Rmd
     Modified:   analysis/index5.Rmd
-    Deleted:    analysis/start.Rmd
+    Modified:   analysis/index6.Rmd
+    Deleted:    data/DB_AllData_V04.CSV
+    Deleted:    data/DB_mass_focals_female.CSV
+    Deleted:    data/DB_mass_focals_males.CSV
 
 </code></pre>
 <p>
@@ -511,37 +513,96 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/a_start.Rmd</code>) and HTML
+(<code>docs/a_start.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/39e340c721b1cde01ddae3aec437bc41d8c856aa/analysis/a_start.Rmd" target="_blank">39e340c</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2022-08-13
+</td>
+<td>
+new
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/39e340c721b1cde01ddae3aec437bc41d8c856aa/docs/a_start.html" target="_blank">39e340c</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2022-08-13
+</td>
+<td>
+new
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <p>Supplementary material reporting R code for the manuscript
-‘Population density affects sexual selection in the red flour
-beetle’.<br><br></p>
-<p>Code and figures can be found at:<br><br> - All initial manuscript
-analyses <br> <a
-href="https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index.html"
-class="uri">https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index.html</a>
-<br><br> - Additional analyses excluding individuals without mating
-success <br> <a
+‘Population density affects sexual selection in an insect
+model’.<br><br></p>
+<p>Code and figures can be found at:<br><br> - Part 1: Analyses on the
+effect of the treatment on contact rates <br> <a
 href="https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index2.html"
 class="uri">https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index2.html</a>
-<br><br> - Analyses on body mass of focal individuals <br> <a
+<br><br> - Part 2: Testing the effect of density on mating behaviour and
+reproductive success <br> <a
 href="https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index3.html"
 class="uri">https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index3.html</a>
-<br><br> - Analyses on body mass of focal individuals excluding
-individuals without mating success <br> <a
+<br><br> - Part 3: Sexual selection metrics <br> <a
 href="https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index4.html"
 class="uri">https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index4.html</a>
-<br><br> - All initial manuscript analyses (treatment specific) <br> <a
+<br><br> - Part 4: Variance decomposition <br> <a
 href="https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index5.html"
 class="uri">https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index5.html</a>
-<br><br> - Additional analyses excluding individuals without mating
-success (treatment specific) <br> <a
+<br><br> - Part 5: Total sexual selection on males <br> <a
 href="https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index6.html"
 class="uri">https://lennartwinkler.github.io/Density_and_sexual_selection_2022/index6.html</a></p>
 
