@@ -5,7 +5,7 @@ navbar:
   title: "Population density affects sexual selection in an insect model"
   left:
   - text: Home
-    href: index1.html
+    href: index.html
   - text: Part 1
     href: index2.html
   - text: Part 2
