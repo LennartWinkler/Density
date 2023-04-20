@@ -665,8 +665,25 @@ BarPlot_1<- ggplot(PhenVarBoot_Table_plot_pop[1:12,], aes(x=Cov_component, y=Var
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('Variance') +xlab('Variance component') +ggtitle('')+labs(tag = "C")+
   scale_x_discrete(breaks=waiver(),labels = c("MS","PS" ,"pFec",'2 x cov\n(MS, \nPS)','2 x cov\n(MS, \npFec)','2 x cov\n(PS, \npFec)'))+
-  fig_theme+
-  scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Small group','Large group'))
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(0.8, 0.9),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=8, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=13, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+        scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Small group','Large group'))
+
 
 BarPlot_2<-ggplot(PhenVarBoot_Table_plot_arena[1:12,], aes(x=Cov_component, y=Variance, alpha=Treatment)) + 
   scale_y_continuous(limits = c(-0.55, 0.6), breaks = c(-0.5,-0.25,0,0.25,0.5), expand = c(0 ,0)) + 
@@ -676,7 +693,23 @@ BarPlot_2<-ggplot(PhenVarBoot_Table_plot_arena[1:12,], aes(x=Cov_component, y=Va
   ylab('') +xlab('Variance component') +ggtitle('')+labs(tag = "D")+
   scale_x_discrete(breaks=waiver(),labels = c("MS","PS" ,"pFec",'2 x cov\n(MS, \nPS)','2 x cov\n(MS, \npFec)','2 x cov\n(PS, \npFec)'))+
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Large arena','Small arena'))+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(0.8, 0.9),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=8, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=13, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))
 
 BarPlot_3<- ggplot(PhenVarBoot_Table_plot_pop[13:18,], aes(x=Cov_component, y=Variance, alpha=Treatment)) + 
   scale_y_continuous(limits = c(-0.7, 2), breaks = c(-0.5,0,0.5,1,1.5,2), expand = c(0 ,0)) + 
@@ -684,7 +717,23 @@ BarPlot_3<- ggplot(PhenVarBoot_Table_plot_pop[13:18,], aes(x=Cov_component, y=Va
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[1]) +
   ylab('Variance') +xlab('') +ggtitle('')+labs(tag = "A")+
   scale_x_discrete(breaks=waiver(),labels = c('MS','Fec','2 x cov\n(MS, Fec)'))+ 
-  fig_theme+
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(0.8, 0.9),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=10, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=13, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm")) +
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Small group','Large group'))
 
@@ -694,7 +743,23 @@ BarPlot_4<- ggplot(PhenVarBoot_Table_plot_arena[13:18,], aes(x=Cov_component, y=
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[1]) +
   ylab('') +xlab('') +ggtitle('')+labs(tag = "B")+
   scale_x_discrete(breaks=waiver(),labels = c('MS','Fec','2 x cov\n(MS, Fec)'))+ 
-  fig_theme +
+ theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(0.8, 0.9),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=10, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=13, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),legend.background = element_rect(fill='transparent')) +
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Large arena','Small arena'))
 ```
@@ -1618,8 +1683,24 @@ BarPlot_5_2<- ggplot(PhenVarBoot_Table_pop[1:8,], aes(x=Variance_component, y=Va
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('Variance') +xlab('') +ggtitle('')+labs(tag = "A")+
   scale_x_discrete(breaks=waiver(),labels = c('MS','IS','FS','pFec'))+ 
-  fig_theme+
-  scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Small group','Large group'))
+   theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(0.8, 0.9),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
+  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))
 
 ### Plot: Variance decomposition for arena size including IS and FS #### 
 BarPlot_6_2<-ggplot(PhenVarBoot_Table_arena[1:8,], aes(x=Variance_component, y=Variance, alpha=Treatment)) + 
@@ -1630,7 +1711,23 @@ BarPlot_6_2<-ggplot(PhenVarBoot_Table_arena[1:8,], aes(x=Variance_component, y=V
   ylab('') +xlab('') +ggtitle('')+labs(tag = "B")+
   scale_x_discrete(breaks=waiver(),labels = c('MS','IS','FS','pFec'))+
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Large arena','Small arena'))+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(0.8, 0.9),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))
 
 ### Plot: Covariances for population size including IS and FS #### 
 BarPlot_1cv<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Cov_component, y=Variance, alpha=Treatment)) + 
@@ -1640,7 +1737,23 @@ BarPlot_1cv<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Cov_component,
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('Variance') +xlab('') +ggtitle('')+labs(tag = "A")+
   scale_x_discrete(breaks=waiver(),labels = c('2 x cov\n(MS,\nIS)','2 x cov\n(MS,\nFS)','2 x cov\n(MS,\npFec)','2 x cov\n(IS,\nFS)','2 x cov\n(IS,\npFec)','2 x cov\n(FS,\npFec)'))+ 
-  fig_theme+
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(0.8, 0.9),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=7, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))+
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Small group','Large group'))
 
 ### Plot: Covariances for arena size including IS and FS #### 
@@ -1652,7 +1765,23 @@ BarPlot_2cv<-ggplot(PhenVarBoot_Table_plot_cov_arena[1:12,], aes(x=Cov_component
   ylab('') +xlab('') +ggtitle('')+labs(tag = "B")+
   scale_x_discrete(breaks=waiver(),labels = c('2 x cov\n(MS,\nIS)','2 x cov\n(MS,\nFS)','2 x cov\n(MS,\npFec)','2 x cov\n(IS,\nFS)','2 x cov\n(IS,\npFec)','2 x cov\n(FS,\npFec)'))+ 
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Large arena','Small arena'))+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), 
+        legend.position = c(0.8, 0.9),
+        plot.tag.position=c(0.01,0.98),
+        legend.title = element_blank(),
+        legend.text = element_text(colour="black", size=10),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=7, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"))
 ```
 
 ### Figure S8

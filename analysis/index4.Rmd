@@ -853,8 +853,28 @@ p16=ggplot(plot_I_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=Tr
   scale_color_manual(values=colpal2)+
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.5,1.5)+ylim(0.5,1.5)+
-  guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+   guides(shape = guide_legend(override.aes = list(size = 5)))+
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(0.8, 0.25),
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0,0.2), "cm"))+guides(line = "none")
 
 ### Plot: Opportunity for sexual selection ####
 # Reorder data
@@ -879,7 +899,28 @@ p17=ggplot(plot_Is_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=T
   scale_color_manual(values=colpal2)+
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.1,0.87)+ylim(0.1,0.87)+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position =  'none',
+        legend.spacing.y = unit(0, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=10),
+        legend.key.size = unit(.2, "cm"),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0,0.2), "cm"))
 
 ### Plot: Sexual selection gradient ####
 # Reorder data
@@ -904,8 +945,28 @@ p18=ggplot(plot_B_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=Tr
   scale_color_manual(values=colpal2)+
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0,1.7)+ylim(0,1.7)+
-  fig_theme
-
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position =  'none',
+        legend.spacing.y = unit(0, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=10),
+        legend.key.size = unit(.2, "cm"),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0,0.2), "cm"))
 ### Plot: Jones index ####
 # Reorder data
 plot_Smax_data_1=Table_BatemanMetrics[c(13,15,29,31),c(1,2,4,5,6)]
@@ -929,7 +990,28 @@ p19=ggplot(plot_Smax_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape
   scale_color_manual(values=colpal2)+
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0,0.84)+ylim(0,0.84)+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position =  'none',
+        legend.spacing.y = unit(0, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=10),
+        legend.key.size = unit(.2, "cm"),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0,0.2), "cm"))
 
 ### Plot: Mating differential on body mass ####
 # Reorder data
@@ -955,7 +1037,28 @@ p20=ggplot(plot_mBM_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=
   scale_color_manual(values=colpal2)+
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(-0.28,0.45)+ylim(-0.28,0.45)+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position =  'none',
+        legend.spacing.y = unit(0, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=10),
+        legend.key.size = unit(.2, "cm"),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0,0.2), "cm"))
 
 ### Plot: Selection differential on body mass ####
 # Reorder data
@@ -981,7 +1084,28 @@ p21=ggplot(plot_sBM_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=
   scale_color_manual(values=colpal2)+
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(-0.28,0.77)+ylim(-0.28,0.77)+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position =  'none',
+        legend.spacing.y = unit(0, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=10),
+        legend.key.size = unit(.2, "cm"),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0,0.2), "cm"))
 ```
 
 ### Figure 2
