@@ -382,7 +382,7 @@ kable(totalSexSel_Table)
 ## Plot: total sexual selection on males (Figure S9)
 
 Finally, we plotted the total opportunity for sexual selection for each treatment.
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 5, results='hide',fig.cap='Figure S9: Total opportunity for sexual selection (ITS) in males for group and arena size treatment. Mean and 95%CI estimated via bootstrapping. Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.height=5}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 5,fig.height=5, results='hide',fig.cap='Figure S9: Total opportunity for sexual selection (ITS) in males for group and arena size treatment. Mean and 95%CI estimated via bootstrapping. Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.fullwidth=TRUE}
 ### Plot: total sexual selection on males (Figure S9) ####
 # Reorder data
 plot_totalSexSel_data_1=totalSexSel_Table[c(1,4),]

@@ -210,6 +210,9 @@ fig_theme=theme(panel.border = element_blank(),
 ## Create customized functions for analysis ####
 # Create function to calculate standard error and upper/lower standard deviation
 standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(!is.na(x)))
+upper_CI <- function(x) mean(x,na.rm=T)+((standard_error(x))*qnorm(0.975))
+lower_CI <- function(x) mean(x,na.rm=T)-((standard_error(x))*qnorm(0.975))
+
 upper_SD <- function(x) mean(x,na.rm=T)+(sd(x)/2)
 lower_SD <- function(x) mean(x,na.rm=T)-(sd(x)/2)
 ```
@@ -247,9 +250,11 @@ mod1=glm((as.numeric(N_contact_WT))~Gr_size*Arena,data=D_data_m,family = quasipo
 summary(mod1)
 Anova(mod1,type=2) # Compute p-values via type 2 ANOVA
 ```
-FDR corrected p-values = `r round(p.adjust(c(0.0021530,0.0004615,0.2541364), method = 'fdr'),digits=3)`
-```{r FDR corrected p-values, warning=FALSE, message=FALSE, results='hide'}
-p.adjust(c(0.0021530,0.0004615,0.2541364), method = 'fdr') 
+FDR corrected p-values:
+```{r FDR corrected p-values, warning=FALSE, message=FALSE}
+tab1=as.data.frame(round(p.adjust(c(0.0021530,0.0004615,0.2541364), method = 'fdr'),digits=3),row.names=cbind('Group size','Arena size', 'Interaction'))
+colnames(tab1)<-cbind('P-value')
+tab1
 ```
 
 ## Effect of density on contact rates of females
@@ -285,26 +290,30 @@ mod2=glm((as.numeric(N_contact_WT))~Gr_size*Arena,data=D_data_f,family = quasipo
 summary(mod2)
 Anova(mod2,type=2) # Compute p-values via type 2 ANOVA
 ```
-FDR corrected p-values = `r round(p.adjust(c(2.432e-09, 1.084e-06,0.1754), method = 'fdr'),digits=3)`
-```{r FDR corrected p-values in females, warning=FALSE, message=FALSE, results='hide'}
-p.adjust(c(2.432e-09, 1.084e-06,0.1754), method = 'fdr') # Compute FDR corrected p-values
+FDR corrected p-values:
+```{r FDR corrected p-values in females, warning=FALSE, message=FALSE}
+tab2=as.data.frame(round(p.adjust(c(2.432e-09, 1.084e-06,0.1754), method = 'fdr'),digits=3),row.names=cbind('Group size','Arena size', 'Interaction'))
+colnames(tab2)<-cbind('P-value')
+tab2
 ```
 
 ## Plot contact rates (Figure S1)
 
 Here we plot the contact rates with potential partners per treatment and sex.
-```{r Figure S1, warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide',fig.cap='Figure S1: Total number of contacts with potential mating partners for males and females under low and high density manipulation via group (left) and arena size (right). Grey bars indicate means and standard deviations.'}
+```{r Figure S1, warning=FALSE, message=FALSE, fig.align="left",fig.width = 11,fig.height=6, results='hide', fig.fullwidth=TRUE,fig.cap='Figure S1: Total number of contacts with potential mating partners for males and females under low and high density manipulation via group (left) and arena size (right). Bars indicate means and 95% CI.'}
 ## Plot contact rates (Figure S1) ####
 # Create factor for treatment categories
 D_data$TreatCgroup <- factor(paste(D_data$Sex,D_data$Gr_size,  sep=" "), levels = c("F SG", "F LG", "M SG",'M LG'))
 
 p1=ggplot(D_data, aes(x=Sex, y=as.numeric(N_contact_WT),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
-  stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
+   geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
                position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
   scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
@@ -323,11 +332,13 @@ D_data$TreatCarena <- factor(paste(D_data$Sex,D_data$Arena,  sep=" "), levels = 
 
 p2=ggplot(D_data, aes(x=Sex, y=as.numeric(N_contact_WT),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
   geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
-  stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
                position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
   scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+

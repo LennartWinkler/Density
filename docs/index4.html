@@ -484,7 +484,7 @@ CNRS, Université de Montpellier</br></h4>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -495,8 +495,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -505,13 +505,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-04-12
+<strong>Last updated:</strong> 2023-04-20
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong>
@@ -535,18 +535,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -637,15 +640,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022tree37a3a3593b5912a532b4a89ecc0b16c3f4b71c91targetblank37a3a35a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treefe835863558dce63c561119aabc2f7cecf052479targetblankfe83586a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/37a3a3593b5912a532b4a89ecc0b16c3f4b71c91" target="_blank">37a3a35</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/fe835863558dce63c561119aabc2f7cecf052479" target="_blank">fe83586</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2022tree37a3a3593b5912a532b4a89ecc0b16c3f4b71c91targetblank37a3a35a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treefe835863558dce63c561119aabc2f7cecf052479targetblankfe83586a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -655,7 +658,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/tree/37a3a3593b5912a532b4a89ecc0b16c3f4b71c91" target="_blank">37a3a35</a>.
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/fe835863558dce63c561119aabc2f7cecf052479" target="_blank">fe83586</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -673,8 +676,12 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Untracked files:
-    Untracked:  Density_and_sexual_selection_2023/
+Unstaged changes:
+    Modified:   analysis/index2.Rmd
+    Modified:   analysis/index3.Rmd
+    Modified:   analysis/index4.Rmd
+    Modified:   analysis/index5.Rmd
+    Modified:   analysis/index6.Rmd
 
 </code></pre>
 <p>
@@ -724,7 +731,24 @@ Message
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/b0a3f1508aa51c79dae8d4cd9910030b2d103152/docs/index4.html" target="_blank">b0a3f15</a>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/55df7ff1846b73c4f57a2ef53d0873d7e3d9fa5b/docs/index4.html" target="_blank">55df7ff</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2023-04-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/b0a3f1508aa51c79dae8d4cd9910030b2d103152/docs/index4.html" target="_blank">b0a3f15</a>
 </td>
 <td>
 LennartWinkler
@@ -741,7 +765,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/c8bd540ca9d998860c3bf82bdc37a9288fa9fbba/analysis/index4.Rmd" target="_blank">c8bd540</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/blob/c8bd540ca9d998860c3bf82bdc37a9288fa9fbba/analysis/index4.Rmd" target="_blank">c8bd540</a>
 </td>
 <td>
 Lennart Winkler
@@ -758,7 +782,7 @@ set up
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/c8bd540ca9d998860c3bf82bdc37a9288fa9fbba/docs/index4.html" target="_blank">c8bd540</a>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/c8bd540ca9d998860c3bf82bdc37a9288fa9fbba/docs/index4.html" target="_blank">c8bd540</a>
 </td>
 <td>
 Lennart Winkler
@@ -775,7 +799,7 @@ set up
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/899398ab3248d206cf6f170f46b15329a9d8a53d/docs/index4.html" target="_blank">899398a</a>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/899398ab3248d206cf6f170f46b15329a9d8a53d/docs/index4.html" target="_blank">899398a</a>
 </td>
 <td>
 Lennart Winkler
@@ -792,7 +816,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/d0d039cec957009b84835e46a05832afd43c2d78/analysis/index4.Rmd" target="_blank">d0d039c</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/blob/d0d039cec957009b84835e46a05832afd43c2d78/analysis/index4.Rmd" target="_blank">d0d039c</a>
 </td>
 <td>
 Lennart Winkler
@@ -809,7 +833,7 @@ wflow_publish(all = T)
 Rmd
 </td>
 <td>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/f54f0225bf3bec80fbcdfe96a0af081fc5f51918/analysis/index4.Rmd" target="_blank">f54f022</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/blob/f54f0225bf3bec80fbcdfe96a0af081fc5f51918/analysis/index4.Rmd" target="_blank">f54f022</a>
 </td>
 <td>
 LennartWinkler
@@ -826,7 +850,7 @@ wflow_publish(republish = TRUE, all = T)
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/f54f0225bf3bec80fbcdfe96a0af081fc5f51918/docs/index4.html" target="_blank">f54f022</a>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/f54f0225bf3bec80fbcdfe96a0af081fc5f51918/docs/index4.html" target="_blank">f54f022</a>
 </td>
 <td>
 LennartWinkler
@@ -843,7 +867,7 @@ wflow_publish(republish = TRUE, all = T)
 Rmd
 </td>
 <td>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2022/blob/f89f7c166b10dab54e9f687a799bfc4a40170000/analysis/index4.Rmd" target="_blank">f89f7c1</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/blob/f89f7c166b10dab54e9f687a799bfc4a40170000/analysis/index4.Rmd" target="_blank">f89f7c1</a>
 </td>
 <td>
 LennartWinkler
@@ -860,7 +884,7 @@ Build site.
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2022/f89f7c166b10dab54e9f687a799bfc4a40170000/docs/index4.html" target="_blank">f89f7c1</a>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/f89f7c166b10dab54e9f687a799bfc4a40170000/docs/index4.html" target="_blank">f89f7c1</a>
 </td>
 <td>
 LennartWinkler
@@ -2288,19 +2312,18 @@ arena size treatments estimated for males and females with mean and
 <h3>Figure 2</h3>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure 2</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Figure_2<span class="ot">&lt;-</span><span class="fu">grid.arrange</span>(p16<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>)),p17<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>)),p18<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>)),p19<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>)),p20<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>)),p21<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.9</span>)), <span class="at">nrow =</span> <span class="dv">3</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figure/index4.Rmd/unnamed-chunk-9-1.png" alt="Figure 2: Selection metrics estimated for females (blue) and males (red) under density manipulated via group (point) or arena size (square). Opportunity for selection (I; A), opportunity for sexual selection (Is; B), Bateman gradient (βss; C), Jones index (s’max; D), mating differential on body mass (m’; E) and selection differential on body mass (s’; F) with mean and 95%CI estimated via bootstrapping (Table 4 &amp; 5). Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment (Table 4 &amp; 5)." width="1248" />
+<div class="figure" style="text-align: left">
+<img src="figure/index4.Rmd/unnamed-chunk-9-1.png" alt="Figure 2: Selection metrics estimated for females (blue) and males (red) under density manipulated via group (point) or arena size (square). Opportunity for selection (I; A), opportunity for sexual selection (Is; B), Bateman gradient (βss; C), Jones index (s’max; D), mating differential on body mass (m’; E) and selection differential on body mass (s’; F) with mean and 95%CI estimated via bootstrapping. Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment." width="1056" />
 <p class="caption">
 Figure 2: Selection metrics estimated for females (blue) and males (red)
 under density manipulated via group (point) or arena size (square).
 Opportunity for selection (I; A), opportunity for sexual selection (Is;
 B), Bateman gradient (βss; C), Jones index (s’max; D), mating
 differential on body mass (m’; E) and selection differential on body
-mass (s’; F) with mean and 95%CI estimated via bootstrapping (Table 4
-&amp; 5). Dashed lines mark equal effect size for both densities. In
-grey area metrics were larger under high density treatments. The
-x-/y-distance of means from dashed line is equal to the effect size of
-the treatment (Table 4 &amp; 5).
+mass (s’; F) with mean and 95%CI estimated via bootstrapping. Dashed
+lines mark equal effect size for both densities. In grey area metrics
+were larger under high density treatments. The x-/y-distance of means
+from dashed line is equal to the effect size of the treatment.
 </p>
 </div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Fig_2<span class="ot">=</span><span class="fu">plot_grid</span>(Figure_2, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">rel_heights=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>)) <span class="co"># rel_heights values control title margins</span></span></code></pre></div>
@@ -2718,9 +2741,11 @@ treatment.</p>
 <span id="cb35-57"><a href="#cb35-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;transparent&quot;</span>))</span>
 <span id="cb35-58"><a href="#cb35-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-59"><a href="#cb35-59" aria-hidden="true" tabindex="-1"></a>legend_Figure_S6 <span class="ot">&lt;-</span> <span class="fu">get_legend</span>(p26)</span></code></pre></div>
+<div id="figure-s6" class="section level3">
+<h3>Figure S6</h3>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Figure_S6<span class="ot">&lt;-</span><span class="fu">grid.arrange</span>(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, <span class="at">nrow =</span> <span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">3</span>, <span class="at">widths=</span><span class="fu">c</span>(<span class="fl">2.3</span>, <span class="fl">2.3</span>, <span class="fl">0.65</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figure/index4.Rmd/unnamed-chunk-24-1.png" alt="Figure S6: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals." width="960" />
+<div class="figure" style="text-align: left">
+<img src="figure/index4.Rmd/unnamed-chunk-24-1.png" alt="Figure S6: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals." width="768" />
 <p class="caption">
 Figure S6: Scatterplot of Bateman gradients (βss; relativized mating
 success against relativized reproductive success) for males (blue) and
@@ -2730,6 +2755,7 @@ with predicted 95% confidence intervals.
 </p>
 </div>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Fig_S6<span class="ot">=</span><span class="fu">plot_grid</span>(Figure_S6, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">rel_heights=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>)) <span class="co"># rel_heights values control title margins</span></span></code></pre></div>
+</div>
 </div>
 </div>
 <div
@@ -3167,9 +3193,11 @@ treatment.</p>
 <span id="cb63-57"><a href="#cb63-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;transparent&quot;</span>))</span>
 <span id="cb63-58"><a href="#cb63-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-59"><a href="#cb63-59" aria-hidden="true" tabindex="-1"></a>legend_Figure_S6 <span class="ot">&lt;-</span> <span class="fu">get_legend</span>(p26)</span></code></pre></div>
+<div id="figure-s7" class="section level3">
+<h3>Figure S7</h3>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>Figure_S7<span class="ot">&lt;-</span><span class="fu">grid.arrange</span>(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, <span class="at">nrow =</span> <span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">3</span>, <span class="at">widths=</span><span class="fu">c</span>(<span class="fl">2.3</span>, <span class="fl">2.3</span>, <span class="fl">0.65</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="figure/index4.Rmd/unnamed-chunk-40-1.png" alt="Figure S7: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) excluding individuals without mating success for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals." width="960" />
+<div class="figure" style="text-align: left">
+<img src="figure/index4.Rmd/unnamed-chunk-40-1.png" alt="Figure S7: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) excluding individuals without mating success for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals." width="768" />
 <p class="caption">
 Figure S7: Scatterplot of Bateman gradients (βss; relativized mating
 success against relativized reproductive success) excluding individuals
@@ -3180,6 +3208,7 @@ confidence intervals.
 </p>
 </div>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>Fig_S7<span class="ot">=</span><span class="fu">plot_grid</span>(Figure_S6, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">rel_heights=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>)) <span class="co"># rel_heights values control title margins</span></span></code></pre></div>
+</div>
 </div>
 </div>
 <div

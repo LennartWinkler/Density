@@ -700,7 +700,7 @@ BarPlot_4<- ggplot(PhenVarBoot_Table_plot_arena[13:18,], aes(x=Cov_component, y=
 ```
 
 ### Figure 3
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 14, results='hide',fig.cap='Figure 3: Variance components of reproductive success into mating success (MS) and fecundity (Fec) and their covariance for females (A + B) and into mating success (MS), paternity share (PS), and partner fecundity (pFec) and their covariances for males (C + D) for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S9).',fig.height=10}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 7,fig.height=7, results='hide',fig.cap='Figure 3: Variance components of reproductive success into mating success (MS) and fecundity (Fec) and their covariance for females (A + B) and into mating success (MS), paternity share (PS), and partner fecundity (pFec) and their covariances for males (C + D) for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S9).',fig.fullwidth=TRUE}
 # Figure 3
 Figure_3<-grid.arrange(BarPlot_3+theme(legend.position = c(1, 0.8)),BarPlot_4+theme(legend.position = c(1, 0.8)),BarPlot_1+theme(legend.position = c(1, 0.8)),BarPlot_2+theme(legend.position = c(1, 0.8)), nrow = 2,ncol=2)
 Fig_3=plot_grid(Figure_3, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
@@ -1656,7 +1656,7 @@ BarPlot_2cv<-ggplot(PhenVarBoot_Table_plot_cov_arena[1:12,], aes(x=Cov_component
 ```
 
 ### Figure S8
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 14, results='hide',fig.cap='Figure S8: Variance (A + B) and covariance (C + D) components of reproductive success into mating success (MS), insemination success (IS), fertilization success (FS) and partner fecundity (pFec) for males for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S7).',fig.height=10}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 7,fig.height=7, results='hide',fig.cap='Figure S8: Variance (A + B) and covariance (C + D) components of reproductive success into mating success (MS), insemination success (IS), fertilization success (FS) and partner fecundity (pFec) for males for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S7).',fig.fullwidth=TRUE}
 ### Figure S8
 Figure_S8<-grid.arrange(BarPlot_5_2+labs(tag = "A")+theme(legend.position = c(1, 0.9)),BarPlot_6_2+theme(legend.position = c(1, 0.9))+labs(tag = "B"),BarPlot_1cv+theme(legend.position = c(1, 0.9))+labs(tag = "C")+xlab('Variance component'),BarPlot_2cv+theme(legend.position = c(1, 0.9))+labs(tag = "D")+xlab('Variance component'), nrow = 2,ncol=2)
 Fig_S8=plot_grid(Figure_S8, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins

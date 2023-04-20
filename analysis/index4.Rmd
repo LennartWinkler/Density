@@ -985,7 +985,7 @@ p21=ggplot(plot_sBM_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=
 ```
 
 ### Figure 2
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 13, results='hide',fig.cap='Figure 2: Selection metrics estimated for females (blue) and males (red) under density manipulated via group (point) or arena size (square). Opportunity for selection (I; A), opportunity for sexual selection (Is; B), Bateman gradient (βss; C), Jones index (s’max; D), mating differential on body mass (m’; E) and selection differential on body mass (s’; F) with mean and 95%CI estimated via bootstrapping (Table 4 & 5). Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment (Table 4 & 5).',fig.height=15}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 11,fig.height=7.7, results='hide',fig.cap='Figure 2: Selection metrics estimated for females (blue) and males (red) under density manipulated via group (point) or arena size (square). Opportunity for selection (I; A), opportunity for sexual selection (Is; B), Bateman gradient (βss; C), Jones index (s’max; D), mating differential on body mass (m’; E) and selection differential on body mass (s’; F) with mean and 95%CI estimated via bootstrapping. Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.fullwidth=TRUE}
 # Figure 2
 Figure_2<-grid.arrange(p16+theme(legend.position = c(1, 0.9)),p17+theme(legend.position = c(1, 0.9)),p18+theme(legend.position = c(1, 0.9)),p19+theme(legend.position = c(1, 0.9)),p20+theme(legend.position = c(1, 0.9)),p21+theme(legend.position = c(1, 0.9)), nrow = 3,ncol=2)
 Fig_2=plot_grid(Figure_2, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
@@ -1159,7 +1159,8 @@ p26<-ggplot(D_data, aes(x=Total_N_MTP1, y=Total_N_Rd, color=Sex)) +
 legend_Figure_S6 <- get_legend(p26)
 ```
 
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide',fig.cap='Figure S6: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.'}
+### Figure S6
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 8,fig.height=7, results='hide',fig.cap='Figure S6: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.',fig.fullwidth=TRUE}
 Figure_S6<-grid.arrange(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, nrow = 2,ncol=3, widths=c(2.3, 2.3, 0.65))
 Fig_S6=plot_grid(Figure_S6, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
@@ -1352,7 +1353,8 @@ p26<-ggplot(D_data_noZeroMS, aes(x=Total_N_MTP1, y=Total_N_Rd, color=Sex)) +
 legend_Figure_S6 <- get_legend(p26)
 ```
 
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide',fig.cap='Figure S7: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) excluding individuals without mating success for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.'}
+### Figure S7
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 8,fig.height=7, results='hide',fig.cap='Figure S7: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) excluding individuals without mating success for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.',fig.fullwidth=TRUE}
 Figure_S7<-grid.arrange(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, nrow = 2,ncol=3, widths=c(2.3, 2.3, 0.65))
 Fig_S7=plot_grid(Figure_S6, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```

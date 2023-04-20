@@ -218,6 +218,9 @@ fig_theme=theme(panel.border = element_blank(),
 ## Create customized functions for analysis ####
 # Create function to calculate standard error and upper/lower standard deviation
 standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(!is.na(x)))
+upper_CI <- function(x) mean(x,na.rm=T)+((standard_error(x))*qnorm(0.975))
+lower_CI <- function(x) mean(x,na.rm=T)-((standard_error(x))*qnorm(0.975))
+
 upper_SD <- function(x) mean(x,na.rm=T)+(sd(x)/2)
 lower_SD <- function(x) mean(x,na.rm=T)-(sd(x)/2)
 ```
@@ -829,159 +832,181 @@ Here we plotted the mating behaviour and reproductive success per treatment and 
 D_data$TreatCgroup <- factor(paste(D_data$Sex,D_data$Gr_size,  sep=" "), levels = c("F SG", "F LG", "M SG",'M LG'))
 D_data$TreatCarena <- factor(paste(D_data$Sex,D_data$Arena,  sep=" "), levels = c("F Large", "F Small", "M Large",'M Small'))
 
-### Plot: Copulation attempts ####
 p3<-ggplot(D_data, aes(x=Sex, y=as.numeric(Total_Encounters),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
-  stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
                position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
   scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
-  xlab('Sex')+ylab("Copulation encounters")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  xlab('Sex')+ylab("Copulation attempts")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,30)+labs(tag = "C")+
   annotate("text",label='n =',x=0.55,y=30,size=4)+
   annotate("text",label='54',x=0.78,y=30,size=4)+
-  annotate("text",label='46',x=1.23,y=30,size=4)+
-  annotate("text",label='45',x=1.78,y=30,size=4)+
+  annotate("text",label='45',x=1.23,y=30,size=4)+
+  annotate("text",label='46',x=1.78,y=30,size=4)+
   annotate("text",label='58',x=2.23,y=30,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 p3.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(Total_Encounters),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
   geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,30)+labs(tag = "D")+
   annotate("text",label='n =',x=0.55,y=30,size=4)+
   annotate("text",label='51',x=0.78,y=30,size=4)+
-  annotate("text",label='55',x=1.23,y=30,size=4)+
-  annotate("text",label='48',x=1.78,y=30,size=4)+
+  annotate("text",label='48',x=1.23,y=30,size=4)+
+  annotate("text",label='55',x=1.78,y=30,size=4)+
   annotate("text",label='49',x=2.23,y=30,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
-### Plot: Copulations per encounter ####
+### Plot: Copulations per attempt ####
 p4<-ggplot(D_data, aes(x=Sex, y=as.numeric(Prop_MS),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
-  xlab('')+ylab("Copulations per encounter")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
+  xlab('')+ylab("Copulations per attempt")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,1.1)+labs(tag = "A")+
   annotate("text",label='n =',x=0.55,y=1.1,size=4)+
   annotate("text",label='54',x=0.78,y=1.1,size=4)+
-  annotate("text",label='46',x=1.23,y=1.1,size=4)+
-  annotate("text",label='45',x=1.78,y=1.1,size=4)+
+  annotate("text",label='45',x=1.23,y=1.1,size=4)+
+  annotate("text",label='46',x=1.78,y=1.1,size=4)+
   annotate("text",label='58',x=2.23,y=1.1,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 p4.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(Prop_MS),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
   geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,1.1)+labs(tag = "B")+
   annotate("text",label='n =',x=0.55,y=1.1,size=4)+
   annotate("text",label='51',x=0.78,y=1.1,size=4)+
-  annotate("text",label='55',x=1.23,y=1.1,size=4)+
-  annotate("text",label='48',x=1.78,y=1.1,size=4)+
+  annotate("text",label='48',x=1.23,y=1.1,size=4)+
+  annotate("text",label='55',x=1.78,y=1.1,size=4)+
   annotate("text",label='49',x=2.23,y=1.1,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 ### Plot: Mating partners focal ####
 p5<-ggplot(D_data, aes(x=Sex, y=as.numeric(MatingPartners_number),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('')+ylab("Number of partners")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,5.4)+labs(tag = "C")+
   annotate("text",label='n =',x=0.55,y=5.4,size=4)+
   annotate("text",label='54',x=0.78,y=5.4,size=4)+
-  annotate("text",label='46',x=1.23,y=5.4,size=4)+
-  annotate("text",label='45',x=1.78,y=5.4,size=4)+
+  annotate("text",label='45',x=1.23,y=5.4,size=4)+
+  annotate("text",label='46',x=1.78,y=5.4,size=4)+
   annotate("text",label='58',x=2.23,y=5.4,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 p5.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(MatingPartners_number),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,5.4)+labs(tag = "D")+
   annotate("text",label='n =',x=0.55,y=5.4,size=4)+
   annotate("text",label='51',x=0.78,y=5.4,size=4)+
-  annotate("text",label='55',x=1.23,y=5.4,size=4)+
-  annotate("text",label='48',x=1.78,y=5.4,size=4)+
+  annotate("text",label='48',x=1.23,y=5.4,size=4)+
+  annotate("text",label='55',x=1.78,y=5.4,size=4)+
   annotate("text",label='49',x=2.23,y=5.4,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 ### Plot: Number copulations ####
 p6<-ggplot(D_data, aes(x=Sex, y=as.numeric(Matings_number),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   xlab('')+ylab("Number of copulations")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,12)+labs(tag = "A")+
   annotate("text",label='n =',x=0.55,y=12,size=4)+
   annotate("text",label='54',x=0.78,y=12,size=4)+
-  annotate("text",label='46',x=1.23,y=12,size=4)+
-  annotate("text",label='45',x=1.78,y=12,size=4)+
+  annotate("text",label='45',x=1.23,y=12,size=4)+
+  annotate("text",label='46',x=1.78,y=12,size=4)+
   annotate("text",label='58',x=2.23,y=12,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 p6.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(Matings_number),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+labs(tag = "B")+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,12)+
   annotate("text",label='n =',x=0.55,y=12,size=4)+
   annotate("text",label='51',x=0.78,y=12,size=4)+
-  annotate("text",label='55',x=1.23,y=12,size=4)+
-  annotate("text",label='48',x=1.78,y=12,size=4)+
+  annotate("text",label='48',x=1.23,y=12,size=4)+
+  annotate("text",label='55',x=1.78,y=12,size=4)+
   annotate("text",label='49',x=2.23,y=12,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
@@ -989,77 +1014,89 @@ p6.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(Matings_number),fill=TreatCarena, c
 ###Plot: Copulations per partner ####
 p7<-ggplot(D_data, aes(x=Sex, y=as.numeric(meanCop),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
   geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   xlab('Sex')+ylab("Copulations per partner")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ labs(tag = "C")+ylim(1,4.5)+
   annotate("text",label='n =',x=0.55,y=4.5,size=4)+
-  annotate("text",label='49',x=0.78,y=4.5,size=4)+
-  annotate("text",label='43',x=1.23,y=4.5,size=4)+
-  annotate("text",label='34',x=1.78,y=4.5,size=4)+
-  annotate("text",label='51',x=2.23,y=4.5,size=4)+
+  annotate("text",label='54',x=0.78,y=4.5,size=4)+
+  annotate("text",label='45',x=1.23,y=4.5,size=4)+
+  annotate("text",label='46',x=1.78,y=4.5,size=4)+
+  annotate("text",label='58',x=2.23,y=4.5,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 p7.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(meanCop),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(1,4.5)+labs(tag = "D")+
   annotate("text",label='n =',x=0.55,y=4.5,size=4)+
-  annotate("text",label='46',x=0.78,y=4.5,size=4)+
-  annotate("text",label='49',x=1.23,y=4.5,size=4)+
-  annotate("text",label='37',x=1.78,y=4.5,size=4)+
-  annotate("text",label='45',x=2.23,y=4.5,size=4)+
+  annotate("text",label='51',x=0.78,y=4.5,size=4)+
+  annotate("text",label='48',x=1.23,y=4.5,size=4)+
+  annotate("text",label='55',x=1.78,y=4.5,size=4)+
+  annotate("text",label='49',x=2.23,y=4.5,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 ### Plot: Copulation duration ####
 p8<-ggplot(D_data, aes(x=Sex, y=as.numeric(MatingDuration_av),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   xlab('Sex')+ylab("Mean copulation duration")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,390)+labs(tag = "E")+
   annotate("text",label='n =',x=0.55,y=390,size=4)+
   annotate("text",label='49',x=0.78,y=390,size=4)+
-  annotate("text",label='43',x=1.23,y=390,size=4)+
-  annotate("text",label='34',x=1.78,y=390,size=4)+
+  annotate("text",label='34',x=1.23,y=390,size=4)+
+  annotate("text",label='43',x=1.78,y=390,size=4)+
   annotate("text",label='51',x=2.23,y=390,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
-  fig_theme+theme( legend.position = c(1.2, 0.8))
+  fig_theme
 
 p8.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(MatingDuration_av),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,390)+labs(tag = "F")+
   annotate("text",label='n =',x=0.55,y=390,size=4)+
   annotate("text",label='46',x=0.78,y=390,size=4)+
-  annotate("text",label='49',x=1.23,y=390,size=4)+
-  annotate("text",label='37',x=1.78,y=390,size=4)+
+  annotate("text",label='37',x=1.23,y=390,size=4)+
+  annotate("text",label='49',x=1.78,y=390,size=4)+
   annotate("text",label='45',x=2.23,y=390,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
@@ -1067,68 +1104,74 @@ p8.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(MatingDuration_av),fill=TreatCarena
 ###Plot: Reproductive success ####
 p9<-ggplot(D_data, aes(x=Sex, y=as.numeric(Total_N_MTP1),fill=TreatCgroup, col=TreatCgroup,alpha=TreatCgroup)) +
   geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
   xlab('Sex')+ylab("Number of offspring")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,320)+labs(tag = "A")+
   annotate("text",label='n =',x=0.55,y=320,size=4)+
   annotate("text",label='54',x=0.78,y=320,size=4)+
-  annotate("text",label='46',x=1.23,y=320,size=4)+
-  annotate("text",label='45',x=1.78,y=320,size=4)+
+  annotate("text",label='45',x=1.23,y=320,size=4)+
+  annotate("text",label='46',x=1.78,y=320,size=4)+
   annotate("text",label='58',x=2.23,y=320,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
 
 p9.2<-ggplot(D_data, aes(x=Sex, y=as.numeric(Total_N_MTP1),fill=TreatCarena, col=TreatCarena,alpha=TreatCarena)) +
-  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19,  size = 2)+
+  geom_point(position=position_jitterdodge(jitter.width=0.5,jitter.height = 0,dodge.width=1.2),shape=19, size = 2)+
+  stat_summary(fun.min =lower_CI ,
+               fun.max = upper_CI ,fun = mean,
+               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+
   stat_summary(fun = mean,
-               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
-  stat_summary(fun.min =lower_SD ,
-               fun.max = upper_SD ,fun = mean,
-               position=position_dodge2(0.3),col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, linewidth = 1.15)+scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+               position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
+  stat_summary(fun = mean,
+               position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
   xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ ylim(0,320)+labs(tag = "B")+
   annotate("text",label='n =',x=0.55,y=320,size=4)+
   annotate("text",label='51',x=0.78,y=320,size=4)+
-  annotate("text",label='55',x=1.23,y=320,size=4)+
-  annotate("text",label='48',x=1.78,y=320,size=4)+
+  annotate("text",label='48',x=1.23,y=320,size=4)+
+  annotate("text",label='55',x=1.78,y=320,size=4)+
   annotate("text",label='49',x=2.23,y=320,size=4)+
   guides(colour = guide_legend(override.aes = list(size=4)))+
   fig_theme
-
 ```
 
 ### Figure S2
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 9, results='hide',fig.cap='Figure S2: Mating behavior of males and females under low and high density manipulation via group (left) and arena size (right). Grey bars indicate means and standard deviations.',fig.height=15}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 9, fig.height=11, results='hide',fig.cap='Figure S2: Mating behavior of males and females under low and high density manipulation via group (left) and arena size (right). Bars indicate means and 95% CI.',fig.fullwidth=TRUE}
 #Behaviour 1 (Figure S2)
-Figure_S2<-grid.arrange(p3+labs(tag = "A")+xlab('')+theme(plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),p3.2+labs(tag = "B")+xlab('')+theme(plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),
+Figure_S2<-grid.arrange(p3+labs(tag = "A")+xlab('')+theme(legend.position = c(1.25, 0.8),plot.margin = unit(c(0.2,3.5,0,0.1), "cm"),legend.text = element_text(size=9)),p3.2+
+                          labs(tag = "B")+xlab('')+theme(legend.position = c(1.25, 0.8),plot.margin = unit(c(0.2,3.5,0,0.1), "cm"),legend.text = element_text(size=9)),
                         p4+labs(tag = "C")+xlab('')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),p4.2+labs(tag = "D")+xlab('')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),
                         p5+labs(tag = "E")+xlab('Sex')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),p5.2+labs(tag = "F")+xlab('Sex')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm"))
                         ,nrow = 3,ncol=2)
-Fig_S2=plot_grid(Figure_S2, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+Figure_S2 = plot_grid(Figure_S2, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
 
 ### Figure S3
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 9, results='hide',fig.cap='Figure S3: Mating behavior of males and females under low and high density manipulation via group (left) and arena size (right). Grey bars indicate means and standard deviations.',fig.height=15}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 9, fig.height=11, results='hide',fig.cap='Figure S3: Mating behavior of males and females under low and high density manipulation via group (left) and arena size (right). Bars indicate means and 95% CI.',fig.fullwidth=TRUE}
 #Behavior 2 (Figure S3)
-Figure_S3<-grid.arrange(p6+labs(tag = "A")+xlab('')+theme(plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),p6.2+labs(tag = "B")+xlab('')+theme(plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),
+Figure_S3<-grid.arrange(p6+labs(tag = "A")+xlab('')+theme(legend.position = c(1.25, 0.8),plot.margin = unit(c(0.2,3.5,0,0.1), "cm"),legend.text = element_text(size=9)),p6.2+labs(tag = "B")+xlab('')+theme(legend.position = c(1.25, 0.8),plot.margin = unit(c(0.2,3.5,0,0.1), "cm"),legend.text = element_text(size=9)),
                         p7+labs(tag = "C")+xlab('')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),p7.2+labs(tag = "D")+xlab('')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),
                         p8+labs(tag = "E")+xlab('Sex')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),p8.2+labs(tag = "F")+xlab('Sex')+theme(legend.position = 'none',plot.margin = unit(c(0.2,3.5,0,0.1), "cm")),nrow = 3,ncol=2)
-Fig_S3=plot_grid(Figure_S3, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+Figure_S3 = plot_grid(Figure_S3, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
 
 ### Figure S4
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide',fig.cap='Figure S4: Reproductive success of males and females under density manipulation via group (left) and arena size (right). Grey bars indicate means and standard deviations.'}
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 11,fig.height=6, results='hide',fig.cap='Figure S4: Reproductive success of males and females under density manipulation via group (left) and arena size (right). Bars indicate means and 95% CI.',fig.fullwidth=TRUE}
 # Reproductive success (Figure S4)
-Figure_S4<-grid.arrange(grobs = list(p9+theme(plot.margin = unit(c(0.2,4,0,0.1), "cm")),p9.2+theme(plot.margin = unit(c(0.2,4,0,0.1), "cm"))), nrow = 1,ncol=2, widths=c(2.3, 2.3))
-Fig_S4=plot_grid(Figure_S4, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+Figure_S4<-grid.arrange(grobs = list(p9+theme(legend.position = c(1.2, 0.8),plot.margin = unit(c(0.2,4,0,0.3), "cm")),p9.2+theme(legend.position = c(1.2, 0.8),plot.margin = unit(c(0.2,4,0,0.3), "cm"))), nrow = 1,ncol=2, widths=c(2.3, 2.3))
+Figure_S4 = plot_grid(Figure_S4, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
 
 ## Bootstrapping variances for mating behaviour and reproductive success
@@ -1521,7 +1564,27 @@ p10=ggplot(plot_MatingA_data, aes(x=Variance_low, y=Variance_high, color=Sex, sh
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.15,1.15)+ylim(0.15,1.15)+
   guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+  theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = c(0.8, 0.4),
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0.1,0.2), "cm"))
 
 ### Plot: Varince in copulations per encounter ####
 # Reorder data
@@ -1547,7 +1610,27 @@ p11=ggplot(plot_PropSuc_data, aes(x=Variance_low, y=Variance_high, color=Sex, sh
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.15,1.15)+ylim(0.15,1.15)+
   guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+   theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = 'none',
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0.1,0.2), "cm"))
 
 ### Plot: Variance in mating success ####
 # Reorder data
@@ -1573,7 +1656,27 @@ p12=ggplot(plot_MS_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape=T
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.15,1.15)+ylim(0.15,1.15)+
   guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+   theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = 'none',
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0.1,0.2), "cm"))
 
 ### Plot: Variance in number of copulations ####
 # Reorder data
@@ -1599,7 +1702,27 @@ p13=ggplot(plot_nCop_data, aes(x=Variance_low, y=Variance_high, color=Sex, shape
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.15,1.15)+ylim(0.15,1.15)+
   guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+   theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = 'none',
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0.1,0.2), "cm"))
 
 ### Plot: Variance in copulations per partner ####
 # Reorder data
@@ -1625,7 +1748,27 @@ p14=ggplot(plot_copperP_data, aes(x=Variance_low, y=Variance_high, color=Sex, sh
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.15,1.15)+ylim(0.15,1.15)+
   guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+   theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = 'none',
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0.1,0.2), "cm"))
 
 ## Plot: Variance in copulation duration
 # Reorder data
@@ -1651,13 +1794,33 @@ p15=ggplot(plot_Duration_data, aes(x=Variance_low, y=Variance_high, color=Sex, s
   guides(shape = guide_legend(override.aes = list(size = 3.5)))+
   xlim(0.15,1.15)+ylim(0.15,1.15)+
   guides(shape = guide_legend(override.aes = list(size = 5)))+
-  fig_theme
+   theme(panel.border = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.tag.position=c(0.01,0.98),
+        legend.position = 'none',
+        legend.spacing.y = unit(0.1, 'cm'),
+        legend.key=element_blank(),
+        legend.title = element_blank(),
+        legend.margin = margin(0,0,0,0, unit="cm"),
+        legend.text = element_text(colour="black", size=11),
+        axis.line.x = element_line(colour = "black", size = 1),
+        axis.line.y = element_line(colour = "black", size = 1),
+        axis.text.x = element_text(face="plain", color="black", size=16, angle=0),
+        axis.text.y = element_text(face="plain", color="black", size=16, angle=0),
+        axis.title.x = element_text(size=16,face="plain", margin = margin(r=0,10,0,0)),
+        axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
+        axis.ticks = element_line(size = 1),
+        axis.ticks.length = unit(.3, "cm"),
+        plot.margin = unit(c(0.5,0.2,0.1,0.2), "cm"))
 ```
 
 ### Figure S5
-```{r , warning=FALSE, message=FALSE, fig.align="center",fig.width = 10, results='hide',fig.cap='Figure S5: Coefficients of variation (CV) in mating behavior for females (blue) and males (red) under density manipulated via group (point) or arena size (square). Copulation attempts (A), proportion of successful copulations (B), number of partners (C), number of copulations (D), copulations per partners (E) and copulation duration (F) with mean and 95%CI estimated via bootstrapping (Table S2). In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.height=10}
-Figure_S5<-grid.arrange(p10+theme(legend.position = c(1, 0.8),legend.text = element_text(size=9)),p11+theme(legend.position = c(1, 0.8),legend.text = element_text(size=9)),p12+theme(legend.position = 'none'),p13+theme(legend.position = 'none'),p14+theme(legend.position = 'none'),p15+theme(legend.position = 'none'), nrow = 3,ncol=2)
-Fig_S5=plot_grid(Figure_S5, ncol=1, rel_heights=c(0.2, 1.1)) # rel_heights values control title margins
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 9,fig.height=11,  results='hide',fig.cap='Figure S5: Coefficients of variation (CV) in mating behavior for females (blue) and males (red) under density manipulated via group (point) or arena size (square). Copulation attempts (A), proportion of successful copulations (B), number of partners (C), number of copulations (D), copulations per partners (E) and copulation duration (F) with mean and 95%CI estimated via bootstrapping (Table S2). In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.fullwidth=TRUE}
+Figure_S5<-grid.arrange(p10,p11,p12,p13,p14,p15, nrow = 3,ncol=2)
+Figure_S5 = plot_grid(Figure_S5, ncol=1, rel_heights=c(0.2, 1.1)) # rel_heights values control title margins
 ```
 
 ## Permutation tests for treatment comparison
