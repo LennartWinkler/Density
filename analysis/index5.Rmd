@@ -1700,7 +1700,7 @@ BarPlot_5_2<- ggplot(PhenVarBoot_Table_pop[1:8,], aes(x=Variance_component, y=Va
         axis.title.y = element_text(size=16,face="plain", margin = margin(r=10,0,0,0)),
         axis.ticks = element_line(size = 1),
         axis.ticks.length = unit(.3, "cm"))+
-  scale_fill_manual(values=c(slava_ukrajini[1],slava_ukrajini[2]),name = "Treatment", labels = c('Small group','Large group'))
+  scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Small group','Large group'))
 
 ### Plot: Variance decomposition for arena size including IS and FS #### 
 BarPlot_6_2<-ggplot(PhenVarBoot_Table_arena[1:8,], aes(x=Variance_component, y=Variance, alpha=Treatment)) + 
