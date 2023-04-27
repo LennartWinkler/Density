@@ -14,7 +14,7 @@
 
 <title>Population density affects sexual selection in an insect model</title>
 
-<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -505,7 +505,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-04-22
+<strong>Last updated:</strong> 2023-04-27
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -637,15 +637,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023tree5b85dd9a015e9d332ed719b3d4acd61a3ec74200targetblank5b85dd9a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treee4a0f09af9c17b7e3344656836da531310519815targetblanke4a0f09a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/5b85dd9a015e9d332ed719b3d4acd61a3ec74200" target="_blank">5b85dd9</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/e4a0f09af9c17b7e3344656836da531310519815" target="_blank">e4a0f09</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023tree5b85dd9a015e9d332ed719b3d4acd61a3ec74200targetblank5b85dd9a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treee4a0f09af9c17b7e3344656836da531310519815targetblanke4a0f09a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -655,7 +655,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/5b85dd9a015e9d332ed719b3d4acd61a3ec74200" target="_blank">5b85dd9</a>.
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/e4a0f09af9c17b7e3344656836da531310519815" target="_blank">e4a0f09</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -716,6 +716,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/blob/e4a0f09af9c17b7e3344656836da531310519815/analysis/index5.Rmd" target="_blank">e4a0f09</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2023-04-27
+</td>
+<td>
+wflow_publish(all = T)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/37ab720affeaa166eb212a6aef909518e73ebe39/docs/index5.html" target="_blank">37ab720</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2023-04-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1255,7 +1289,7 @@ data.</p>
 <span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a><span class="do">## Create customized functions for analysis ####</span></span>
 <span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="co"># Create function to calculate standard error and upper/lower standard deviation</span></span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>standard_error <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sd</span>(x,<span class="at">na.rm=</span>T) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(<span class="sc">!</span><span class="fu">is.na</span>(x)))</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>standard_error <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sd</span>(x,<span class="at">na.rm=</span>T) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(<span class="fu">na.exclude</span>(x)))</span>
 <span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>upper_SD <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(x,<span class="at">na.rm=</span>T)<span class="sc">+</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="dv">2</span>)</span>
 <span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>lower_SD <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">mean</span>(x,<span class="at">na.rm=</span>T)<span class="sc">-</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="dv">2</span>)</span></code></pre></div>
 </div>
@@ -2014,7 +2048,7 @@ with mean and 95%CI estimated via bootstrapping.</p>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(),<span class="at">fill=</span>colpal2[<span class="dv">2</span>]) <span class="sc">+</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>l95_CI, <span class="at">ymax=</span>u95_CI, <span class="at">group =</span> Treatment), <span class="at">width=</span>.<span class="dv">3</span>,<span class="at">size=</span>.<span class="dv">5</span>,<span class="at">alpha=</span><span class="dv">1</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;Variance&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Variance component&#39;</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&#39;&#39;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;C&quot;</span>)<span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;MS&quot;</span>,<span class="st">&quot;PS&quot;</span> ,<span class="st">&quot;pFec&quot;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">PS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(PS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;MS&quot;</span>,<span class="st">&quot;PS&quot;</span> ,<span class="st">&quot;pFec&quot;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">PS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(PS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
@@ -2041,7 +2075,7 @@ with mean and 95%CI estimated via bootstrapping.</p>
 <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(),<span class="at">fill=</span>colpal2[<span class="dv">2</span>]) <span class="sc">+</span></span>
 <span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>l95_CI, <span class="at">ymax=</span>u95_CI, <span class="at">group =</span> Treatment), <span class="at">width=</span>.<span class="dv">3</span>,<span class="at">size=</span>.<span class="dv">5</span>,<span class="at">alpha=</span><span class="dv">1</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span></span>
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Variance component&#39;</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&#39;&#39;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;D&quot;</span>)<span class="sc">+</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;MS&quot;</span>,<span class="st">&quot;PS&quot;</span> ,<span class="st">&quot;pFec&quot;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">PS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(PS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;MS&quot;</span>,<span class="st">&quot;PS&quot;</span> ,<span class="st">&quot;pFec&quot;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">PS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(PS, </span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span></span>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_alpha_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="fl">0.65</span>,<span class="dv">1</span>),<span class="at">name =</span> <span class="st">&quot;Treatment&quot;</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Large arena&#39;</span>,<span class="st">&#39;Small arena&#39;</span>))<span class="sc">+</span></span>
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
@@ -2066,7 +2100,7 @@ with mean and 95%CI estimated via bootstrapping.</p>
 <span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;solid&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(),<span class="at">fill=</span>colpal2[<span class="dv">1</span>]) <span class="sc">+</span></span>
 <span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;Variance&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&#39;&#39;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;A&quot;</span>)<span class="sc">+</span></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;MS&#39;</span>,<span class="st">&#39;Fec&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS, Fec)&#39;</span>))<span class="sc">+</span> </span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;MS&#39;</span>,<span class="st">&#39;Fec&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS, Fec)&#39;</span>))<span class="sc">+</span> </span>
 <span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
@@ -2092,7 +2126,7 @@ with mean and 95%CI estimated via bootstrapping.</p>
 <span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;solid&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(),<span class="at">fill=</span>colpal2[<span class="dv">1</span>]) <span class="sc">+</span></span>
 <span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&#39;&#39;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;B&quot;</span>)<span class="sc">+</span></span>
-<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;MS&#39;</span>,<span class="st">&#39;Fec&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS, Fec)&#39;</span>))<span class="sc">+</span> </span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;MS&#39;</span>,<span class="st">&#39;Fec&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS, Fec)&#39;</span>))<span class="sc">+</span> </span>
 <span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
@@ -3880,12 +3914,12 @@ and fertilization success.</p>
 <span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot: Covariances for population size including IS and FS #### </span></span>
 <span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>BarPlot_1cv<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(PhenVarBoot_Table_plot_cov_pop[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,], <span class="fu">aes</span>(<span class="at">x=</span>Cov_component, <span class="at">y=</span>Variance, <span class="at">alpha=</span>Treatment)) <span class="sc">+</span> </span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.50</span>, <span class="fl">0.35</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.35</span>,<span class="fl">0.18</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span> ,<span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.50</span>, <span class="fl">0.35</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span> ,<span class="dv">0</span>)) <span class="sc">+</span> </span>
 <span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;solid&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(),<span class="at">fill=</span>colpal2[<span class="dv">2</span>]) <span class="sc">+</span></span>
 <span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>l95_CI, <span class="at">ymax=</span>u95_CI, <span class="at">group =</span> Treatment), <span class="at">width=</span>.<span class="dv">3</span>,<span class="at">size=</span>.<span class="dv">5</span>,<span class="at">alpha=</span><span class="dv">1</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span></span>
 <span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;Variance&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&#39;&#39;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;A&quot;</span>)<span class="sc">+</span></span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">IS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(FS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span> </span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">IS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(FS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span> </span>
 <span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
@@ -3907,12 +3941,12 @@ and fertilization success.</p>
 <span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot: Covariances for arena size including IS and FS #### </span></span>
 <span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>BarPlot_2cv<span class="ot">&lt;-</span><span class="fu">ggplot</span>(PhenVarBoot_Table_plot_cov_arena[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,], <span class="fu">aes</span>(<span class="at">x=</span>Cov_component, <span class="at">y=</span>Variance, <span class="at">alpha=</span>Treatment)) <span class="sc">+</span> </span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.50</span>, <span class="fl">0.35</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.35</span>,<span class="fl">0.18</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span> ,<span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.50</span>, <span class="fl">0.35</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span> ,<span class="dv">0</span>)) <span class="sc">+</span> </span>
 <span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;solid&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(),<span class="at">fill=</span>colpal2[<span class="dv">2</span>]) <span class="sc">+</span></span>
 <span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>l95_CI, <span class="at">ymax=</span>u95_CI, <span class="at">group =</span> Treatment), <span class="at">width=</span>.<span class="dv">3</span>,<span class="at">size=</span>.<span class="dv">5</span>,<span class="at">alpha=</span><span class="dv">1</span>, <span class="at">position=</span><span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span></span>
 <span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;&#39;</span>) <span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">&#39;&#39;</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;B&quot;</span>)<span class="sc">+</span></span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">IS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 x cov</span><span class="sc">\n</span><span class="st">(FS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span> </span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks=</span><span class="fu">waiver</span>(),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">IS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(MS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">FS)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(IS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>,<span class="st">&#39;2 cov</span><span class="sc">\n</span><span class="st">(FS,</span><span class="sc">\n</span><span class="st">pFec)&#39;</span>))<span class="sc">+</span> </span>
 <span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_alpha_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="fl">0.65</span>,<span class="dv">1</span>),<span class="at">name =</span> <span class="st">&quot;Treatment&quot;</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Large arena&#39;</span>,<span class="st">&#39;Small arena&#39;</span>))<span class="sc">+</span></span>
 <span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
@@ -3931,21 +3965,21 @@ and fertilization success.</p>
 <span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>,<span class="at">face=</span><span class="st">&quot;plain&quot;</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)),</span>
 <span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="dv">1</span>),</span>
 <span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.length =</span> <span class="fu">unit</span>(.<span class="dv">3</span>, <span class="st">&quot;cm&quot;</span>))</span></code></pre></div>
-<div id="figure-s8" class="section level3">
-<h3>Figure S8</h3>
+<div id="figure-s7" class="section level3">
+<h3>Figure S7</h3>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure S8</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Figure_S8<span class="ot">&lt;-</span><span class="fu">grid.arrange</span>(BarPlot_5_2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;A&quot;</span>),BarPlot_6_2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;B&quot;</span>),BarPlot_1cv<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;C&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Variance component&#39;</span>),BarPlot_2cv<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;D&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Variance component&#39;</span>), <span class="at">nrow =</span> <span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Figure_S7<span class="ot">&lt;-</span><span class="fu">grid.arrange</span>(BarPlot_5_2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;A&quot;</span>),BarPlot_6_2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;B&quot;</span>),BarPlot_1cv<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;C&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Variance component&#39;</span>),BarPlot_2cv<span class="sc">+</span><span class="fu">labs</span>(<span class="at">tag =</span> <span class="st">&quot;D&quot;</span>)<span class="sc">+</span><span class="fu">xlab</span>(<span class="st">&#39;Variance component&#39;</span>), <span class="at">nrow =</span> <span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: left">
-<img src="figure/index5.Rmd/unnamed-chunk-13-1.png" alt="Figure S8: Variance (A + B) and covariance (C + D) components of reproductive success into mating success (MS), insemination success (IS), fertilization success (FS) and partner fecundity (pFec) for males for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S7)." width="672" />
+<img src="figure/index5.Rmd/unnamed-chunk-13-1.png" alt="Figure S7: Variance (A + B) and covariance (C + D) components of reproductive success into mating success (MS), insemination success (IS), fertilization success (FS) and partner fecundity (pFec) for males for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S7)." width="672" />
 <p class="caption">
-Figure S8: Variance (A + B) and covariance (C + D) components of
+Figure S7: Variance (A + B) and covariance (C + D) components of
 reproductive success into mating success (MS), insemination success
 (IS), fertilization success (FS) and partner fecundity (pFec) for males
 for group size treatment (A + C) and arena size treatment (B + D). Mean
 and 95%CI estimated via bootstrapping (Table S7).
 </p>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Fig_S8<span class="ot">=</span><span class="fu">plot_grid</span>(Figure_S8, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">rel_heights=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>)) <span class="co"># rel_heights values control title margins</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Fig_S7<span class="ot">=</span><span class="fu">plot_grid</span>(Figure_S7, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">rel_heights=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>)) <span class="co"># rel_heights values control title margins</span></span></code></pre></div>
 </div>
 </div>
 <div
@@ -4248,7 +4282,7 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>R version 4.2.3 (2023-03-15 ucrt)
+<pre><code>R version 4.2.0 (2022-04-22 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 Running under: Windows 10 x64 (build 19045)
 
@@ -4264,35 +4298,36 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] knitr_1.42         ICC_2.4.0          data.table_1.14.8  boot_1.3-28.1     
- [5] RColorBrewer_1.1-3 car_3.1-2          carData_3.0-5      gridGraphics_0.5-1
- [9] cowplot_1.1.1      EnvStats_2.7.0     dplyr_1.1.1        readr_2.1.4       
-[13] lmerTest_3.1-3     lme4_1.1-32        Matrix_1.5-3       gridExtra_2.3     
-[17] ggplot2_3.4.2      ggeffects_1.2.1    workflowr_1.7.0   
+ [1] knitr_1.42         ICC_2.4.0          data.table_1.14.8  boot_1.3-28       
+ [5] RColorBrewer_1.1-3 car_3.1-1          carData_3.0-5      gridGraphics_0.5-1
+ [9] cowplot_1.1.1      EnvStats_2.7.0     dplyr_1.1.0        readr_2.1.4       
+[13] lmerTest_3.1-3     lme4_1.1-31        Matrix_1.5-3       gridExtra_2.3     
+[17] ggplot2_3.4.1      ggeffects_1.2.0    workflowr_1.7.0   
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.10         lattice_0.20-45     getPass_0.2-2      
- [4] ps_1.7.3            rprojroot_2.0.3     digest_0.6.31      
- [7] utf8_1.2.3          R6_2.5.1            evaluate_0.20      
-[10] highr_0.10          httr_1.4.5          pillar_1.9.0       
-[13] rlang_1.1.0         rstudioapi_0.14     minqa_1.2.5        
-[16] whisker_0.4.1       callr_3.7.3         jquerylib_0.1.4    
-[19] nloptr_2.0.3        rmarkdown_2.21      splines_4.2.3      
-[22] stringr_1.5.0       bit_4.0.5           munsell_0.5.0      
-[25] compiler_4.2.3      numDeriv_2016.8-1.1 httpuv_1.6.9       
-[28] xfun_0.38           pkgconfig_2.0.3     htmltools_0.5.5    
-[31] tidyselect_1.2.0    tibble_3.2.1        fansi_1.0.4        
-[34] crayon_1.5.2        tzdb_0.3.0          withr_2.5.0        
-[37] later_1.3.0         MASS_7.3-58.2       nlme_3.1-162       
-[40] jsonlite_1.8.4      gtable_0.3.3        lifecycle_1.0.3    
-[43] git2r_0.31.0        magrittr_2.0.3      scales_1.2.1       
-[46] vroom_1.6.1         cli_3.6.1           stringi_1.7.12     
-[49] cachem_1.0.7        farver_2.1.1        fs_1.6.1           
-[52] promises_1.2.0.1    bslib_0.4.2         generics_0.1.3     
-[55] vctrs_0.6.1         tools_4.2.3         bit64_4.0.5        
-[58] glue_1.6.2          hms_1.1.3           parallel_4.2.3     
-[61] abind_1.4-5         processx_3.8.0      fastmap_1.1.1      
-[64] yaml_2.3.7          colorspace_2.1-0    sass_0.4.5         </code></pre>
+ [1] httr_1.4.5          sass_0.4.5          bit64_4.0.5        
+ [4] vroom_1.6.1         jsonlite_1.8.4      splines_4.2.0      
+ [7] bslib_0.4.2         getPass_0.2-2       highr_0.10         
+[10] yaml_2.3.7          numDeriv_2016.8-1.1 pillar_1.8.1       
+[13] lattice_0.20-45     glue_1.6.2          digest_0.6.31      
+[16] promises_1.2.0.1    minqa_1.2.5         colorspace_2.1-0   
+[19] htmltools_0.5.4     httpuv_1.6.9        pkgconfig_2.0.3    
+[22] scales_1.2.1        processx_3.8.0      whisker_0.4.1      
+[25] later_1.3.0         tzdb_0.3.0          git2r_0.31.0       
+[28] tibble_3.2.0        generics_0.1.3      farver_2.1.1       
+[31] ellipsis_0.3.2      cachem_1.0.7        withr_2.5.0        
+[34] cli_3.6.1           magrittr_2.0.3      crayon_1.5.2       
+[37] evaluate_0.20       ps_1.7.2            fs_1.6.1           
+[40] fansi_1.0.4         nlme_3.1-157        MASS_7.3-56        
+[43] tools_4.2.0         hms_1.1.2           lifecycle_1.0.3    
+[46] stringr_1.5.0       munsell_0.5.0       callr_3.7.3        
+[49] compiler_4.2.0      jquerylib_0.1.4     rlang_1.0.6        
+[52] nloptr_2.0.3        rstudioapi_0.14     rmarkdown_2.20     
+[55] gtable_0.3.1        abind_1.4-5         R6_2.5.1           
+[58] fastmap_1.1.1       bit_4.0.5           utf8_1.2.3         
+[61] rprojroot_2.0.3     stringi_1.7.12      parallel_4.2.0     
+[64] Rcpp_1.0.10         vctrs_0.5.2         tidyselect_1.2.0   
+[67] xfun_0.37          </code></pre>
 </div>
 </div>
 </div>
