@@ -218,7 +218,7 @@ fig_theme=theme(panel.border = element_blank(),
 
 ## Create customized functions for analysis ####
 # Create function to calculate standard error and upper/lower standard deviation
-standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(!is.na(x)))
+standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(na.exclude(x)))
 upper_SD <- function(x) mean(x,na.rm=T)+(sd(x)/2)
 lower_SD <- function(x) mean(x,na.rm=T)-(sd(x)/2)
 ```
@@ -664,7 +664,7 @@ BarPlot_1<- ggplot(PhenVarBoot_Table_plot_pop[1:12,], aes(x=Cov_component, y=Var
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[2]) +
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('Variance') +xlab('Variance component') +ggtitle('')+labs(tag = "C")+
-  scale_x_discrete(breaks=waiver(),labels = c("MS","PS" ,"pFec",'2 x cov\n(MS, \nPS)','2 x cov\n(MS, \npFec)','2 x cov\n(PS, \npFec)'))+
+  scale_x_discrete(breaks=waiver(),labels = c("MS","PS" ,"pFec",'2 cov\n(MS, \nPS)','2 cov\n(MS, \npFec)','2 cov\n(PS, \npFec)'))+
   theme(panel.border = element_blank(),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -691,7 +691,7 @@ BarPlot_2<-ggplot(PhenVarBoot_Table_plot_arena[1:12,], aes(x=Cov_component, y=Va
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[2]) +
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('') +xlab('Variance component') +ggtitle('')+labs(tag = "D")+
-  scale_x_discrete(breaks=waiver(),labels = c("MS","PS" ,"pFec",'2 x cov\n(MS, \nPS)','2 x cov\n(MS, \npFec)','2 x cov\n(PS, \npFec)'))+
+  scale_x_discrete(breaks=waiver(),labels = c("MS","PS" ,"pFec",'2 cov\n(MS, \nPS)','2 cov\n(MS, \npFec)','2 cov\n(PS, \npFec)'))+
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Large arena','Small arena'))+
   theme(panel.border = element_blank(),
         plot.title = element_text(hjust = 0.5),
@@ -716,7 +716,7 @@ BarPlot_3<- ggplot(PhenVarBoot_Table_plot_pop[13:18,], aes(x=Cov_component, y=Va
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[1]) +
   ylab('Variance') +xlab('') +ggtitle('')+labs(tag = "A")+
-  scale_x_discrete(breaks=waiver(),labels = c('MS','Fec','2 x cov\n(MS, Fec)'))+ 
+  scale_x_discrete(breaks=waiver(),labels = c('MS','Fec','2 cov\n(MS, Fec)'))+ 
   theme(panel.border = element_blank(),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -742,7 +742,7 @@ BarPlot_4<- ggplot(PhenVarBoot_Table_plot_arena[13:18,], aes(x=Cov_component, y=
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[1]) +
   ylab('') +xlab('') +ggtitle('')+labs(tag = "B")+
-  scale_x_discrete(breaks=waiver(),labels = c('MS','Fec','2 x cov\n(MS, Fec)'))+ 
+  scale_x_discrete(breaks=waiver(),labels = c('MS','Fec','2 cov\n(MS, Fec)'))+ 
  theme(panel.border = element_blank(),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -1731,12 +1731,12 @@ BarPlot_6_2<-ggplot(PhenVarBoot_Table_arena[1:8,], aes(x=Variance_component, y=V
 
 ### Plot: Covariances for population size including IS and FS #### 
 BarPlot_1cv<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Cov_component, y=Variance, alpha=Treatment)) + 
-  scale_y_continuous(limits = c(-0.50, 0.35), breaks = seq(-0.5,0.35,0.18), expand = c(0 ,0)) + 
+  scale_y_continuous(limits = c(-0.50, 0.35), breaks = seq(-0.5, 0.25, 0.25), expand = c(0 ,0)) + 
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[2]) +
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('Variance') +xlab('') +ggtitle('')+labs(tag = "A")+
-  scale_x_discrete(breaks=waiver(),labels = c('2 x cov\n(MS,\nIS)','2 x cov\n(MS,\nFS)','2 x cov\n(MS,\npFec)','2 x cov\n(IS,\nFS)','2 x cov\n(IS,\npFec)','2 x cov\n(FS,\npFec)'))+ 
+  scale_x_discrete(breaks=waiver(),labels = c('2 cov\n(MS,\nIS)','2 cov\n(MS,\nFS)','2 cov\n(MS,\npFec)','2 cov\n(IS,\nFS)','2 x cov\n(IS,\npFec)','2 cov\n(FS,\npFec)'))+ 
   theme(panel.border = element_blank(),
         plot.title = element_text(hjust = 0.5),
         panel.background = element_blank(),
@@ -1758,12 +1758,12 @@ BarPlot_1cv<- ggplot(PhenVarBoot_Table_plot_cov_pop[1:12,], aes(x=Cov_component,
 
 ### Plot: Covariances for arena size including IS and FS #### 
 BarPlot_2cv<-ggplot(PhenVarBoot_Table_plot_cov_arena[1:12,], aes(x=Cov_component, y=Variance, alpha=Treatment)) + 
-  scale_y_continuous(limits = c(-0.50, 0.35), breaks = seq(-0.5,0.35,0.18), expand = c(0 ,0)) + 
+  scale_y_continuous(limits = c(-0.50, 0.35), breaks = seq(-0.5, 0.25, 0.25), expand = c(0 ,0)) + 
   geom_hline(yintercept=0, linetype="solid", color = "black", size=1) +
   geom_bar(stat="identity", color="black", position=position_dodge(),fill=colpal2[2]) +
   geom_errorbar(aes(ymin=l95_CI, ymax=u95_CI, group = Treatment), width=.3,size=.5,alpha=1, position=position_dodge(.9)) +
   ylab('') +xlab('') +ggtitle('')+labs(tag = "B")+
-  scale_x_discrete(breaks=waiver(),labels = c('2 x cov\n(MS,\nIS)','2 x cov\n(MS,\nFS)','2 x cov\n(MS,\npFec)','2 x cov\n(IS,\nFS)','2 x cov\n(IS,\npFec)','2 x cov\n(FS,\npFec)'))+ 
+  scale_x_discrete(breaks=waiver(),labels = c('2 cov\n(MS,\nIS)','2 cov\n(MS,\nFS)','2 cov\n(MS,\npFec)','2 cov\n(IS,\nFS)','2 cov\n(IS,\npFec)','2 cov\n(FS,\npFec)'))+ 
   scale_alpha_manual(values=c(0.65,1),name = "Treatment", labels = c('Large arena','Small arena'))+
   theme(panel.border = element_blank(),
         plot.title = element_text(hjust = 0.5),
@@ -1784,11 +1784,11 @@ BarPlot_2cv<-ggplot(PhenVarBoot_Table_plot_cov_arena[1:12,], aes(x=Cov_component
         axis.ticks.length = unit(.3, "cm"))
 ```
 
+### Figure S7
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 7,fig.height=7, results='hide',fig.cap='Figure S7: Variance (A + B) and covariance (C + D) components of reproductive success into mating success (MS), insemination success (IS), fertilization success (FS) and partner fecundity (pFec) for males for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S7).',fig.fullwidth=TRUE}
 ### Figure S8
-```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 7,fig.height=7, results='hide',fig.cap='Figure S8: Variance (A + B) and covariance (C + D) components of reproductive success into mating success (MS), insemination success (IS), fertilization success (FS) and partner fecundity (pFec) for males for group size treatment (A + C) and arena size treatment (B + D). Mean and 95%CI estimated via bootstrapping (Table S7).',fig.fullwidth=TRUE}
-### Figure S8
-Figure_S8<-grid.arrange(BarPlot_5_2+labs(tag = "A"),BarPlot_6_2+labs(tag = "B"),BarPlot_1cv+labs(tag = "C")+xlab('Variance component'),BarPlot_2cv+labs(tag = "D")+xlab('Variance component'), nrow = 2,ncol=2)
-Fig_S8=plot_grid(Figure_S8, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+Figure_S7<-grid.arrange(BarPlot_5_2+labs(tag = "A"),BarPlot_6_2+labs(tag = "B"),BarPlot_1cv+labs(tag = "C")+xlab('Variance component'),BarPlot_2cv+labs(tag = "D")+xlab('Variance component'), nrow = 2,ncol=2)
+Fig_S7=plot_grid(Figure_S7, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
 
 ## Permuation test for treatment comparison of variance decomposition including IS and FS

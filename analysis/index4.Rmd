@@ -210,7 +210,7 @@ fig_theme=theme(panel.border = element_blank(),
 
 ## Create customized functions for analysis ####
 # Create function to calculate standard error and upper/lower standard deviation
-standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(!is.na(x)))
+standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(na.exclude(x)))
 upper_SD <- function(x) mean(x,na.rm=T)+(sd(x)/2)
 lower_SD <- function(x) mean(x,na.rm=T)-(sd(x)/2)
 ```
@@ -1280,13 +1280,13 @@ p26<-ggplot(D_data, aes(x=Total_N_MTP1, y=Total_N_Rd, color=Sex)) +
   guides(color=guide_legend(override.aes=list(fill=NA)))+
   theme(legend.key = element_rect(fill = "transparent"))
 
-legend_Figure_S6 <- get_legend(p26)
+legend_Figure_S5 <- get_legend(p26)
 ```
 
-### Figure S6
-```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 8,fig.height=7, results='hide',fig.cap='Figure S6: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.',fig.fullwidth=TRUE}
-Figure_S6<-grid.arrange(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, nrow = 2,ncol=3, widths=c(2.3, 2.3, 0.65))
-Fig_S6=plot_grid(Figure_S6, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+### Figure S5
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 8,fig.height=7, results='hide',fig.cap='Figure S5: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.',fig.fullwidth=TRUE}
+Figure_S5<-grid.arrange(p22,p23,legend_Figure_S5,p24,p25,legend_Figure_S5, nrow = 2,ncol=3, widths=c(2.3, 2.3, 0.65))
+Fig_S5=plot_grid(Figure_S5, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
 
 # Analyses for sexual selection gradients excluding individuals without mating success
@@ -1477,10 +1477,10 @@ p26<-ggplot(D_data_noZeroMS, aes(x=Total_N_MTP1, y=Total_N_Rd, color=Sex)) +
 legend_Figure_S6 <- get_legend(p26)
 ```
 
-### Figure S7
+### Figure S6
 ```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 8,fig.height=7, results='hide',fig.cap='Figure S7: Scatterplot of Bateman gradients (βss; relativized mating success against relativized reproductive success) excluding individuals without mating success for males (blue) and females (red) for group size treatment (A + B) and arena size treatment (C+ D). Slopes of liner models estimating βss indicated by solid line with predicted 95% confidence intervals.',fig.fullwidth=TRUE}
-Figure_S7<-grid.arrange(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, nrow = 2,ncol=3, widths=c(2.3, 2.3, 0.65))
-Fig_S7=plot_grid(Figure_S6, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
+Figure_S6<-grid.arrange(p22,p23,legend_Figure_S6,p24,p25,legend_Figure_S6, nrow = 2,ncol=3, widths=c(2.3, 2.3, 0.65))
+Fig_S6=plot_grid(Figure_S6, ncol=1, rel_heights=c(0.1, 1)) # rel_heights values control title margins
 ```
 
 # Permutation tests for treatment comparisons for (sexual) selection metrics

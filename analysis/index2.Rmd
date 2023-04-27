@@ -209,7 +209,7 @@ fig_theme=theme(panel.border = element_blank(),
 
 ## Create customized functions for analysis ####
 # Create function to calculate standard error and upper/lower standard deviation
-standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(!is.na(x)))
+standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(na.exclude(x)))
 upper_CI <- function(x) mean(x,na.rm=T)+((standard_error(x))*qnorm(0.975))
 lower_CI <- function(x) mean(x,na.rm=T)-((standard_error(x))*qnorm(0.975))
 
@@ -314,9 +314,9 @@ p1=ggplot(D_data, aes(x=Sex, y=as.numeric(N_contact_WT),fill=TreatCgroup, col=Tr
                position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
   stat_summary(fun = mean,
                position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
-  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
-  scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
-  scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Small group','Females: Large group','Males: Small group','Males: Large group'))+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Small group','Large group','Small group','Large group'))+
+  scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Small group','Large group','Small group','Large group'))+
+  scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Small group','Large group','Small group','Large group'))+
   xlab('Sex')+ylab("Contacts with mating partners")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ylim(0,400)+labs(tag = "A")+
   annotate("text",label='n =',x=0.55,y=400,size=4)+
@@ -339,9 +339,9 @@ p2=ggplot(D_data, aes(x=Sex, y=as.numeric(N_contact_WT),fill=TreatCarena, col=Tr
                position=position_dodge2(0.3), size = 1,col=c("white","white","white","white"),alpha=c(1,1,1,1),show.legend = F, stroke = 0,linewidth = 1.2)+
   stat_summary(fun = mean,
                position=position_dodge2(0.3), size = 1,col=c("#b2182b","#b2182b","#2166AC","#2166AC"),alpha=c(0.5,0.75,0.5,0.75),show.legend = F, stroke = 0,linewidth = 1.2)+
-  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
-  scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
-  scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Females: Large arena','Females: Small arena','Males: Large arena','Males: Small arena'))+
+  scale_color_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Small arena','Large arena','Small arena','Large arena'))+
+  scale_fill_manual(values=c(colpal2[1],colpal2[1],colpal2[2],colpal2[2]),name = "Treatment", labels = c('Small arena','Large arena','Small arena','Large arena'))+
+  scale_alpha_manual(values=c(0.5,0.75,0.5,0.75),name = "Treatment", labels = c('Small arena','Large arena','Small arena','Large arena'))+
   xlab('Sex')+ylab("")+ggtitle('')+ theme(plot.title = element_text(hjust = 0.5))+
   scale_x_discrete(labels = c('Female','Male'),drop=FALSE)+ylim(0,400)+labs(tag = "B")+
   annotate("text",label='n =',x=0.55,y=400,size=4)+

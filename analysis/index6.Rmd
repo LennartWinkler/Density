@@ -212,7 +212,7 @@ fig_theme=theme(panel.border = element_blank(),
 
 ## Create customized functions for analysis ####
 # Create function to calculate standard error and upper/lower standard deviation
-standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(!is.na(x)))
+standard_error <- function(x) sd(x,na.rm=T) / sqrt(length(na.exclude(x)))
 upper_SD <- function(x) mean(x,na.rm=T)+(sd(x)/2)
 lower_SD <- function(x) mean(x,na.rm=T)-(sd(x)/2)
 ```
@@ -379,11 +379,11 @@ Table A8: Treatment difference in the total opportunity for sexual selection (IT
 kable(totalSexSel_Table)
 ```
 
-## Plot: total sexual selection on males (Figure S9)
+## Plot: total sexual selection on males (Figure S8)
 
 Finally, we plotted the total opportunity for sexual selection for each treatment.
-```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 5,fig.height=5, results='hide',fig.cap='Figure S9: Total opportunity for sexual selection (ITS) in males for group and arena size treatment. Mean and 95%CI estimated via bootstrapping. Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.fullwidth=TRUE}
-### Plot: total sexual selection on males (Figure S9) ####
+```{r , warning=FALSE, message=FALSE, fig.align="left",fig.width = 5,fig.height=5, results='hide',fig.cap='Figure S8: Total opportunity for sexual selection (ITS) in males for group and arena size treatment. Mean and 95%CI estimated via bootstrapping. Dashed lines mark equal effect size for both densities. In grey area metrics were larger under high density treatments. The x-/y-distance of means from dashed line is equal to the effect size of the treatment.',fig.fullwidth=TRUE}
+### Plot: total sexual selection on males (Figure S8) ####
 # Reorder data
 plot_totalSexSel_data_1=totalSexSel_Table[c(1,4),]
 names(plot_totalSexSel_data_1)[3] <- "Variance_low"
