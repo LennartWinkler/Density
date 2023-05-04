@@ -506,7 +506,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-04-27
+<strong>Last updated:</strong> 2023-05-04
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -638,15 +638,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treee4a0f09af9c17b7e3344656836da531310519815targetblanke4a0f09a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treefe2f6657b681fac285e9185a9bb9facf593f8875targetblankfe2f665a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/e4a0f09af9c17b7e3344656836da531310519815" target="_blank">e4a0f09</a>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/fe2f6657b681fac285e9185a9bb9facf593f8875" target="_blank">fe2f665</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treee4a0f09af9c17b7e3344656836da531310519815targetblanke4a0f09a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomLennartWinklerDensityandsexualselection2023treefe2f6657b681fac285e9185a9bb9facf593f8875targetblankfe2f665a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -656,7 +656,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/e4a0f09af9c17b7e3344656836da531310519815" target="_blank">e4a0f09</a>.
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/tree/fe2f6657b681fac285e9185a9bb9facf593f8875" target="_blank">fe2f665</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -717,6 +717,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/LennartWinkler/Density_and_sexual_selection_2023/blob/fe2f6657b681fac285e9185a9bb9facf593f8875/analysis/index2.Rmd" target="_blank">fe2f665</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2023-05-04
+</td>
+<td>
+wflow_publish(all = T)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/LennartWinkler/Density_and_sexual_selection_2023/af343667ad265bf2094a82c0bd20b9cbcc0e081d/docs/index2.html" target="_blank">af34366</a>
+</td>
+<td>
+LennartWinkler
+</td>
+<td>
+2023-04-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1402,397 +1436,6 @@ males and females under low and high density manipulation via group
 </p>
 </div>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Figure_S1<span class="ot">&lt;-</span><span class="fu">plot_grid</span>(Figure_S1, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">rel_heights=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>))</span></code></pre></div>
-</div>
-</div>
-<div id="bootstrapping-the-variance-in-contact-rates"
-class="section level1">
-<h1>Bootstrapping the variance in contact rates</h1>
-<p>Next, we computed the coefficient of variation in contact rates for
-both sexes and all treatments.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Bootstrapping the variance in contact rates ####</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Male</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Large group size</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>D_data_Large_pop_M_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="cf">function</span>(d, i){</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  d2 <span class="ot">&lt;-</span> d[i]</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sd</span>(d2, <span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">/</span><span class="fu">mean</span>(d2, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>Large_pop_M_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Large_pop_M_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Small group size</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>D_data_Small_pop_M_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>Small_pop_M_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Small_pop_M_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Large arena</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>D_data_Large_arena_M_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>Large_arena_M_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Large_arena_M_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Small arena  </span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>D_data_Small_arena_M_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>Small_arena_M_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Small_arena_M_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Female</span></span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Large group size</span></span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>D_data_Large_pop_F_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>Large_pop_F_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Large_pop_F_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Small group size</span></span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>D_data_Small_pop_F_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>Small_pop_F_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Small_pop_F_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Large arena</span></span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>D_data_Large_arena_F_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>Large_arena_F_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Large_arena_F_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Small arena  </span></span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>D_data_Small_arena_F_Contact_n <span class="ot">&lt;-</span><span class="fu">as.vector</span>(D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])</span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>Small_arena_F_Contact_bootvar <span class="ot">&lt;-</span> <span class="fu">boot</span>(D_data_Small_arena_F_Contact_n, c, <span class="at">R=</span><span class="dv">10000</span>)</span>
-<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract data and write results table</span></span>
-<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Male_Small_pop_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Small population size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Small_pop_M_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Small_pop_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Small_pop_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Male_Large_pop_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Large population size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Large_pop_M_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Large_pop_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Large_pop_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Female_Small_pop_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Small population size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Small_pop_F_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Small_pop_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Small_pop_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Female_Large_pop_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Large population size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Large_pop_F_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Large_pop_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Large_pop_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Male_Small_arena_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Small arena size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Small_arena_M_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Small_arena_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Small_arena_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Male_Large_arena_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Large arena size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Large_arena_M_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Large_arena_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Large_arena_M_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Female_Small_arena_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Small arena size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Small_arena_F_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Small_arena_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Small_arena_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a>PhenVarBoot_Table_Female_Large_arena_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Large arena size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, <span class="fu">as.numeric</span>(<span class="fu">mean</span>(Large_arena_F_Contact_bootvar<span class="sc">$</span>t)), <span class="fu">quantile</span>(Large_arena_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">025</span>, <span class="at">names =</span> <span class="cn">FALSE</span>), <span class="fu">quantile</span>(Large_arena_F_Contact_bootvar<span class="sc">$</span>t,.<span class="dv">975</span>, <span class="at">names =</span> <span class="cn">FALSE</span>)))</span>
-<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>Table_VarCont <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(<span class="fu">rbind</span>(PhenVarBoot_Table_Male_Small_pop_Contact,PhenVarBoot_Table_Male_Large_pop_Contact,</span>
-<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>                                               PhenVarBoot_Table_Female_Small_pop_Contact,PhenVarBoot_Table_Female_Large_pop_Contact,</span>
-<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a>                                               PhenVarBoot_Table_Male_Small_arena_Contact,PhenVarBoot_Table_Male_Large_arena_Contact,</span>
-<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a>                                               PhenVarBoot_Table_Female_Small_arena_Contact,PhenVarBoot_Table_Female_Large_arena_Contact)))</span>
-<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="fu">is.table</span>(Table_VarCont)</span>
-<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_VarCont)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Sex&quot;</span></span>
-<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_VarCont)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Treatment&quot;</span></span>
-<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_VarCont)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Trait&quot;</span></span>
-<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_VarCont)[<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Variance&quot;</span></span>
-<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_VarCont)[<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">&quot;l95_CI&quot;</span></span>
-<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_VarCont)[<span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="st">&quot;u95_CI&quot;</span></span>
-<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a>Table_VarCont[,<span class="dv">4</span>]<span class="ot">=</span><span class="fu">round</span>(<span class="fu">as.numeric</span>(Table_VarCont[,<span class="dv">4</span>]),<span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a>Table_VarCont[,<span class="dv">5</span>]<span class="ot">=</span><span class="fu">round</span>(<span class="fu">as.numeric</span>(Table_VarCont[,<span class="dv">5</span>]),<span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a>Table_VarCont[,<span class="dv">6</span>]<span class="ot">=</span><span class="fu">round</span>(<span class="fu">as.numeric</span>(Table_VarCont[,<span class="dv">6</span>]),<span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(c) <span class="co"># Remove bootstrapping function</span></span></code></pre></div>
-<p>Table S2: Coefficients of variation (CV) in the total number of
-contacts with potential mating partners for treatments (group and arena)
-estimated for males and females with mean and 95%CI estimated via
-bootstrapping.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(Table_VarCont)</span></code></pre></div>
-<table>
-<colgroup>
-<col width="8%" />
-<col width="27%" />
-<col width="35%" />
-<col width="11%" />
-<col width="8%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Sex</th>
-<th align="left">Treatment</th>
-<th align="left">Trait</th>
-<th align="right">Variance</th>
-<th align="right">l95_CI</th>
-<th align="right">u95_CI</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Male</td>
-<td align="left">Small population size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.44</td>
-<td align="right">0.37</td>
-<td align="right">0.50</td>
-</tr>
-<tr class="even">
-<td align="left">Male</td>
-<td align="left">Large population size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.39</td>
-<td align="right">0.32</td>
-<td align="right">0.45</td>
-</tr>
-<tr class="odd">
-<td align="left">Female</td>
-<td align="left">Small population size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.44</td>
-<td align="right">0.36</td>
-<td align="right">0.53</td>
-</tr>
-<tr class="even">
-<td align="left">Female</td>
-<td align="left">Large population size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.44</td>
-<td align="right">0.35</td>
-<td align="right">0.52</td>
-</tr>
-<tr class="odd">
-<td align="left">Male</td>
-<td align="left">Small arena size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.51</td>
-<td align="right">0.43</td>
-<td align="right">0.59</td>
-</tr>
-<tr class="even">
-<td align="left">Male</td>
-<td align="left">Large arena size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.41</td>
-<td align="right">0.35</td>
-<td align="right">0.47</td>
-</tr>
-<tr class="odd">
-<td align="left">Female</td>
-<td align="left">Small arena size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.34</td>
-<td align="right">0.26</td>
-<td align="right">0.42</td>
-</tr>
-<tr class="even">
-<td align="left">Female</td>
-<td align="left">Large arena size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.40</td>
-<td align="right">0.34</td>
-<td align="right">0.46</td>
-</tr>
-</tbody>
-</table>
-<div id="permutation-test-for-treatment-comparison-of-contact-rates"
-class="section level2">
-<h2>Permutation test for treatment comparison of contact rates</h2>
-<p>Here we test if the coefficient of variation differed between
-treatments (large vs small population size &amp; small vs large arena
-size).</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Permutation test for treatment comparison of contact rates ####</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Male</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Group size</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>Treat_diff_Male_pop_Contact<span class="ot">=</span><span class="fu">c</span>(Large_pop_M_Contact_bootvar<span class="sc">$</span>t)<span class="sc">-</span><span class="fu">c</span>(Small_pop_M_Contact_bootvar<span class="sc">$</span>t)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_pop_Contact<span class="ot">=</span><span class="fu">mean</span>(Treat_diff_Male_pop_Contact,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_pop_Contact_lower<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Male_pop_Contact,.<span class="dv">025</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_pop_Contact_upper<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Male_pop_Contact,.<span class="dv">975</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Permutation test to calculate p value</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>comb_data<span class="ot">=</span><span class="fu">c</span>(D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>],D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>diff.observed <span class="ot">=</span> <span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>number_of_permutations <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>diff.random <span class="ot">=</span> <span class="cn">NULL</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> number_of_permutations) {</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample from the combined data set</span></span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  a.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  b.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Null (permuated) difference</span></span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>  diff.random[i] <span class="ot">=</span>  <span class="fu">sd</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(b.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(b.random))</span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co"># P-value is the fraction of how many times the permuted difference is equal or more extreme than the observed difference</span></span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_pop_Contact_p <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">abs</span>(diff.random) <span class="sc">&gt;=</span> <span class="fu">as.numeric</span>(<span class="fu">abs</span>(diff.observed)))<span class="sc">/</span>   number_of_permutations</span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Arena</span></span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>Treat_diff_Male_arena_Contact<span class="ot">=</span><span class="fu">c</span>(Small_arena_M_Contact_bootvar<span class="sc">$</span>t)<span class="sc">-</span><span class="fu">c</span>(Large_arena_M_Contact_bootvar<span class="sc">$</span>t)</span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_arena_Contact<span class="ot">=</span><span class="fu">mean</span>(Treat_diff_Male_arena_Contact,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_arena_Contact_lower<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Male_arena_Contact,.<span class="dv">025</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_arena_Contact_upper<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Male_arena_Contact,.<span class="dv">975</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co">#Permutation test to calculate p value</span></span>
-<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>comb_data<span class="ot">=</span><span class="fu">c</span>(D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>],D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])</span>
-<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>diff.observed <span class="ot">=</span> <span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>]))) </span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>number_of_permutations <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a>diff.random <span class="ot">=</span> <span class="cn">NULL</span></span>
-<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> number_of_permutations) {</span>
-<span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample from the combined data set</span></span>
-<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a>  b.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a>  a.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;M&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Null (permuated) difference</span></span>
-<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a>  diff.random[i] <span class="ot">=</span>  <span class="fu">sd</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(b.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(b.random))</span>
-<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Male_arena_Contact_p <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">abs</span>(diff.random) <span class="sc">&gt;=</span> <span class="fu">as.numeric</span>(<span class="fu">abs</span>(diff.observed)))<span class="sc">/</span>   number_of_permutations</span>
-<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Female</span></span>
-<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Group size</span></span>
-<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a>Treat_diff_Female_pop_Contact<span class="ot">=</span><span class="fu">c</span>(Large_pop_F_Contact_bootvar<span class="sc">$</span>t)<span class="sc">-</span><span class="fu">c</span>(Small_pop_F_Contact_bootvar<span class="sc">$</span>t)</span>
-<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_pop_Contact<span class="ot">=</span><span class="fu">mean</span>(Treat_diff_Female_pop_Contact,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_pop_Contact_lower<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Female_pop_Contact,.<span class="dv">025</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_pop_Contact_upper<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Female_pop_Contact,.<span class="dv">975</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-65"><a href="#cb26-65" aria-hidden="true" tabindex="-1"></a><span class="co">#Permutation test to calculate p value</span></span>
-<span id="cb26-66"><a href="#cb26-66" aria-hidden="true" tabindex="-1"></a>comb_data<span class="ot">=</span><span class="fu">c</span>(D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>],D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])</span>
-<span id="cb26-67"><a href="#cb26-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a>diff.observed <span class="ot">=</span> <span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))<span class="sc">-</span> <span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))</span>
-<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a>number_of_permutations <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb26-71"><a href="#cb26-71" aria-hidden="true" tabindex="-1"></a>diff.random <span class="ot">=</span> <span class="cn">NULL</span></span>
-<span id="cb26-72"><a href="#cb26-72" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> number_of_permutations) {</span>
-<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-74"><a href="#cb26-74" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample from the combined data set</span></span>
-<span id="cb26-75"><a href="#cb26-75" aria-hidden="true" tabindex="-1"></a>  a.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Large_pop<span class="sc">$</span>N_contact_WT[D_data_Large_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a>  b.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Small_pop<span class="sc">$</span>N_contact_WT[D_data_Small_pop<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Null (permuated) difference</span></span>
-<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a>  diff.random[i] <span class="ot">=</span>  <span class="fu">sd</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(b.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(b.random))</span>
-<span id="cb26-80"><a href="#cb26-80" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-81"><a href="#cb26-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-82"><a href="#cb26-82" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_pop_Contact_p <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">abs</span>(diff.random) <span class="sc">&gt;=</span> <span class="fu">as.numeric</span>(<span class="fu">abs</span>(diff.observed)))<span class="sc">/</span>   number_of_permutations</span>
-<span id="cb26-83"><a href="#cb26-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-84"><a href="#cb26-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Arena</span></span>
-<span id="cb26-85"><a href="#cb26-85" aria-hidden="true" tabindex="-1"></a>Treat_diff_Female_arena_Contact<span class="ot">=</span><span class="fu">c</span>(Small_arena_F_Contact_bootvar<span class="sc">$</span>t)<span class="sc">-</span><span class="fu">c</span>(Large_arena_F_Contact_bootvar<span class="sc">$</span>t)</span>
-<span id="cb26-86"><a href="#cb26-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-87"><a href="#cb26-87" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_arena_Contact<span class="ot">=</span><span class="fu">mean</span>(Treat_diff_Female_arena_Contact,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-88"><a href="#cb26-88" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_arena_Contact_lower<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Female_arena_Contact,.<span class="dv">025</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-89"><a href="#cb26-89" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_arena_Contact_upper<span class="ot">=</span><span class="fu">quantile</span>(Treat_diff_Female_arena_Contact,.<span class="dv">975</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-90"><a href="#cb26-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-91"><a href="#cb26-91" aria-hidden="true" tabindex="-1"></a><span class="co">#Permutation test to calculate p value</span></span>
-<span id="cb26-92"><a href="#cb26-92" aria-hidden="true" tabindex="-1"></a>comb_data<span class="ot">=</span><span class="fu">c</span>(D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>],D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])</span>
-<span id="cb26-93"><a href="#cb26-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-94"><a href="#cb26-94" aria-hidden="true" tabindex="-1"></a>diff.observed <span class="ot">=</span> <span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>((D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>((D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>]))) </span>
-<span id="cb26-95"><a href="#cb26-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-96"><a href="#cb26-96" aria-hidden="true" tabindex="-1"></a>number_of_permutations <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb26-97"><a href="#cb26-97" aria-hidden="true" tabindex="-1"></a>diff.random <span class="ot">=</span> <span class="cn">NULL</span></span>
-<span id="cb26-98"><a href="#cb26-98" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> number_of_permutations) {</span>
-<span id="cb26-99"><a href="#cb26-99" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-100"><a href="#cb26-100" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample from the combined data set</span></span>
-<span id="cb26-101"><a href="#cb26-101" aria-hidden="true" tabindex="-1"></a>  b.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Large_arena<span class="sc">$</span>N_contact_WT[D_data_Large_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-102"><a href="#cb26-102" aria-hidden="true" tabindex="-1"></a>  a.random <span class="ot">=</span> <span class="fu">sample</span> (<span class="fu">na.omit</span>(comb_data), <span class="fu">length</span>(<span class="fu">c</span>(D_data_Small_arena<span class="sc">$</span>N_contact_WT[D_data_Small_arena<span class="sc">$</span>Sex<span class="sc">==</span><span class="st">&#39;F&#39;</span>])), <span class="cn">TRUE</span>)</span>
-<span id="cb26-103"><a href="#cb26-103" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-104"><a href="#cb26-104" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Null (permuated) difference</span></span>
-<span id="cb26-105"><a href="#cb26-105" aria-hidden="true" tabindex="-1"></a>  diff.random[i] <span class="ot">=</span>  <span class="fu">sd</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(a.random))<span class="sc">-</span><span class="fu">sd</span>(<span class="fu">na.omit</span>(b.random))<span class="sc">/</span><span class="fu">mean</span>(<span class="fu">na.omit</span>(b.random))</span>
-<span id="cb26-106"><a href="#cb26-106" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-107"><a href="#cb26-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-108"><a href="#cb26-108" aria-hidden="true" tabindex="-1"></a>t_Treat_diff_Female_arena_Contact_p <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">abs</span>(diff.random) <span class="sc">&gt;=</span> <span class="fu">as.numeric</span>(<span class="fu">abs</span>(diff.observed)))<span class="sc">/</span>   number_of_permutations</span>
-<span id="cb26-109"><a href="#cb26-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-110"><a href="#cb26-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract data and write data table</span></span>
-<span id="cb26-111"><a href="#cb26-111" aria-hidden="true" tabindex="-1"></a>CompTreat_Table_Male_pop_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Group size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, t_Treat_diff_Male_pop_Contact, t_Treat_diff_Male_pop_Contact_lower, t_Treat_diff_Male_pop_Contact_upper, t_Treat_diff_Male_pop_Contact_p))</span>
-<span id="cb26-112"><a href="#cb26-112" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CompTreat_Table_Male_pop_Contact)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;V1&#39;</span>,<span class="st">&#39;V2&#39;</span>,<span class="st">&#39;V3&#39;</span>,<span class="st">&#39;V4&#39;</span>,<span class="st">&#39;V5&#39;</span>,<span class="st">&#39;V6&#39;</span>,<span class="st">&#39;V7&#39;</span>)</span>
-<span id="cb26-113"><a href="#cb26-113" aria-hidden="true" tabindex="-1"></a>CompTreat_Table_Female_pop_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Group size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, t_Treat_diff_Female_pop_Contact, t_Treat_diff_Female_pop_Contact_lower, t_Treat_diff_Female_pop_Contact_upper, t_Treat_diff_Female_pop_Contact_p))</span>
-<span id="cb26-114"><a href="#cb26-114" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CompTreat_Table_Female_pop_Contact)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;V1&#39;</span>,<span class="st">&#39;V2&#39;</span>,<span class="st">&#39;V3&#39;</span>,<span class="st">&#39;V4&#39;</span>,<span class="st">&#39;V5&#39;</span>,<span class="st">&#39;V6&#39;</span>,<span class="st">&#39;V7&#39;</span>)</span>
-<span id="cb26-115"><a href="#cb26-115" aria-hidden="true" tabindex="-1"></a>CompTreat_Table_Male_arena_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Arena size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, t_Treat_diff_Male_arena_Contact, t_Treat_diff_Male_arena_Contact_lower, t_Treat_diff_Male_arena_Contact_upper, t_Treat_diff_Male_arena_Contact_p))</span>
-<span id="cb26-116"><a href="#cb26-116" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CompTreat_Table_Male_arena_Contact)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;V1&#39;</span>,<span class="st">&#39;V2&#39;</span>,<span class="st">&#39;V3&#39;</span>,<span class="st">&#39;V4&#39;</span>,<span class="st">&#39;V5&#39;</span>,<span class="st">&#39;V6&#39;</span>,<span class="st">&#39;V7&#39;</span>)</span>
-<span id="cb26-117"><a href="#cb26-117" aria-hidden="true" tabindex="-1"></a>CompTreat_Table_Female_arena_Contact <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Arena size&quot;</span>, <span class="st">&quot;Contacts with pot. partners&quot;</span>, t_Treat_diff_Female_arena_Contact, t_Treat_diff_Female_arena_Contact_lower, t_Treat_diff_Female_arena_Contact_upper, t_Treat_diff_Female_arena_Contact_p))</span>
-<span id="cb26-118"><a href="#cb26-118" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CompTreat_Table_Female_arena_Contact)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;V1&#39;</span>,<span class="st">&#39;V2&#39;</span>,<span class="st">&#39;V3&#39;</span>,<span class="st">&#39;V4&#39;</span>,<span class="st">&#39;V5&#39;</span>,<span class="st">&#39;V6&#39;</span>,<span class="st">&#39;V7&#39;</span>)</span>
-<span id="cb26-119"><a href="#cb26-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-120"><a href="#cb26-120" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(<span class="fu">rbind</span>(CompTreat_Table_Male_pop_Contact,CompTreat_Table_Female_pop_Contact,</span>
-<span id="cb26-121"><a href="#cb26-121" aria-hidden="true" tabindex="-1"></a>                                                         CompTreat_Table_Male_arena_Contact,CompTreat_Table_Female_arena_Contact)))</span>
-<span id="cb26-122"><a href="#cb26-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-123"><a href="#cb26-123" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">4</span>]<span class="ot">=</span><span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">4</span>])</span>
-<span id="cb26-124"><a href="#cb26-124" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">5</span>]<span class="ot">=</span><span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">5</span>])</span>
-<span id="cb26-125"><a href="#cb26-125" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">6</span>]<span class="ot">=</span><span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">6</span>])</span>
-<span id="cb26-126"><a href="#cb26-126" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">7</span>]<span class="ot">=</span><span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">7</span>])</span>
-<span id="cb26-127"><a href="#cb26-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-128"><a href="#cb26-128" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Sex&quot;</span></span>
-<span id="cb26-129"><a href="#cb26-129" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Treatment&quot;</span></span>
-<span id="cb26-130"><a href="#cb26-130" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Trait&quot;</span></span>
-<span id="cb26-131"><a href="#cb26-131" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Variance&quot;</span></span>
-<span id="cb26-132"><a href="#cb26-132" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="st">&quot;l95_CI&quot;</span></span>
-<span id="cb26-133"><a href="#cb26-133" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="st">&quot;u95_CI&quot;</span></span>
-<span id="cb26-134"><a href="#cb26-134" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Table_varCont_TreatComp)[<span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Adj. p-value&quot;</span></span>
-<span id="cb26-135"><a href="#cb26-135" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">7</span>]<span class="ot">=</span><span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">p.adjust</span>(<span class="fu">c</span>(<span class="fl">0.32852</span> ,<span class="fl">0.61279</span>   ), <span class="at">method =</span> <span class="st">&#39;fdr&#39;</span>),<span class="at">digit=</span><span class="dv">3</span>),<span class="fu">round</span>(<span class="fu">p.adjust</span>(<span class="fu">c</span>(<span class="fl">0.52590</span> ,<span class="fl">0.24217</span>    ), <span class="at">method =</span> <span class="st">&#39;fdr&#39;</span>),<span class="at">digit=</span><span class="dv">3</span>))</span>
-<span id="cb26-136"><a href="#cb26-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-137"><a href="#cb26-137" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">4</span>]<span class="ot">=</span><span class="fu">round</span>(<span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">4</span>]),<span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb26-138"><a href="#cb26-138" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">5</span>]<span class="ot">=</span><span class="fu">round</span>(<span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">5</span>]),<span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb26-139"><a href="#cb26-139" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">6</span>]<span class="ot">=</span><span class="fu">round</span>(<span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">6</span>]),<span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb26-140"><a href="#cb26-140" aria-hidden="true" tabindex="-1"></a>Table_varCont_TreatComp[,<span class="dv">7</span>]<span class="ot">=</span><span class="fu">as.numeric</span>(Table_varCont_TreatComp[,<span class="dv">7</span>])</span>
-<span id="cb26-141"><a href="#cb26-141" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Table_varCont_TreatComp) <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb26-142"><a href="#cb26-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-143"><a href="#cb26-143" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">p.adjust</span>(<span class="fu">c</span>(<span class="fl">0.32852</span> ,<span class="fl">0.61279</span>   ), <span class="at">method =</span> <span class="st">&#39;fdr&#39;</span>),<span class="at">digit=</span><span class="dv">3</span>) <span class="co"># Calculate FDR adjusted p-values for males</span></span>
-<span id="cb26-144"><a href="#cb26-144" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">p.adjust</span>(<span class="fu">c</span>(<span class="fl">0.52590</span> ,<span class="fl">0.24217</span>    ), <span class="at">method =</span> <span class="st">&#39;fdr&#39;</span>),<span class="at">digit=</span><span class="dv">3</span>) <span class="co"># Calculate FDR adjusted p-values for females</span></span></code></pre></div>
-<p>Table S3: Influence of density treatment (group and arena size) on
-coefficients of variation (CV) in the total number of contacts with
-potential mating partners for treatments (group size and arena)
-estimated for males and females with mean and 95%CI estimated via
-bootstrapping. Negative effect sizes indicate larger values at lower
-density and positive effect sizes larger values at higher density.
-P-values corrected for multiple testing by FDR (Benjamini and Hochberg
-1995).</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(Table_varCont_TreatComp)</span></code></pre></div>
-<table>
-<colgroup>
-<col width="8%" />
-<col width="13%" />
-<col width="34%" />
-<col width="10%" />
-<col width="8%" />
-<col width="8%" />
-<col width="15%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Sex</th>
-<th align="left">Treatment</th>
-<th align="left">Trait</th>
-<th align="right">Variance</th>
-<th align="right">l95_CI</th>
-<th align="right">u95_CI</th>
-<th align="right">Adj. p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Male</td>
-<td align="left">Group size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">-0.05</td>
-<td align="right">-0.14</td>
-<td align="right">0.04</td>
-<td align="right">0.613</td>
-</tr>
-<tr class="even">
-<td align="left">Female</td>
-<td align="left">Group size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">-0.01</td>
-<td align="right">-0.13</td>
-<td align="right">0.12</td>
-<td align="right">0.613</td>
-</tr>
-<tr class="odd">
-<td align="left">Male</td>
-<td align="left">Arena size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">0.10</td>
-<td align="right">0.00</td>
-<td align="right">0.20</td>
-<td align="right">0.526</td>
-</tr>
-<tr class="even">
-<td align="left">Female</td>
-<td align="left">Arena size</td>
-<td align="left">Contacts with pot. partners</td>
-<td align="right">-0.06</td>
-<td align="right">-0.16</td>
-<td align="right">0.04</td>
-<td align="right">0.484</td>
-</tr>
-</tbody>
-</table>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1801,7 +1444,7 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>R version 4.2.0 (2022-04-22 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 Running under: Windows 10 x64 (build 19045)
