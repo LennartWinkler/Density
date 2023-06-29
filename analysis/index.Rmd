@@ -11,16 +11,16 @@ Supplementary material reporting R code for the manuscript 'Population density a
 
 Code and figures can be found at:<br><br>
 - Part 1: Analyses on the effect of the treatment on contact rates <br>
-https://lennartwinkler.github.io/Density_and_sexual_selection_2023/index2.html
+https://lennartwinkler.github.io/Density/index2.html
 <br><br>
 - Part 2: Testing the effect of density on mating behaviour and reproductive success <br>
-https://lennartwinkler.github.io/Density_and_sexual_selection_2023/index3.html
+https://lennartwinkler.github.io/Density/index3.html
 <br><br>
 - Part 3: Sexual selection metrics  <br>
-https://lennartwinkler.github.io/Density_and_sexual_selection_2023/index4.html
+https://lennartwinkler.github.io/Density/index4.html
 <br><br>
 - Part 4: Variance decomposition <br>
-https://lennartwinkler.github.io/Density_and_sexual_selection_2023/index5.html
+https://lennartwinkler.github.io/Density/index5.html
 <br><br>
 - Part 5: Total sexual selection on males <br>
-https://lennartwinkler.github.io/Density_and_sexual_selection_2023/index6.html
+https://lennartwinkler.github.io/Density/index6.html
